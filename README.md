@@ -1,3 +1,9 @@
+HTMLBook Backends
+=================
+
+This repo holds the backend templates for converting `.asciidoc` files into `.html` files in the htmlbook flavor.
+
+
 One-time Conversion of Books
 ----------------------------
 
