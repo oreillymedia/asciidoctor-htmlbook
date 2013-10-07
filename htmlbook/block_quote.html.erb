@@ -1,0 +1,11 @@
+<%#encoding:UTF-8%><blockquote data-type="epigraph"<%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<%= content.chomp %><%
+if attr?(:attribution) or attr?(:citetitle) %>
+<p data-type="attribution"><%
+if attr? :citetitle %>
+<cite><%= attr :citetitle %></cite><% end %><%
+if attr? :attribution %><% if attr? :citetitle %>
+<br/><% end %><%=
+"&#8212; #{attr :attribution}" %><% end %></p>
+<% end %>
+</blockquote>

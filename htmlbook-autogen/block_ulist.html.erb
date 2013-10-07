@@ -1,0 +1,7 @@
+<%#encoding:UTF-8%><ul<%= @id && %( id="#{@id}") %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<% content.each do |item| %>
+<li><p><%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %>
+</li>
+<% end %>
+</ul>

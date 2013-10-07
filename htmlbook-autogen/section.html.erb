@@ -1,0 +1,67 @@
+<%#encoding:UTF-8%>
+<% if @level == 0 %>
+<div data-type="part"<%= @id && %( id="#{@id}") %>>
+<%= %(<h1) %>><%= title %><%= %(</h1>) %>
+
+<%= content %>
+</div>
+<% else %><% 
+title_html = %(#{@caption}#{title})
+title_html = %(<a name="#{@id}" class="anchor" href="#{@id}">#{title_html}</a>) if (attr? 'anchors')
+title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @level < 4
+%>
+
+<% if @level == 1 %>
+<% if sectname == 'preface[@role="foreword"]' %>
+<section data-type="foreword"<%= @id && %( id="#{@id}") %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
+<% elsif sectname == 'preface' %>
+<section data-type="preface"<%= @id && %( id="#{@id}") %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
+<% elsif sectname == 'appendix' %>
+<section data-type="appendix"<%= @id && %( id="#{@id}") %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
+<% else %>
+<section data-type="chapter"<%= @id && %( id="#{@id}") %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
+<% end %><% end %>
+
+<% if @level == 2 %>
+<section data-type="sect1"<%= @id && %( id="#{@id}") %>>
+<h1><%= title %></h1>
+<%= content %>
+</section>
+<% end %>
+
+<% if @level == 3 %>
+<section data-type="sect2"<%= @id && %( id="#{@id}") %>>
+<h2><%= title %></h2>
+<%= content %>
+</section>
+<% end %>
+
+<% if @level == 4 %>
+<section data-type="sect3"<%= @id && %( id="#{@id}") %>>
+<h3><%= title %></h3>
+<%= content %>
+</section>
+<% end %>
+
+<% if @level == 5 %>
+<section data-type="sect4"<%= @id && %( id="#{@id}") %>>
+<h4><%= title %></h4>
+<%= content %>
+</section>
+<% end %><% end %>

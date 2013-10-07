@@ -1,0 +1,6 @@
+<%#encoding:UTF-8%>
+<% if attr? 'style', 'source', false %>
+<pre<%= @id && %( id="#{@id}") %> data-type="programlisting" class="programlisting" data-code-language="<%= (attr 'language') %>"><%= content %></pre>
+<% else %>
+<pre<%= @id && %( id="#{@id}") %> data-type="programlisting" class="programlisting"><%= content %></pre>
+<% end %>

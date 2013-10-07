@@ -1,0 +1,32 @@
+<%#encoding:UTF-8%><!DOCTYPE html>
+
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.w3.org/1999/xhtml ../schema/htmlbook.xsd"
+xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title><%= doctitle %></title>
+    <meta name="<%= doctitle %>" content="text/html; charset=utf-8"/>
+  </head>
+<body<%= @id && %( id="#{@id}") %> data-type="book">
+  <h1><%= @header.title %></h1>
+  <figure data-type="cover">
+    <img src="cover.png"/>
+  </figure>
+  <section data-type="titlepage">
+    <h1><%= @header.title %></h1>
+    <% if attr? :author %><h2 data-type="author"><%= attr :author %></h2><% end %>
+  </section>
+  <section data-type="copyright-page">
+    <h1><%= @header.title %></h1>
+    <% if attr? :author %><p data-type="author">by <%= attr :author %></p><% end %>
+  </section>
+<% if @level == 1 && @role == 'dedication' %>
+<section data-type="dedication"<%= @id && %( id="#{@id}") %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section><% end %>
+<%= content %>
+</body>
+</html>
