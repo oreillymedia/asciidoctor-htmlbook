@@ -1,8 +1,10 @@
 HTMLBook Backends
 =================
 
-This repo holds the backend templates for converting `.asciidoc` files into `.html` files in the htmlbook flavor.
+This repo holds the backend templates for converting `.asciidoc` files into `.html` files in the htmlbook flavor. The repo ships with 2 backends:
 
+- `htmlbook` - a set of templates that can be used directly with the `asciidoctor` gem. This is a direct source conversion
+- `htmlbook-autogen` - a set of templates that can only be used with the `orm_asciidoctor` gem. This provides some autogeneration abilities.
 
 One-time Conversion of Books
 ----------------------------
