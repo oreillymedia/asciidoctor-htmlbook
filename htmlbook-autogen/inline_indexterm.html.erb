@@ -18,7 +18,7 @@ terms.each do |term| %><%
 		elsif terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-seealso="<%= $seealsoterm %>"/><% 
 		elsif terms.to_s.include?('sortas=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-primary-sortas="<%= $sortasterm %>"/><% 
 		elsif terms.to_s.include?('id=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" id="<%= $idterm %>"/><% 
-		elsif terms.to_s.include?('startref=') %><a data-type="indexterm" data-startref="<%= $startrefterm %>" %>"/><% end %><% 
+		elsif terms.to_s.include?('startref=') %><a data-type="indexterm" data-startref="<%= $startrefterm %>"/><% end %><% 
 	elsif numterms == 3 %><% 
 		if tertiaryterm %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>"/><% 
 		elsif terms.to_s.include?('see=') and not terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-see="<%= $seeterm %>"/><% 
