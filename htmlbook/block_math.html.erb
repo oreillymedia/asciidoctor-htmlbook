@@ -9,7 +9,7 @@ if (@subs.nil? || @subs.empty?) && !(attr? 'subs')
   equation = sub_specialcharacters equation
 end
 unless (equation.start_with? open) && (equation.end_with? close)
-  equation = %(#{open}#{equation}#{close})
+  equation = %(#{equation})
 end
 %>
 <%= %(#{equation}\n) %></p>
