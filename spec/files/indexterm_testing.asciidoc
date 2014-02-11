@@ -1,0 +1,97 @@
+== Indexterm Tests
+
+=== PRIMARY
+
+One term total: one primary.((("primary index term")))
+
+
+Two terms total: one primary, one see.((("Flash", see="HTML5")))
+
+Two terms total: one primary, one seealso.((("Flash", seealso="HTML5")))
+
+Two terms total: one primary, one sortas.((("3-D", sortas="three-d")))
+
+Two terms total: one primary, one id.((("HTML5", id="ix_html1")))
+
+
+Three terms total: one primary, one id, one range.((("HTML5", id="ix_html2", range="startofrange")))
+...stuff here...
+Two terms total: one range, one startref.(((range="endofrange", startref="ix_html2")))
+
+Three terms total: one primary, one see, one seealso.((("Flash", see="HTML5", seealso="HTML4")))
+
+
+Four terms total: one primary, one id, one range, one see.((("Flash", id="ix_html3", range="startofrange", see="HTML5")))
+
+Four terms total: one primary, one id, one range, one seealso.((("Flash", id="ix_html4", range="startofrange", seealso="HTML5")))
+
+Four terms total: one primary, one id, one range, one sortas.((("Flash", id="ix_html5", range="startofrange", sortas="HTML5")))
+
+Four terms total: one primary, one id, one see, one seealso.((("Flash", id="ix_html6", see="HTML5", seealso="HTML4")))
+
+
+Five terms total: one primary, one id, one range, one see, one seealso.((("Flash", id="ix_html7", range="startofrange", see="HTML5", seealso="HTML4")))
+
+=== SECONDARY
+
+Two terms total: one primary, one secondary.((("primary index term", "subentry")))
+
+
+Three terms total: one primary, one secondary, one see.((("Flash", "RDF", see="HTML5")))
+
+Three terms total: one primary, one secondary, one seealso.((("Flash", "RDF", seealso="HTML5")))
+
+Three terms total: one primary, one secondary, one sortas.((("Flash", "3-D", sortas="three-d")))
+
+
+Four terms total: one primary, one secondary, one id, one range.((("Flash", "HTML5", id="ix_html8", range="startofrange")))
+
+Four terms total: one primary, one secondary, one see, one seealso.((("Flash", "RDF", see="HTML5", seealso="HTML4")))
+
+
+Five terms total: one primary, one secondary, one id, one range, one see.((("Flash", "RDF", id="ix_html9", range="startofrange", see="HTML5")))
+
+Five terms total: one primary, one secondary, one id, one range, one seealso.((("Flash", "RDF", id="ix_html10", range="startofrange", seealso="HTML5")))
+
+Five terms total: one primary, one secondary, one id, one range, one sortas.((("Flash", "RDF", id="ix_html11", range="startofrange", sortas="HTML5")))
+
+
+Six terms total: one primary, one secondary, one id, one range, one see, one seealso.((("Flash", "RDF", id="ix_html12", range="startofrange", see="HTML5", seealso="HTML4")))
+
+=== TERTIARY
+
+Three terms total: one primary, one secondary, one tertiary.((("primary index term", "subentry", "sub-subentry")))
+
+Three terms total: one primary, one secondary, one tertiary, no quotes.(((XML, RDF, SPARQL)))
+
+
+Four terms total: one primary, one secondary, one tertiary, one see.((("Flash", "RDF", "SPARQL", see="HTML5")))
+
+Four terms total: one primary, one secondary, one tertiary, one seealso.((("XML", "RDF", "SPARQL", seealso="XQuery")))
+
+Four terms total: one primary, one secondary, one tertiary, one sortas.((("Flash", "RDF", "3-D", sortas="three-d")))
+
+
+Five terms total: one primary, one secondary, one tertiary, one id, one range.((("Flash", "RDF", "HTML5", id="ix_html13", range="startofrange")))
+
+Five terms total: one primary, one secondary, one tertiary, one see, one seealso.((("Flash", "RDF", "HTML5", see="HTML5", seealso="HTML4")))
+
+
+Six terms total: one primary, one secondary, one tertiary, one id, one range, one see.((("Flash", "RDF", "HTML5", id="ix_html14", range="startofrange", see="HTML5")))
+
+Six terms total: one primary, one secondary, one tertiary, one id, one range, one seealso.((("Flash", "RDF", "HTML5", id="ix_html15", range="startofrange", seealso="HTML5")))
+
+Six terms total: one primary, one secondary, one tertiary, one id, one range, one sortas.((("Flash", "RDF", "HTML5", id="ix_html16", range="startofrange", sortas="HTML5")))
+
+
+Seven terms total: one primary, one secondary, one tertiary, one id, one range, one see, one seealso.((("Flash", "RDF", "HTML5", id="ix_html17", range="startofrange", see="HTML5", seealso="HTML4")))
+
+=== MISCELLANEOUS
+
+Range and id can be in any order.((("Flash", range="startofrange", id="ix_html18")))
+
+Can have a range and id with a see or seealso in any order.((("Flash", range="startofrange", id="ix_html19", see="HTML5")))
+
+Can have a see AND a seealso in any order (but not more than one of each).((("Flash", seealso="HTML5", see="HTML4")))
+
+CANNOT have a sortas with a see or seealso.
