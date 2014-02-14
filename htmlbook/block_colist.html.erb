@@ -1,0 +1,27 @@
+<%#encoding:UTF-8%><ol<%= @id && %( id="#{@id}") %> class="calloutlist<%= attr?('role') ? %( #{attr 'role'}) : nil %><%= attr?('start') ? %( start="#{attr 'start'}") : nil %>">
+<% content.each_with_index do |item, i| %><li><% 
+	if i == 0 %><p>&#x278a; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+elsif i == 1 %><p>&#x278b; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+elsif i == 2 %><p>&#x278c; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><%  
+elsif i == 3 %><p>&#x278d; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+elsif i == 4 %><p>&#x278e; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+elsif i == 5 %><p>&#x278f; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+elsif i == 6 %><p>&#x2790; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+elsif i == 7 %><p>&#x2791; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+elsif i == 8 %><p>&#x2792; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+elsif i == 9 %><p>&#x2793; <%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% 
+else %><p><%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %><% end %>
+</li>
+<% end %>
+</ol>

@@ -16,3 +16,13 @@ end
 def htmlbook_path
   "#{File.dirname(__FILE__)}/../htmlbook"
 end
+
+def convert_indexterm_tests
+  indexterm_test_path = File.readlines("#{File.dirname(__FILE__)}/files/indexterm_testing.asciidoc")
+  doc = Asciidoctor::Document.new(indexterm_test_path, :template_dir => htmlbook_path)
+  doc.render
+end
+
+def indexterm_test_path
+  "#{File.dirname(__FILE__)}/files/indexterm_testing.asciidoc"
+end
