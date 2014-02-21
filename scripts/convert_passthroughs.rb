@@ -17,12 +17,13 @@ class InlineDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Preprocessor
     end
     lines.each do |line|
       passfull = 'pass:\[(.*?)\]'
-      regexmatch = /#{passfull}/.match(line)
-      if regexmatch.class == MatchData
-        passcaptured = regexmatch.captures
-        passcaptured.each do |inlinepass|
-          convertedpass = convert_to_htmlbook inlinepass
-          line.gsub!(/#{Regexp.escape(inlinepass)}/, convertedpass.chomp)
+      regexmatch = line.scan(/#{passfull}/)
+      regexmatch.each do |inlinearray|
+        inlinearray.each do |inlinepass|
+          convertedpass = convert_to_htmlbook inlinepass.to_s
+          if convertedpass != ""
+            line.gsub!(/#{Regexp.escape(inlinepass.to_s)}/, convertedpass.chomp)
+          end
         end
       end
     end
