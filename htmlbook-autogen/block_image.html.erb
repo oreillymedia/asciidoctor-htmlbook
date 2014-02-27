@@ -1,11 +1,7 @@
 <%#encoding:UTF-8%><figure<%= @id && %( id="#{@id}") %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
-<img src="<%= image_uri(attr 'target') %>"<%= attr?('alt') ? %( alt="#{attr 'alt'}") : nil %><%= attr?('width') ? %( width="#{attr 'width'}") : nil %>/>
 <% if title? %>
-<figcaption><span data-type="label"><%= caption_title = @document.attributes["figure-caption"]
-caption_num = @document.attributes["figure-number"]
-section_num = @next_section_index += 1
-@caption = "#{caption_title} #{section_num}-#{caption_num}. "%></span><%= title %></figcaption><%
-else %>
-<figcaption/><% 
+<figcaption><%= title %></figcaption><%
+else %><figcaption/><% 
 end %>
+<img src="<%= image_uri(attr 'target') %>"<%= attr?('alt') ? %( alt="#{attr 'alt'}") : nil %><%= attr?('width') ? %( width="#{attr 'width'}") : nil %>/>
 </figure>
