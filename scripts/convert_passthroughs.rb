@@ -64,7 +64,8 @@ end
 
 def convert_to_htmlbook text
   # set up xslt
-  stylesheet_file = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
+  # stylesheet_file = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
+  stylesheet_file = LibXML::XML::Document.file('/vagrant/docbook2htmlbook/db2htmlbook.xsl')
   xslt = LibXSLT::XSLT::Stylesheet.new(stylesheet_file)
 
   # set up xml and apply xslt
@@ -83,4 +84,13 @@ Asciidoctor::Extensions.register do |document|
 end
 
 
-Asciidoctor.render_file 'book.asciidoc', :safe => :safe, :in_place => true, :template_dir => "/usr/local/app/asciidoctor-htmlbook/htmlbook"
+Dir.glob("*.asciidoc") do |filename|
+    # For use on consolidated book file
+    if filename == "book.asciidoc"
+      Asciidoctor.render_file(filename, :safe => :safe, :in_place => true, :template_dir => "/usr/local/app/asciidoctor-htmlbook/htmlbook-autogen")
+    # For use on chunked files
+    # TODO: convert only asciidoc files included in book.asciidoc, including in subdirs
+    else
+      Asciidoctor.render_file(filename, :safe => :safe, :in_place => true, :template_dir => "/usr/local/app/asciidoctor-htmlbook/htmlbook")
+    end
+end
