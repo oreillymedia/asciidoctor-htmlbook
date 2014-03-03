@@ -64,8 +64,7 @@ end
 
 def convert_to_htmlbook text
   # set up xslt
-  # stylesheet_file = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
-  stylesheet_file = LibXML::XML::Document.file('/vagrant/docbook2htmlbook/db2htmlbook.xsl')
+  stylesheet_file = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
   xslt = LibXSLT::XSLT::Stylesheet.new(stylesheet_file)
 
   # set up xml and apply xslt
