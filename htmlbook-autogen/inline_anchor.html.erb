@@ -2,7 +2,7 @@
 case @type
 when :xref
   refid = (attr :refid) || @target
-  %><% if text.nil? %><%= %(<a href="#{@target}"/>) %><% 
+  %><% if text.nil? %><%= %(<a data-type="xref" href="#{@target}"/>) %><% 
   else %><%= %(<a href="#{@target}">#{@text || @document.references[:ids].fetch(refid, %[[#{refid}]]).tr_s("\n", ' ')}</a>) %><% end %><%
 when :ref %><%= %(<a id="#{@target}"></a>) %><%
 when :bibref %><%= %(<a id="#{@target}"></a>[#{@target}]) %><%
