@@ -2,10 +2,5 @@
 <h5><span data-type="label"><%= caption_title = @document.attributes["example-caption"]
 caption_num = @document.attributes["example-number"]
 section_num = @next_section_index += 1
-@caption = "#{caption_title} #{section_num}-#{caption_num}. "%></span><%= title %></h5>
-<% if attr? 'style', 'source', false %>
-<pre<%= @id && %( id="#{@id}") %> data-code-language="<%= (attr 'language') %>"><%= content %></pre>
-<% else %>
-<pre<%= @id && %( id="#{@id}") %>><%= content %></pre>
-<% end %>
-</div>
+@caption = "#{caption_title} #{section_num}-#{caption_num}. "%></span><%= title %></h5><%= content 
+%></div>
