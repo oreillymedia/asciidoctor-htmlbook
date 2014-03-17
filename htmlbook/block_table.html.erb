@@ -1,16 +1,6 @@
-<%#encoding:UTF-8%><table<%= @id && %( id="#{@id}") %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<%#encoding:UTF-8%><table<%= @id && %( id="#{@id}") %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %><%= attr?('width') ? %( style="width: #{attr 'width'}") : nil %>>
 <% if title? %><caption><%= title %></caption><% end %><%
-if (attr 'rowcount') >= 0 %><colgroup><%
-if attr? 'autowidth-option' %><%
-@columns.each do %>
-<col><%
-end %><%
-else %><%
-@columns.each do |col| %>
-<col style="width:<%= col.attr 'colpcwidth' %>%;"/><%
-end %><%
-end %>
-</colgroup><%
+if (attr 'rowcount') >= 0 %><%
 [:head, :foot, :body].select {|tsec| !@rows[tsec].empty? }.each do |tsec| %>
 <t<%= tsec %>><%
 @rows[tsec].each do |row| %>
