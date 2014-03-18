@@ -2,7 +2,7 @@
 if title? %>
 <h5><%= title %></h5><%
 end %>
-<p data-type="latex"><%
+<p data-type="tex"><%
 open, close = ::Asciidoctor::BLOCK_MATH_DELIMITERS[@style.to_sym]
 equation = content.strip
 if (@subs.nil? || @subs.empty?) && !(attr? 'subs')
