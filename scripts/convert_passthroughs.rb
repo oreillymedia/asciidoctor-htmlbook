@@ -22,6 +22,7 @@ class InlineDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Preprocessor
         inlinearray.each do |inlinepass|
           convertedpass = convert_to_htmlbook inlinepass.to_s
           if convertedpass != ""
+            convertedpass = convertedpass.gsub!(/\n\s?\s?/, '')
             line.gsub!(/#{Regexp.escape(inlinepass.to_s)}/, convertedpass.chomp)
           end
         end
