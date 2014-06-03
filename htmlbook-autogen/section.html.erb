@@ -43,6 +43,18 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 
 <%= content %>
 </section>
+<% elsif title == 'Glossary' %>
+<section data-type="glossary"<%= @id && %( id="#{@id}") %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
+<% elsif title == 'Index' %>
+<section data-type="index"<%= @id && %( id="#{@id}") %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
 <% else %>
 <section data-type="chapter"<%= @id && %( id="#{@id}") %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
