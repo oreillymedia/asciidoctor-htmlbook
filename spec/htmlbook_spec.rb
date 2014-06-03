@@ -26,6 +26,28 @@ describe "HTMLBook Templates" do
 		html.xpath("//section[@data-type='appendix']/h1").text.should == "Appendix"
 	end
 
+        it "should convert dedication titles" do
+            html = Nokogiri::HTML(convert("== Dedication"))
+                html.xpath("//section[@data-type='dedication']/h1").text.should == "Dedication"
+        end
+
+        it "should convert glossary titles" do
+            html = Nokogiri::HTML(convert("== Glossary"))
+                html.xpath("//section[@data-type='glossary']/h1").text.should == "Glossary"
+        end
+
+        it "should convert foreword titles" do
+            html = Nokogiri::HTML(convert("
+[preface]
+== Foreword"))
+                html.xpath("//section[@data-type='foreword']/h1").text.should == "Foreword"
+        end
+
+        it "should convert index titles" do
+            html = Nokogiri::HTML(convert("== Index"))
+                html.xpath("//section[@data-type='index']/h1").text.should == "Index"
+        end
+
 	it "should convert level 1 headings" do
 	    html = Nokogiri::HTML(convert("=== Heading 1"))
 		html.xpath("//section[@data-type='sect1']/h1").text.should == "Heading 1"
