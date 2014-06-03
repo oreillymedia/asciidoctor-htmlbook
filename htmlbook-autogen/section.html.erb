@@ -25,7 +25,7 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 %>
 
 <% if @level == 1 %>
-<% if sectname == 'preface[@role="foreword"]' %>
+<% if sectname == 'preface' and title == 'Foreword' %>
 <section data-type="foreword"<%= @id && %( id="#{@id}") %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
@@ -45,6 +45,12 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 </section>
 <% elsif title == 'Glossary' %>
 <section data-type="glossary"<%= @id && %( id="#{@id}") %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
+<% elsif title == 'Dedication' %>
+<section data-type="dedication"<%= @id && %( id="#{@id}") %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
