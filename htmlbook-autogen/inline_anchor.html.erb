@@ -6,5 +6,10 @@ when :xref
   else %><%= %(<a href="#{@target}">#{@text || @document.references[:ids].fetch(refid, %[[#{refid}]]).tr_s("\n", ' ')}</a>) %><% end %><%
 when :ref %><%= %(<a id="#{@target}"></a>) %><%
 when :bibref %><%= %(<a id="#{@target}"></a>[#{@target}]) %><%
-else %><%= %(<a href="#{@target}"#{role? ? %[ class="#{role}"] : nil}#{(attr? :window) ? %[ target="#{attr :window}"] : nil}>#{@text}</a>) %><%
+else %><% 
+	if text != target %><%= 
+		%(<a href="#{@target}"#{role? ? %[ class="#{role}"] : nil}#{(attr? :window) ? %[ target="#{attr :window}"] : nil}>#{@text}</a>) %><%
+	else %><%= 
+		%(<a href="#{@target}"#{role? ? %[ class="#{role}"] : nil}#{(attr? :window) ? %[ target="#{attr :window}"] : nil}><em class="hyperlink">#{@text}</em></a>) %><%
+	end %><%
 end %>

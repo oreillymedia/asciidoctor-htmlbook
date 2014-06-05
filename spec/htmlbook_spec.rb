@@ -368,6 +368,18 @@ See <<inlineanchor, Awesome Chapter>>
 		html.xpath("//p[2]/a").text.should == "Awesome Chapter"
 	end
 
+        it "should convert inline anchors" do
+                html = Nokogiri::HTML(convert("
+This is a link without a text node: http://www.oreilly.com
+
+This is a link with a text node: http://www.oreilly.com[check out this text node]
+"))
+                html.xpath("//p[1]/a/@href").text.should == "http://www.oreilly.com"
+                html.xpath("//p[1]/a/em[@class='hyperlink']").text.should == "http://www.oreilly.com"
+                html.xpath("//p[2]/a/@href").text.should == "http://www.oreilly.com"
+                html.xpath("//p[2]/a[not(*)]").text.should == "check out this text node"
+        end
+
 	# Tests inline_callout template
 	it "should convert inline callouts in code" do
 		html = Nokogiri::HTML(convert("
