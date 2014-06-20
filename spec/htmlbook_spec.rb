@@ -436,24 +436,138 @@ Finally a reference to the second footnote.footnoteref:[note2]
 	# Tests math in inline_quoted template
 	it "should convert inline equations" do
 		html = Nokogiri::HTML(convert("The Pythagorean Theorem is latexmath:[$a^2 + b^2 = c^2$]"))
-		html.xpath("//p/span[@data-type='latex']").text.should == "$a^2 + b^2 = c^2$"
+		html.xpath("//p/span[@data-type='tex']").text.should == "$a^2 + b^2 = c^2$"
 	end
 
 	# Tests inline_indexterm template - source markup is in files/indexterm_testing.asciidoc
-	it "should convert primary inline indexterms" do
+	it "should convert inline indexterms with one term" do
 		html = Nokogiri::HTML(convert_indexterm_tests)
-		html.xpath("//section[@data-type='sect1'][1]/p[1]/a/@data-type").text.should == "indexterm"
-		html.xpath("//section[@data-type='sect1'][1]/p[1]/a/@data-primary").text.should == "primary index term"
-		html.xpath("//section[@data-type='sect1'][1]/p[2]/a/@data-see").text.should == "HTML5"
-		html.xpath("//section[@data-type='sect1'][1]/p[3]/a/@data-seealso").text.should == "HTML5"
-		html.xpath("//section[@data-type='sect1'][1]/p[4]/a/@data-primary-sortas").text.should == "three-d"
-		html.xpath("//section[@data-type='sect1'][1]/p[5]/a/@id").text.should == "ix_html1"
-		html.xpath("//section[@data-type='sect1'][1]/p[6]/a/@data-startref").text.should == "ix_html2"
-		html.xpath("//section[@data-type='sect1'][1]/p[7]/a/@data-see").text.should == "HTML5"
-		html.xpath("//section[@data-type='sect1'][1]/p[7]/a/@data-seealso").text.should == "HTML4"
+		# Primary only, with quation marks
+		html.xpath("//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]/p[1]/a/@data-type").text.should == "indexterm"
+		html.xpath("//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]/p[1]/a/@data-primary").text.should == "metaclass"
+		# Primary only, without quotation marks
+		html.xpath("//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]/p[2]/a/@data-type").text.should == "indexterm"
+		html.xpath("//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]/p[2]/a/@data-primary").text.should == "accessibility"
 	end
 
-	it "should convert secondary inline indexterms"
+	it "should convert inline indexterms with two terms" do
+		html = Nokogiri::HTML(convert_indexterm_tests)
+		# Primary only
+		html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[1]/a/@data-see").text.should == "aspect-oriented"
+		html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[2]/a/@data-seealso").text.should == "namespace"
+		html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[3]/a/@data-primary-sortas").text.should == "patterns"
+		html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[4]/a/@id").text.should == "dynamic"
+		html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[5]/a/@data-startref").text.should == "dynamic"
+		# Secondary
+		html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "eigenclass"
+	end
 
+	it "should convert inline indexterms with three terms" do
+		html = Nokogiri::HTML(convert_indexterm_tests)
+		# Primary only
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][1]/p[1]/a/@id").text.should == "orthogonality"
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][1]/p[2]/a/@data-see").text.should == "destructor"
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][1]/p[2]/a/@data-seealso").text.should == "factory method"
+		# Secondary
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "immutable"
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][2]/p[1]/a/@data-see").text.should == "instance method"
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][2]/p[2]/a/@data-seealso").text.should == "partial class"
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][2]/p[3]/a/@data-secondary-sortas").text.should == "iterator"
+		# Tertiary, with quotation marks
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][3]/p[1]/a/@data-secondary").text.should == "virtual class"
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][3]/p[1]/a/@data-tertiary").text.should == "subtype"
+		# Tertiary, without quotation marks
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][3]/p[2]/a/@data-secondary").text.should == "test-driven development"
+		html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][3]/p[2]/a/@data-tertiary").text.should == "weak reference"		
+	end
+
+	it "should convert inline indexterms with four terms" do
+		html = Nokogiri::HTML(convert_indexterm_tests)
+		# Primary only
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[1]/a/@id").text.should == "slicing"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[1]/a/@data-see").text.should == "access control"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[2]/a/@data-seealso").text.should == "hybrid"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[3]/a/@data-primary-sortas").text.should == "uninitialized"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[4]/a/@data-see").text.should == "mutator method"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[4]/a/@data-seealso").text.should == "policy-based design"
+		# Secondary
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "viscosity"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[1]/a/@id").text.should == "encapsulation"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[2]/a/@data-secondary").text.should == "superclass"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[2]/a/@data-see").text.should == "typecasting"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[2]/a/@data-seealso").text.should == "virtual inheritance"
+		# Tertiary
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[1]/a/@data-secondary").text.should == "shadowed name"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[1]/a/@data-tertiary").text.should == "function"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[1]/a/@data-see").text.should == "late binding"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[2]/a/@data-secondary").text.should == "array"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[2]/a/@data-tertiary").text.should == "compiler"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[2]/a/@data-seealso").text.should == "subroutine"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[3]/a/@data-secondary").text.should == "stack"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[3]/a/@data-tertiary").text.should == "paradigm"
+		html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[3]/a/@data-tertiary-sortas").text.should == "enumerable"
+	end
+
+	it "should convert inline indexterms with five terms" do
+		html = Nokogiri::HTML(convert_indexterm_tests)
+		# Primary only
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][1]/p[1]/a/@id").text.should == "mapping"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][1]/p[1]/a/@data-see").text.should == "overload"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][1]/p[1]/a/@data-seealso").text.should == "parse"
+		# Secondary
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "token"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[1]/a/@id").text.should == "syntax"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[1]/a/@data-see").text.should == "binary"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[2]/a/@data-secondary").text.should == "conditional"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[2]/a/@id").text.should == "collection"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[2]/a/@data-seealso").text.should == "alias"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[3]/a/@data-secondary").text.should == "operation"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[3]/a/@id").text.should == "semantics"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[3]/a/@data-secondary-sortas").text.should == "parameter"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[4]/a/@data-secondary").text.should == "abstraction"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[4]/a/@id").text.should == "constant"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[4]/a/@data-see").text.should == "arithmetic operator"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[4]/a/@data-seealso").text.should == "base type"
+		# Tertiary
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[1]/a/@data-secondary").text.should == "deprecated"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[1]/a/@data-tertiary").text.should == "finalization"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[1]/a/@id").text.should == "little-endian"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[2]/a/@data-secondary").text.should == "parallel"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[2]/a/@data-tertiary").text.should == "scheme"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[2]/a/@data-see").text.should == "ternary"
+		html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[2]/a/@data-seealso").text.should == "exception"
+	end
+
+	it "should convert inline indexterms with six terms" do
+		html = Nokogiri::HTML(convert_indexterm_tests)
+		# Secondary
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][1]/p[1]/a/@data-secondary").text.should == "while loop"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][1]/p[1]/a/@id").text.should == "retro"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][1]/p[1]/a/@data-see").text.should == "top-level class"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][1]/p[1]/a/@data-seealso").text.should == "unary"
+		# Tertiary
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "precedence"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[1]/a/@data-tertiary").text.should == "overriding"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[1]/a/@id").text.should == "lightweight"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[1]/a/@data-see").text.should == "infinite"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[2]/a/@data-secondary").text.should == "encapsulation"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[2]/a/@data-tertiary").text.should == "condition"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[2]/a/@id").text.should == "aggregation"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[2]/a/@data-seealso").text.should == "boundary"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[3]/a/@data-secondary").text.should == "classpath"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[3]/a/@data-tertiary").text.should == "import"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[3]/a/@id").text.should == "datagram"
+		html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[3]/a/@data-tertiary-sortas").text.should == "method"
+	end
+
+	it "should convert inline indexterms with seven terms" do
+		html = Nokogiri::HTML(convert_indexterm_tests)
+		# Tertiary
+		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-secondary").text.should == "public"
+		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-tertiary").text.should == "relational"
+		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@id").text.should == "cascaded"
+		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-see").text.should == "inline"
+		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-seealso").text.should == "private"
+	end
 
 end

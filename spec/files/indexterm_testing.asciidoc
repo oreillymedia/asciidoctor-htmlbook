@@ -1,97 +1,122 @@
 == Indexterm Tests
 
-=== PRIMARY
+=== I. ONE TERM
 
-One term total: one primary.((("primary index term")))
+==== Primary Only
 
+One term total: one primary with quotation marks.((("metaclass")))
 
-Two terms total: one primary, one see.((("Flash", see="HTML5")))
-
-Two terms total: one primary, one seealso.((("Flash", seealso="HTML5")))
-
-Two terms total: one primary, one sortas.((("3-D", sortas="three-d")))
-
-Two terms total: one primary, one id.((("HTML5", id="ix_html1")))
+One term total: one primary without quotation marks.(((accessibility)))
 
 
-Three terms total: one primary, one id, one range.((("HTML5", id="ix_html2", range="startofrange")))
-...stuff here...
-Two terms total: one range, one startref.(((range="endofrange", startref="ix_html2")))
+=== II. TWO TERMS
 
-Three terms total: one primary, one see, one seealso.((("Flash", see="HTML5", seealso="HTML4")))
+==== Primary Only
 
+Two terms total: one primary, one see.((("builder", see="aspect-oriented")))
 
-Four terms total: one primary, one id, one range, one see.((("Flash", id="ix_html3", range="startofrange", see="HTML5")))
+Two terms total: one primary, one seealso.((("class method", seealso="namespace")))
 
-Four terms total: one primary, one id, one range, one seealso.((("Flash", id="ix_html4", range="startofrange", seealso="HTML5")))
+Two terms total: one primary, one sortas.((("mixin", sortas="patterns")))
 
-Four terms total: one primary, one id, one range, one sortas.((("Flash", id="ix_html5", range="startofrange", sortas="HTML5")))
+Two terms total: one primary, one id.((("Parnas's principles", id="dynamic")))
 
-Four terms total: one primary, one id, one see, one seealso.((("Flash", id="ix_html6", see="HTML5", seealso="HTML4")))
+Two terms total: one range, one startref.(((range="endofrange", startref="dynamic")))
 
+==== Primary and Secondary
 
-Five terms total: one primary, one id, one range, one see, one seealso.((("Flash", id="ix_html7", range="startofrange", see="HTML5", seealso="HTML4")))
-
-=== SECONDARY
-
-Two terms total: one primary, one secondary.((("primary index term", "subentry")))
+Two terms total: one primary, one secondary.((("dynamically typed", "eigenclass")))
 
 
-Three terms total: one primary, one secondary, one see.((("Flash", "RDF", see="HTML5")))
+=== III. THREE TERMS
 
-Three terms total: one primary, one secondary, one seealso.((("Flash", "RDF", seealso="HTML5")))
+==== Primary Only
 
-Three terms total: one primary, one secondary, one sortas.((("Flash", "3-D", sortas="three-d")))
+Three terms total: one primary, one id, one range.((("polymorphic", id="orthogonality", range="startofrange")))
 
+Three terms total: one primary, one see, one seealso.((("mock object", see="destructor", seealso="factory method")))
 
-Four terms total: one primary, one secondary, one id, one range.((("Flash", "HTML5", id="ix_html8", range="startofrange")))
+==== Primary and Secondary
 
-Four terms total: one primary, one secondary, one see, one seealso.((("Flash", "RDF", see="HTML5", seealso="HTML4")))
+Three terms total: one primary, one secondary, one see.((("heap-based memory allocation", "immutable", see="instance method")))
 
+Three terms total: one primary, one secondary, one seealso.((("inversion of control", "early binding", seealso="partial class")))
 
-Five terms total: one primary, one secondary, one id, one range, one see.((("Flash", "RDF", id="ix_html9", range="startofrange", see="HTML5")))
+Three terms total: one primary, one secondary, one sortas.((("model–view–controller", "recursion", sortas="iterator")))
 
-Five terms total: one primary, one secondary, one id, one range, one seealso.((("Flash", "RDF", id="ix_html10", range="startofrange", seealso="HTML5")))
+==== Primary, Secondary, and Tertiary
 
-Five terms total: one primary, one secondary, one id, one range, one sortas.((("Flash", "RDF", id="ix_html11", range="startofrange", sortas="HTML5")))
+Three terms total: one primary, one secondary, one tertiary.((("reflection", "virtual class", "subtype")))
 
-
-Six terms total: one primary, one secondary, one id, one range, one see, one seealso.((("Flash", "RDF", id="ix_html12", range="startofrange", see="HTML5", seealso="HTML4")))
-
-=== TERTIARY
-
-Three terms total: one primary, one secondary, one tertiary.((("primary index term", "subentry", "sub-subentry")))
-
-Three terms total: one primary, one secondary, one tertiary, no quotes.(((XML, RDF, SPARQL)))
+Three terms total: one primary, one secondary, one tertiary, no quotes.(((singleton, test-driven development, weak reference)))
 
 
-Four terms total: one primary, one secondary, one tertiary, one see.((("Flash", "RDF", "SPARQL", see="HTML5")))
+=== IV. FOUR TERMS
 
-Four terms total: one primary, one secondary, one tertiary, one seealso.((("XML", "RDF", "SPARQL", seealso="XQuery")))
+==== Primary Only
 
-Four terms total: one primary, one secondary, one tertiary, one sortas.((("Flash", "RDF", "3-D", sortas="three-d")))
+Four terms total: one primary, one id, one range, one see.((("trait", id="slicing", range="startofrange", see="access control")))
+
+Four terms total: one primary, one id, one range, one seealso.((("exception handling", id="deep copy", range="startofrange", seealso="hybrid")))
+
+Four terms total: one primary, one id, one range, one sortas.((("dependency injection", id="instance", range="startofrange", sortas="uninitialized")))
+
+Four terms total: one primary, one id, one see, one seealso.((("fragile base class", id="inheritance", see="mutator method", seealso="policy-based design")))
+
+==== Primary and Secondary
+
+Four terms total: one primary, one secondary, one id, one range.((("run-time type information", "viscosity", id="encapsulation", range="startofrange")))
+
+Four terms total: one primary, one secondary, one see, one seealso.((("data-driven design", "superclass", see="typecasting", seealso="virtual inheritance")))
+
+==== Primary, Secondary, and Tertiary
+
+Four terms total: one primary, one secondary, one tertiary, one see.((("scope", "shadowed name", "function", see="late binding")))
+
+Four terms total: one primary, one secondary, one tertiary, one seealso.((("initialize", "array", "compiler", seealso="subroutine")))
+
+Four terms total: one primary, one secondary, one tertiary, one sortas.((("Boolean", "stack", "paradigm", sortas="enumerable")))
 
 
-Five terms total: one primary, one secondary, one tertiary, one id, one range.((("Flash", "RDF", "HTML5", id="ix_html13", range="startofrange")))
 
-Five terms total: one primary, one secondary, one tertiary, one see, one seealso.((("Flash", "RDF", "HTML5", see="HTML5", seealso="HTML4")))
+=== V. FIVE TERMS
+
+==== Primary Only
+
+Five terms total: one primary, one id, one range, one see, one seealso.((("identifier", id="mapping", range="startofrange", see="overload", seealso="parse")))
+
+==== Primary and Secondary
+
+Five terms total: one primary, one secondary, one id, one range, one see.((("prototype", "token", id="syntax", range="startofrange", see="binary")))
+
+Five terms total: one primary, one secondary, one id, one range, one seealso.((("global", "conditional", id="collection", range="startofrange", seealso="alias")))
+
+Five terms total: one primary, one secondary, one id, one range, one sortas.((("encapsulated", "operation", id="semantics", range="startofrange", sortas="parameter")))
+
+Five terms total: one primary, one secondary, one id, one see, one seealso.((("void pointer", "abstraction", id="constant", see="arithmetic operator", seealso="base type")))
+
+==== Primary, Secondary, and Tertiary
+
+Five terms total: one primary, one secondary, one tertiary, one id, one range.((("continuous", "deprecated", "finalization", id="little-endian", range="startofrange")))
+
+Five terms total: one primary, one secondary, one tertiary, one see, one seealso.((("locale", "parallel", "scheme", see="ternary", seealso="exception")))
 
 
-Six terms total: one primary, one secondary, one tertiary, one id, one range, one see.((("Flash", "RDF", "HTML5", id="ix_html14", range="startofrange", see="HTML5")))
+=== VI. SIX TERMS
 
-Six terms total: one primary, one secondary, one tertiary, one id, one range, one seealso.((("Flash", "RDF", "HTML5", id="ix_html15", range="startofrange", seealso="HTML5")))
+==== Primary and Secondary
 
-Six terms total: one primary, one secondary, one tertiary, one id, one range, one sortas.((("Flash", "RDF", "HTML5", id="ix_html16", range="startofrange", sortas="HTML5")))
+Six terms total: one primary, one secondary, one id, one range, one see, one seealso.((("virtual", "while loop", id="retro", range="startofrange", see="top-level class", seealso="unary")))
+
+==== Primary, Secondary, and Tertiary
+
+Six terms total: one primary, one secondary, one tertiary, one id, one range, one see.((("static type", "precedence", "overriding", id="lightweight", range="startofrange", see="infinite")))
+
+Six terms total: one primary, one secondary, one tertiary, one id, one range, one seealso.((("hash function", "encapsulation", "condition", id="aggregation", range="startofrange", seealso="boundary")))
+
+Six terms total: one primary, one secondary, one tertiary, one id, one range, one sortas.((("bytecode", "classpath", "import", id="datagram", range="startofrange", sortas="method")))
 
 
-Seven terms total: one primary, one secondary, one tertiary, one id, one range, one see, one seealso.((("Flash", "RDF", "HTML5", id="ix_html17", range="startofrange", see="HTML5", seealso="HTML4")))
+=== VII. SEVEN TERMS
 
-=== MISCELLANEOUS
-
-Range and id can be in any order.((("Flash", range="startofrange", id="ix_html18")))
-
-Can have a range and id with a see or seealso in any order.((("Flash", range="startofrange", id="ix_html19", see="HTML5")))
-
-Can have a see AND a seealso in any order (but not more than one of each).((("Flash", seealso="HTML5", see="HTML4")))
-
-CANNOT have a sortas with a see or seealso.
+Seven terms total: one primary, one secondary, one tertiary, one id, one range, one see, one seealso.((("copy constructor", "public", "relational", id="cascaded", range="startofrange", see="inline", seealso="private")))
