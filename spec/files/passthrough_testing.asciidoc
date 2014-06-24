@@ -1,0 +1,86 @@
+== Passthrough Tests
+
+=== DocBook Inline
+
+Here is an inline passthrough that contains a DocBook element that is NOT common to HTML: pass:[<phrase role="keep-together">DocBook phrase element</phrase>].
+
+Here is an inline passthrough that contains a DocBook element that IS common to HTML: pass:[<code>DocBook code element</code>].
+
+=== DocBook Block
+
+Here is a block passthrough that contains a DocBook element that is NOT common to HTML:
+
+++++
+<programlisting><userinput>first line of code here</userinput>
+second line of code here
+</programlisting>
+++++
+
+Here is a block passthrough that contains a DocBook element (figure) that IS common to HTML:
+
+++++
+<figure>
+<title>DocBook Figure Markup</title>
+  <mediaobject>
+    <imageobject role="web">
+      <imagedata fileref="images/docbook.png" format="PNG"/>
+    </imageobject>
+  </mediaobject>
+</figure>
+++++
+
+Here is another one (blockquote) that IS common to HTML:
+
+++++
+<blockquote><attribution>Lewis Carroll</attribution>
+<para>Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, "and what is the use of a book," thought Alice "without pictures or conversations?"</para>
+</blockquote>
+++++
+
+=== HTML Inline
+
+Here is an inline passthrough that contains an HTML element that is NOT common to DocBook: pass:[<strong>HTML strong element</strong>].
+
+Here is an inline passthrough that contains an HTML element that IS common to DocBook: pass:[<code>HTML code element</code>].
+
+=== HTML Block
+
+Here is a block passthrough that contains an HTML element that is NOT common to DocBook:
+
+++++
+<p>Some text in an HTML p element.</p>
+++++
+
+Here is a block passthrough that contains an HTML element (figure) that IS common to DocBook:
+
+++++
+<figure>
+<figcaption>HTML Figure Markup</figcaption>
+<img src="images/html.png"/>
+</figure>
+++++
+
+Here is another one (blockquote) that IS common to DocBook:
+
+++++
+<blockquote><p>So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.</p>
+</blockquote>
+++++
+
+=== Processing Instructions
+
+Processing instruction in inline passthroughs should be ignored entirely.pass:[<?dbhtml orphans="4"?>]
+
+Processing instruction in inline passthroughs with surrounding text pass:[<phrase>should be subbed out.<?dbhtml orphans="4"?></phrase>]
+
+Processing instruction in block passthroughs should be ignored entirely:
+
+++++
+<?hard-pagebreak?>
+++++
+
+Processing instruction in block passthroughs with surrounding text should be subbed out:
+
+++++
+<p>text before <?hard-pagebreak?> text after</p>
+++++
