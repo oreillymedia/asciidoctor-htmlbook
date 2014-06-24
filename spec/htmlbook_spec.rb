@@ -250,9 +250,6 @@ Here is a basic paragraph.
 		html.xpath("//p[@class='right']").text.should == "Here is a basic paragraph."
 	end
 
-	# PENDING: Tests block_pass template
-	it "should convert block passthroughs from DocBook to HTMLBook"
-
 	# Tests block_quote template
 	it "should convert block quotes" do
 		html = Nokogiri::HTML(convert("
@@ -568,6 +565,45 @@ Finally a reference to the second footnote.footnoteref:[note2]
 		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@id").text.should == "cascaded"
 		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-see").text.should == "inline"
 		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-seealso").text.should == "private"
+	end
+
+
+	# Passthrough tests
+	it "should convert inline DocBook passthroughs to HTMLBook" do
+		html = Nokogiri::HTML(convert_passthrough_tests)
+		html.xpath("//section[@data-type='sect1'][1]/p[1]/span[@class='keep-together']").text.should == "DocBook phrase element"
+		html.xpath("//section[@data-type='sect1'][1]/p[2]/code").text.should == "DocBook code element"
+	end
+
+	it "should convert block DocBook passthroughs to HTMLBook" do
+		html = Nokogiri::HTML(convert_passthrough_tests)
+		html.xpath("//section[@data-type='sect1'][2]/pre[@data-type='programlisting']/strong/code").text.should == "first line of code here"
+		html.xpath("//section[@data-type='sect1'][2]/figure/figcaption").text.should == "DocBook Figure Markup"
+		html.xpath("//section[@data-type='sect1'][2]/figure/img/@src").text.should == "images/docbook.png"
+		html.xpath("//section[@data-type='sect1'][2]/blockquote/p[@data-type='attribution']").text.should == "Lewis Carroll"
+		html.xpath("//section[@data-type='sect1'][2]/blockquote/p").text.should start_with "Alice was beginning to get very tired"
+	end
+
+	it "should not convert inline HTML block passthroughs" do
+		html = Nokogiri::HTML(convert_passthrough_tests)
+		html.xpath("//section[@data-type='sect1'][3]/p[1]/strong").text.should == "HTML strong element"
+		html.xpath("//section[@data-type='sect1'][3]/p[2]/code").text.should == "HTML code element"
+	end
+
+	it "should not convert block HTML passthroughs" do
+		html = Nokogiri::HTML(convert_passthrough_tests)
+		html.xpath("//section[@data-type='sect1'][4]/p[2]").text.should == "Some text in an HTML p element."
+		html.xpath("//section[@data-type='sect1'][4]/figure/figcaption").text.should == "HTML Figure Markup"
+		html.xpath("//section[@data-type='sect1'][4]/figure/img/@src").text.should == "images/html.png"
+		html.xpath("//section[@data-type='sect1'][4]/blockquote/p").text.should start_with "So she was considering in her own mind"
+	end
+
+	it "should ignore processing instruction passthroughs" do
+		html = Nokogiri::HTML(convert_passthrough_tests)
+		html.xpath("//section[@data-type='sect1'][5]/p[1]").text.should == "Processing instruction in inline passthroughs should be ignored entirely."
+		html.xpath("//section[@data-type='sect1'][5]/p[2]/span").text.should == "should be subbed out."
+		html.xpath("//section[@data-type='sect1'][5]").text.should_not include '<?hard-pagebreak?>'
+		html.xpath("//section[@data-type='sect1'][5]/p[5]").text.should == "text before  text after"
 	end
 
 end
