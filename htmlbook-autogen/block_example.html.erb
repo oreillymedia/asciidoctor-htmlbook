@@ -1,6 +1,4 @@
 <%#encoding:UTF-8%><div<%= @id && %( id="#{@id}") %> data-type="example"<%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
-<h5><span data-type="label"><%= caption_title = @document.attributes["example-caption"]
-caption_num = @document.attributes["example-number"]
-section_num = @next_section_index += 1
-@caption = "#{caption_title} #{section_num}-#{caption_num}. "%></span><%= title %></h5><%= content 
+<h5><%= title %></h5>
+<%= content 
 %></div>

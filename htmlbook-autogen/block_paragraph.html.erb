@@ -1,2 +1,2 @@
 <%#encoding:UTF-8%>
-<p><%= content %></p>
+<p<%= attr?('role') ? %( class="#{attr 'role'}") : nil %>><%= content %></p>
