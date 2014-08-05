@@ -20,12 +20,11 @@ class InlineDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Preprocessor
       regexmatch = line.scan(/#{passfull}/)
       regexmatch.each do |inlinearray|
         inlinearray.each do |inlinepass|
-          convertedpass = convert_to_htmlbook(inlinepass.to_s)
+          convertedpass = convert_to_htmlbook(inlinepass)
           if convertedpass.empty?
-            line.gsub!(/pass:\[#{Regexp.escape(inlinepass.to_s)}\]/, '')
+            line.gsub!(/pass:\[#{Regexp.escape(inlinepass)}\]/, '')
           else
-            convertedpass = convertedpass.gsub!(/\n\s?\s?/, '')
-            line.gsub!(/#{Regexp.escape(inlinepass.to_s)}/, convertedpass.chomp)
+            line.gsub!(/#{Regexp.escape(inlinepass)}/, convertedpass.strip)
           end
         end
       end
@@ -66,34 +65,29 @@ end
 
 
 def convert_to_htmlbook(text)
-  db2htmlbook = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
-  xslt = LibXSLT::XSLT::Stylesheet.new(db2htmlbook)
+    db2htmlbook = LibXML::XML::Document.file('/vagrant/docbook2htmlbook/db2htmlbook.xsl')
+    # db2htmlbook = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
+    xslt = LibXSLT::XSLT::Stylesheet.new(db2htmlbook)
 
-  unless text.gsub(/\<\?(.*?)\?\>/, '').empty?
-    if text =~ (/\<\?(.*?)\?\>/)
-      puts "Warning! The processing instruction in '#{text}' will be dropped."
-      text = text.gsub(/\<\?(.*?)\?\>/, '')
-    end
+    # Drop processing instructions
+    text = text.gsub(/\<\?(.*?)\?\>/, '')
 
+    # If passthrough contains docbook content, apply xslt
     if text.include?('<')
-      passthrough = LibXML::XML::Parser.string(text, :options => LibXML::XML::Parser::Options::RECOVER).parse
-      # if and only if passthrough contains docbook content, apply xslt
+      wrapped = "<root>" + text + "</root>"
+      passthrough = LibXML::XML::Parser.string(wrapped, :options => LibXML::XML::Parser::Options::RECOVER).parse
       DOCBOOK_ELEMENTS.each { |d|
-        if passthrough.find_first(d)
+        if passthrough.find_first('/root' + d)
           result = xslt.apply(passthrough)
-          result = result.to_s.gsub(/\<\?xml version="1.0" encoding="UTF-8"\?\>\n/, '')
+          result = result.to_s.gsub(/\<\?xml version="1.0" encoding="UTF-8"\?\>\n/, '').gsub(/\<\/?root\>/, '')
           return result
         end
         }
-      else
-        puts "Warning! Passthrough content '#{text}' is not tagged. Passing through as is."
-        return text
     end
-  end
 
-  # otherwise assume html and return string
-  return passthrough.to_s.gsub(/\<\?xml version="1.0" encoding="UTF-8"\?\>\n/, '')
-end
+    # Otherwise assume html and return string
+    return text
+  end
 
 
 Asciidoctor::Extensions.register do |document|
