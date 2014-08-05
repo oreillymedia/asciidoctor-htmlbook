@@ -65,8 +65,7 @@ end
 
 
 def convert_to_htmlbook(text)
-    db2htmlbook = LibXML::XML::Document.file('/vagrant/docbook2htmlbook/db2htmlbook.xsl')
-    # db2htmlbook = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
+    db2htmlbook = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
     xslt = LibXSLT::XSLT::Stylesheet.new(db2htmlbook)
 
     # Drop processing instructions
