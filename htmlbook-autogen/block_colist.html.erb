@@ -1,27 +1,8 @@
-<%#encoding:UTF-8%><ol<%= @id && %( id="#{@id}") %> class="calloutlist<%= attr?('role') ? %( #{attr 'role'}) : nil %><%= attr?('start') ? %( start="#{attr 'start'}") : nil %>">
-<% content.each_with_index do |item, i| %><li><% 
-	if i == 0 %><p>&#x278a; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-elsif i == 1 %><p>&#x278b; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-elsif i == 2 %><p>&#x278c; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><%  
-elsif i == 3 %><p>&#x278d; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-elsif i == 4 %><p>&#x278e; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-elsif i == 5 %><p>&#x278f; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-elsif i == 6 %><p>&#x2790; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-elsif i == 7 %><p>&#x2791; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-elsif i == 8 %><p>&#x2792; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-elsif i == 9 %><p>&#x2793; <%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% 
-else %><p><%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %><% end %>
-</li>
-<% end %>
-</ol>
+<%#encoding:UTF-8%><dl class="calloutlist<%= attr?('role') ? %( #{attr 'role'}) : nil %>">
+<% content.each_with_index do |item, i| 
+	num = i + 1
+	refnum = @document.callouts.current_list[i][:id]
+	%><dt><a class="co" id="<%= %(callout_#{refnum}) %>" href="<%= %(#co_#{refnum}) %>"><img src="<%= %(callouts/#{num}.png) %>" alt="<%= num %>"/></a></dt>
+<dd><p><%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %></dd>
+<% end %></dl>
