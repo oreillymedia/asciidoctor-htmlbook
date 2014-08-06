@@ -2,7 +2,8 @@
 <% content.each_with_index do |item, i| 
 	num = i + 1
 	refnum = @document.callouts.current_list[i][:id]
-	%><dt><a class="co" id="<%= %(callout_#{refnum}) %>" href="<%= %(#co_#{refnum}) %>"><img src="<%= %(callouts/#{num}.png) %>" alt="<%= num %>"/></a></dt>
+	chaptitle = (@document.doctitle).gsub(/ /, '_').downcase
+	%><dt><a class="co" id="<%= %(callout_#{chaptitle}_#{refnum}) %>" href="<%= %(#co_#{chaptitle}_#{refnum}) %>"><img src="<%= %(callouts/#{num}.png) %>" alt="<%= num %>"/></a></dt>
 <dd><p><%= item.text %></p><% if item.blocks? %>
 <%= item.content %><% end %></dd>
 <% end %></dl>
