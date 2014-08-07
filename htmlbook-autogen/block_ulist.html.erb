@@ -1,4 +1,10 @@
-<%#encoding:UTF-8%><ul<%= @id && %( id="#{@id}") %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<%#encoding:UTF-8%><% if title? 
+%><%if attr?('style', 'bibliography')%><p class="references-title"><%= title %></p><% 
+else %><p><%= title %></p><%
+end %><% end %>
+<ul<%= @id && %( id="#{@id}") %><% 
+if style and role %> class="<%= attr?('style', 'bibliography') ? %(references) : nil %><%= attr?('role') ? %( #{role}) : nil %>"<% 
+else %> class="<%= attr?('style', 'bibliography') ? %(references) : nil %><%= attr?('role') ? role : nil %>"<% end %>>
 <% content.each do |item| %><li>
 <p><%= item.text %></p><% if item.blocks? %>
 <%= item.content %><% end %>
