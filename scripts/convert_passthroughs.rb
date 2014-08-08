@@ -24,7 +24,7 @@ class InlineDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Preprocessor
           if convertedpass.empty?
             line.gsub!(/pass:\[#{Regexp.escape(inlinepass)}\]/, '')
           else
-            line.gsub!(/#{Regexp.escape(inlinepass)}/, convertedpass.strip)
+            line.gsub!(/#{Regexp.escape(inlinepass)}/, convertedpass.sub(/\n/, '').strip)
           end
         end
       end
