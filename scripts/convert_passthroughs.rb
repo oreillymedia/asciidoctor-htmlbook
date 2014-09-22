@@ -40,7 +40,6 @@ class InlineDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Preprocessor
 
 end
 
-
 # Convert block DocBook passthroughs to HTMLBook
 class BlockDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Treeprocessor
 
@@ -62,7 +61,6 @@ class BlockDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Treeprocessor
   end
 
 end
-
 
 def convert_to_htmlbook(text)
   db2htmlbook = LibXML::XML::Document.file('/usr/local/app/docbook2htmlbook/db2htmlbook.xsl')
@@ -87,7 +85,6 @@ def convert_to_htmlbook(text)
   # Otherwise assume html and return string
   text
 end
-
 
 Asciidoctor::Extensions.register do |_document|
   treeprocessor BlockDocBook2HTMLBookprocessor

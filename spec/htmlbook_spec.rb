@@ -78,7 +78,6 @@ Here is some text inside a note.
     html.xpath("//div[@data-type='note']/p").text.should == "Here is some text inside a note."
   end
 
-
   it "should convert tips" do
     html = Nokogiri::HTML(convert("
 [TIP]
@@ -88,7 +87,6 @@ Here is some text inside a tip.
 "))
     html.xpath("//div[@data-type='tip']/p").text.should == "Here is some text inside a tip."
   end
-
 
   it "should convert warnings" do
     html = Nokogiri::HTML(convert("
@@ -110,10 +108,8 @@ Here is some text inside a caution.
     html.xpath("//div[@data-type='caution']/p").text.should == "Here is some text inside a caution."
   end
 
-
   # PENDING: Tests block_colist template
   it "should convert calloutlists"
-
 
   # Tests block_dlist template
   it "should convert definition/variable list terms" do
@@ -121,7 +117,6 @@ Here is some text inside a caution.
     html.xpath("//dl/dt").text.should == "First term"
     html.xpath("//dl/dd/p").text.should == "This is a definition of the first term."
   end
-
 
   # Tests block_example template
   it "should convert formal examples" do
@@ -141,7 +136,6 @@ Hello world
     html.xpath("//div[@data-type='example']/pre[@data-type='programlisting']").text.should == "Hello world"
   end
 
-
   # Tests block_image template
   it "should convert formal figures" do
     html = Nokogiri::HTML(convert("
@@ -154,7 +148,6 @@ image::images/tiger.png[]
     html.xpath("//figure/img/@src").text.should == "images/tiger.png"
     html.xpath("//figure/img/@alt").text.should == "tiger"
   end
-
 
   it "should convert informal figures" do
     html = Nokogiri::HTML(convert("image::images/duck.png[]"))
@@ -565,7 +558,6 @@ Finally a reference to the second footnote.footnoteref:[note2]
     html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-see").text.should == "inline"
     html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-seealso").text.should == "private"
   end
-
 
   # Passthrough tests
   it "should convert inline DocBook passthroughs to HTMLBook" do
