@@ -75,13 +75,13 @@ def convert_to_htmlbook(text)
   if text.include?('<')
     wrapped = "<root>" + text + "</root>"
     passthrough = LibXML::XML::Parser.string(wrapped, :options => LibXML::XML::Parser::Options::RECOVER).parse
-    DOCBOOK_ELEMENTS.each { |d|
+    DOCBOOK_ELEMENTS.each do |d|
       if passthrough.find_first('/root' + d)
         result = xslt.apply(passthrough)
         result = result.to_s.gsub(/\<\?xml version="1.0" encoding="UTF-8"\?\>\n/, '').gsub(/\<\/?root\>/, '')
         return result
       end
-    }
+    end
   end
 
   # Otherwise assume html and return string
