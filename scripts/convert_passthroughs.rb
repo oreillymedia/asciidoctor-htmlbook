@@ -49,13 +49,13 @@ class BlockDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Treeprocessor
 
   def process_blocks(node)
     node.blocks.each_with_index do |block, i|
-      if block.respond_to? :context
-        if block.context == :pass
-          block_text = convert_to_htmlbook(block.content)
-          node.blocks[i] = Asciidoctor::Block.new @document, :pass, :content_model => :raw, :subs => [], :source => block_text
-        else
-          process_blocks block if block.blocks?
-        end
+      next unless block.respond_to? :context
+
+      if block.context == :pass
+        block_text = convert_to_htmlbook(block.content)
+        node.blocks[i] = Asciidoctor::Block.new @document, :pass, :content_model => :raw, :subs => [], :source => block_text
+      else
+        process_blocks block if block.blocks?
       end
     end
   end
@@ -74,11 +74,10 @@ def convert_to_htmlbook(text)
     wrapped = "<root>" + text + "</root>"
     passthrough = LibXML::XML::Parser.string(wrapped, :options => LibXML::XML::Parser::Options::RECOVER).parse
     DOCBOOK_ELEMENTS.each do |d|
-      if passthrough.find_first('/root' + d)
-        result = xslt.apply(passthrough)
-        result = result.to_s.gsub(/\<\?xml version="1.0" encoding="UTF-8"\?\>\n/, '').gsub(/\<\/?root\>/, '')
-        return result
-      end
+      next unless passthrough.find_first('/root' + d)
+      result = xslt.apply(passthrough)
+      result = result.to_s.gsub(/\<\?xml version="1.0" encoding="UTF-8"\?\>\n/, '').gsub(/\<\/?root\>/, '')
+      return result
     end
   end
 
