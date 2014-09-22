@@ -1,19 +1,19 @@
 <%#encoding:UTF-8%>
 <% if @level == 0 %><% 
 if title == 'Colophon' %>
-<section data-type="colophon"<%= @id && %( id="#{@id}") %>>
+<section data-type="colophon"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h1) %>><%= title %><%= %(</h1>) %>
 
 <%= content %>
 </section><% 
 elsif title == 'Index' %>
-<section data-type="index"<%= @id && %( id="#{@id}") %>>
+<section data-type="index"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h1) %>><%= title %><%= %(</h1>) %>
 
 <%= content %>
 </section><% 
 else %>
-<div data-type="part"<%= @id && %( id="#{@id}") %>>
+<div data-type="part"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h1) %>><%= title %><%= %(</h1>) %>
 
 <%= content %>
@@ -26,43 +26,43 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 
 <% if @level == 1 %>
 <% if sectname == 'preface' and title == 'Foreword' %>
-<section data-type="foreword"<%= @id && %( id="#{@id}") %>>
+<section data-type="foreword"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif sectname == 'preface' %>
-<section data-type="preface"<%= @id && %( id="#{@id}") %>>
+<section data-type="preface"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif sectname == 'appendix' %>
-<section data-type="appendix"<%= @id && %( id="#{@id}") %>>
+<section data-type="appendix"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif title == 'Glossary' %>
-<section data-type="glossary"<%= @id && %( id="#{@id}") %>>
+<section data-type="glossary"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif title == 'Dedication' %>
-<section data-type="dedication"<%= @id && %( id="#{@id}") %>>
+<section data-type="dedication"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif title == 'Index' %>
-<section data-type="index"<%= @id && %( id="#{@id}") %>>
+<section data-type="index"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% else %>
-<section data-type="chapter"<%= @id && %( id="#{@id}") %>>
+<section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
@@ -70,28 +70,28 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 <% end %><% end %>
 
 <% if @level == 2 %>
-<section data-type="sect1"<%= @id && %( id="#{@id}") %>>
+<section data-type="sect1"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <h1><%= title %></h1>
 <%= content %>
 </section>
 <% end %>
 
 <% if @level == 3 %>
-<section data-type="sect2"<%= @id && %( id="#{@id}") %>>
+<section data-type="sect2"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <h2><%= title %></h2>
 <%= content %>
 </section>
 <% end %>
 
 <% if @level == 4 %>
-<section data-type="sect3"<%= @id && %( id="#{@id}") %>>
+<section data-type="sect3"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <h3><%= title %></h3>
 <%= content %>
 </section>
 <% end %>
 
 <% if @level == 5 %>
-<section data-type="sect4"<%= @id && %( id="#{@id}") %>>
+<section data-type="sect4"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <h4><%= title %></h4>
 <%= content %>
 </section>
