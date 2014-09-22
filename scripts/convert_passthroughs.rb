@@ -85,7 +85,7 @@ def convert_to_htmlbook(text)
   end
 
   # Otherwise assume html and return string
-  return text
+  text
 end
 
 
