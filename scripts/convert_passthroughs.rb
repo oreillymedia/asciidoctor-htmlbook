@@ -89,7 +89,7 @@ def convert_to_htmlbook(text)
 end
 
 
-Asciidoctor::Extensions.register do |document|
+Asciidoctor::Extensions.register do |_document|
   treeprocessor BlockDocBook2HTMLBookprocessor
   preprocessor InlineDocBook2HTMLBookprocessor
 end
