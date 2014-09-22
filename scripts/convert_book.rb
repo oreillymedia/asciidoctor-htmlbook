@@ -4,7 +4,7 @@ require 'asciidoctor'
 require 'fileutils'
 
 book_folder = ARGV[0]
-raise "Book Folder does not exist: #{book_folder}" unless File.exists?(book_folder)
+raise "Book Folder does not exist: #{book_folder}" unless File.exist?(book_folder)
 
 Dir.glob("#{book_folder}**/*.{asciidoc,adoc,asc}") do |file|
   puts "Converting #{File.basename(file)}"
