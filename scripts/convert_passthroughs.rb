@@ -53,7 +53,7 @@ class BlockDocBook2HTMLBookprocessor < Asciidoctor::Extensions::Treeprocessor
 
       if block.context == :pass
         block_text = convert_to_htmlbook(block.content)
-        node.blocks[i] = Asciidoctor::Block.new @document, :pass, :content_model => :raw, :subs => [], :source => block_text
+        node.blocks[i] = Asciidoctor::Block.new @document, :pass, content_model: :raw, subs: [], source: block_text
       else
         process_blocks block if block.blocks?
       end
@@ -72,7 +72,7 @@ def convert_to_htmlbook(text)
   # If passthrough contains docbook content, apply xslt
   if text.include?('<')
     wrapped = "<root>" + text + "</root>"
-    passthrough = LibXML::XML::Parser.string(wrapped, :options => LibXML::XML::Parser::Options::RECOVER).parse
+    passthrough = LibXML::XML::Parser.string(wrapped, options: LibXML::XML::Parser::Options::RECOVER).parse
     DOCBOOK_ELEMENTS.each do |d|
       next unless passthrough.find_first('/root' + d)
       result = xslt.apply(passthrough)
@@ -93,9 +93,9 @@ end
 Dir.glob("*.asc*") do |filename|
   # For use on consolidated book file
   if filename == "book.asciidoc" || filename == "book.asc"
-    Asciidoctor.render_file(filename, :safe => :safe, :in_place => true, :template_dir => "/usr/local/app/asciidoctor-htmlbook/htmlbook-autogen")
+    Asciidoctor.render_file(filename, safe: :safe, in_place: true, template_dir: "/usr/local/app/asciidoctor-htmlbook/htmlbook-autogen")
   # For use on chunked files
   else
-    Asciidoctor.render_file(filename, :safe => :safe, :in_place => true, :template_dir => "/usr/local/app/asciidoctor-htmlbook/htmlbook")
+    Asciidoctor.render_file(filename, safe: :safe, in_place: true, template_dir: "/usr/local/app/asciidoctor-htmlbook/htmlbook")
   end
 end

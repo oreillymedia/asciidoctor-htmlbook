@@ -9,7 +9,7 @@ fail "Book Folder does not exist: #{book_folder}" unless File.exist?(book_folder
 Dir.glob("#{book_folder}**/*.{asciidoc,adoc,asc}") do |file|
   puts "Converting #{File.basename(file)}"
   asciidoc  = File.open(file).read
-  html      = Asciidoctor.render(asciidoc, :template_dir => "#{File.dirname(__FILE__)}/../htmlbook")
+  html      = Asciidoctor.render(asciidoc, template_dir: "#{File.dirname(__FILE__)}/../htmlbook")
   filename  = "#{File.dirname(file)}/#{File.basename(file, '.*')}.html"
   File.open(filename, 'w') { |out| out.write(html) }
 end
