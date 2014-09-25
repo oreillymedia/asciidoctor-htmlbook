@@ -1,601 +1,760 @@
 # encoding: utf-8
 require 'spec_helper.rb'
 
-describe "HTMLBook Templates" do
+describe "HTMLBook" do
 
-  # Tests section.html.erb templates
-  it "should convert chapter titles" do
-    html = convert "== Chapter Title"
-    html.xpath("//section[@data-type='chapter']/h1").text.should == "Chapter Title"
+  describe 'section' do
+
+    it 'converts chapter title' do
+      html = convert('== Chapter Title')
+      expect(html).to have_html("//section[@data-type='chapter']/h1").with_text('Chapter Title')
+    end
+
+    ['Dedication', 'Glossary', 'Index'].each do |title|
+      it "converts #{title.downcase} title" do
+        html = convert("== #{title}")
+        expect(html).to have_html("//section[@data-type='#{title.downcase}']/h1").with_text(title)
+      end
+    end
+
+    ['Preface', 'Foreword'].each do |title|
+      it "converts #{title.downcase} title" do
+        html = convert <<-eos
+          [preface]
+          == #{title}
+        eos
+        expect(html).to have_html("//section[@data-type='#{title.downcase}']/h1").with_text(title)
+      end
+    end
+
+    it 'converts appendix title' do
+      html = convert <<-eos
+        [appendix]
+        == Appendix
+      eos
+      expect(html).to have_html("//section[@data-type='appendix']/h1").with_text('Appendix')
+    end
+
+    (1..4).each do |lvl|
+      it "converts level #{lvl} heading" do
+        html = convert("==#{'=' * lvl} Heading #{lvl}")
+        expect(html).to have_html("//section[@data-type='sect#{lvl}']/h#{lvl}").with_text("Heading #{lvl}")
+      end
+    end
   end
 
-  it "should convert preface titles" do
-    html = convert %(
-      [preface]
-      == Preface
-    )
-    html.xpath("//section[@data-type='preface']/h1").text.should == "Preface"
-  end
-
-  it "should convert appendix titles" do
-    html = convert %(
-      [appendix]
-      == Appendix
-    )
-    html.xpath("//section[@data-type='appendix']/h1").text.should == "Appendix"
-  end
-
-  it "should convert dedication titles" do
-    html = convert "== Dedication"
-    html.xpath("//section[@data-type='dedication']/h1").text.should == "Dedication"
-  end
-
-  it "should convert glossary titles" do
-    html = convert "== Glossary"
-    html.xpath("//section[@data-type='glossary']/h1").text.should == "Glossary"
-  end
-
-  it "should convert foreword titles" do
-    html = convert %(
-      [preface]
-      == Foreword
-    )
-    html.xpath("//section[@data-type='foreword']/h1").text.should == "Foreword"
-  end
-
-  it "should convert index titles" do
-    html = convert "== Index"
-    html.xpath("//section[@data-type='index']/h1").text.should == "Index"
-  end
-
-  it "should convert level 1 headings" do
-    html = convert "=== Heading 1"
-    html.xpath("//section[@data-type='sect1']/h1").text.should == "Heading 1"
-  end
-
-  it "should convert level 2 headings" do
-    html = convert "==== Heading 2"
-    html.xpath("//section[@data-type='sect2']/h2").text.should == "Heading 2"
-  end
-
-  it "should convert level 3 headings" do
-    html = convert "===== Heading 3"
-    html.xpath("//section[@data-type='sect3']/h3").text.should == "Heading 3"
-  end
-
-  it "should convert level 4 headings" do
-    html = convert "====== Heading 4"
-    html.xpath("//section[@data-type='sect4']/h4").text.should == "Heading 4"
-  end
-
-  # Tests block_admonition template
-  it "should convert notes" do
-    html = convert %(
-      [NOTE]
-      ====
-      Here is some text inside a note.
-      ====
-    )
-    html.xpath("//div[@data-type='note']/p").text.should == "Here is some text inside a note."
-  end
-
-  it "should convert tips" do
-    html = convert %(
-      [TIP]
-      ====
-      Here is some text inside a tip.
-      ====
-    )
-    html.xpath("//div[@data-type='tip']/p").text.should == "Here is some text inside a tip."
-  end
-
-  it "should convert warnings" do
-    html = convert %(
-      [WARNING]
-      ====
-      Here is some text inside a warning.
-      ====
-    )
-    html.xpath("//div[@data-type='warning']/p").text.should == "Here is some text inside a warning."
-  end
-
-  it "should convert cautions" do
-    html = convert %(
-      [CAUTION]
-      ====
-      Here is some text inside a caution.
-      ====
-    )
-    html.xpath("//div[@data-type='caution']/p").text.should == "Here is some text inside a caution."
+  describe 'block_admonition' do
+    ['note', 'tip', 'warning', 'caution'].each do |type|
+      it "converts #{type}" do
+        html = convert <<-eos
+          [#{type.upcase}]
+          ====
+          Here is some text inside a #{type}.
+          ====
+        eos
+        expect(html).to have_html("//div[@data-type='#{type}']/p").with_text("Here is some text inside a #{type}.")
+      end
+    end
   end
 
   # PENDING: Tests block_colist template
-  it "should convert calloutlists"
+  it 'block_colist'
 
-  # Tests block_dlist template
-  it "should convert definition/variable list terms" do
-    html = convert "First term:: This is a definition of the first term."
-    html.xpath("//dl/dt").text.should == "First term"
-    html.xpath("//dl/dd/p").text.should == "This is a definition of the first term."
+  describe 'block_dlist' do
+    subject { convert('First term:: This is a definition of the first term.') }
+
+    it { should have_html('//dl/dt').with_text('First term') }
+    it { should have_html('//dl/dd/p').with_text('This is a definition of the first term.') }
   end
 
-  # Tests block_example template
-  it "should convert formal examples" do
-    html = convert %(
-      [[Example1]]
-      .A code block with a title
-      ====
-      [source, php]
-      ----
-      Hello world
-      ----
-      ====
-    )
-    html.xpath("//div[@data-type='example']/@id").text.should == "Example1"
-    html.xpath("//div[@data-type='example']/h5").text.should == "A code block with a title"
-    html.xpath("//div[@data-type='example']/pre[@data-type='programlisting']/@data-code-language").text.should == "php"
-    html.xpath("//div[@data-type='example']/pre[@data-type='programlisting']").text.should == "Hello world"
+  # formal examples
+  describe 'block_example' do
+    subject do
+      convert <<-eos
+        [[Example1]]
+        .A code block with a title
+        ====
+        [source, ruby]
+        ----
+        Hello world
+        ----
+        ====
+      eos
+    end
+
+    { '@id' => 'Example1',
+      'h5' => 'A code block with a title',
+      "pre[@data-type='programlisting']/@data-code-language" => 'ruby',
+      "pre[@data-type='programlisting']" => 'Hello world'
+    }.each do |xpath, text|
+      it { should have_html("//div[@data-type='example']/#{xpath}").with_text(text) }
+    end
   end
 
-  # Tests block_image template
-  it "should convert formal figures" do
-    html = convert %(
-      [[unique_id1]]
-      .A Figure
-      image::images/tiger.png[]
-    )
-    html.xpath("//figure/@id").text.should == "unique_id1"
-    html.xpath("//figure/figcaption").text.should == "A Figure"
-    html.xpath("//figure/img/@src").text.should == "images/tiger.png"
-    html.xpath("//figure/img/@alt").text.should == "tiger"
+  describe 'block_image' do
+
+    describe 'formal figure' do
+      subject do
+        convert <<-eos
+          [[unique_id1]]
+          .A Figure
+          image::images/tiger.png[]
+        eos
+      end
+
+      { '@id' => 'unique_id1',
+        'figcaption' => 'A Figure',
+        'img/@src' => 'images/tiger.png',
+        'img/@alt' => 'tiger'
+      }.each do |xpath, text|
+        it { should have_html("//figure/#{xpath}").with_text(text) }
+      end
+    end
+
+    describe 'informal figure' do
+
+      describe 'with an alternate text' do
+        subject { convert 'image::images/duck.png[]' }
+
+        it { should have_html('//figure/figcaption') }
+        it { should have_html('//figure/img/@src').with_text('images/duck.png') }
+        it { should_not have_html('//figure/@id') }
+      end
+
+      describe 'without an alternate text' do
+        subject { convert "image::images/lion.png['An image of a lion head']" }
+
+        it { should have_html('//figure/img/@alt').with_text('An image of a lion head') }
+      end
+    end
   end
 
-  it "should convert informal figures" do
-    html = convert "image::images/duck.png[]"
-    html.xpath("//figure/figcaption").size.should == 1
-    html.xpath("//figure/@id").size.should == 0
-    html.xpath("//figure/img/@src").text.should == "images/duck.png"
+  describe 'block_listing' do
+
+    describe 'informal code block' do
+      subject do
+        convert <<-eos
+          [source, ruby]
+          ----
+          Hello world
+          ----
+        eos
+      end
+      let(:xpath) { "//pre[@data-type='programlisting']" }
+
+      it { should have_html("#{xpath}/@data-code-language").with_text('ruby') }
+      it { should have_html("#{xpath}").with_text('Hello world') }
+    end
   end
 
-  it "should convert figures with alt-text" do
-    html = convert "image::images/lion.png['An image of a lion head']"
-    html.xpath("//figure/img/@alt").text.should == "An image of a lion head"
+  describe 'block_literal' do
+
+    it 'converts a first markup style' do
+      html = convert %(
+        [literal]
+        This is a literal block.
+      )
+      expect(html).to have_html('//pre').with_text('This is a literal block.')
+    end
+
+    it 'converts a second markup style' do
+      html = convert(' This is also a literal block.')
+      expect(html).to have_html('//pre').with_text('This is also a literal block.')
+    end
   end
 
-  # Tests block_listing template
-  it "should convert informal code blocks" do
-    html = convert %(
-      [source, php]
-      ----
-      Hello world
-      ----
-    )
-    html.xpath("//pre[@data-type='programlisting']/@data-code-language").text.should == "php"
-    html.xpath("//pre[@data-type='programlisting']").text.should == "Hello world"
+  describe 'block_math' do
+    subject do
+      convert %q(
+        [latexmath]
+        .Equation title
+        ++++
+        \begin{equation}
+        {x = \frac{{ - b \pm \sqrt {b^2 - 4ac} }}{{2a}}}
+        \end{equation}
+        ++++
+      )
+    end
+
+    let(:tex) do
+      unindent %q(
+        \begin{equation}
+        {x = \frac{{ - b \pm \sqrt {b^2 - 4ac} }}{{2a}}}
+        \end{equation}
+        )
+    end
+
+    let(:xpath) { "//div[@data-type='equation']" }
+
+    it { should have_html("#{xpath}/h5").with_text('Equation title') }
+    it { should have_html("#{xpath}/p[@data-type='tex']").with_text(tex) }
   end
 
-  # Tests block_literal template - first markup style
-  it "should convert literal blocks" do
-    html = convert %(
-      [literal]
-      This is a literal block.
-    )
-    html.xpath("//pre").text.should == "This is a literal block."
+  describe 'block_olist' do
+    subject do
+      convert <<-eos
+        . Preparation
+        . Assembly
+        . Measure
+        +
+        Combine
+        +
+        Bake
+        +
+        . Applause
+      eos
+    end
+
+    { 'li[1]/p[1]' => 'Preparation',
+      'li[2]/p[1]' => 'Assembly',
+      'li[3]/p[1]' => 'Measure',
+      'li[3]/p[2]' => 'Combine',
+      'li[3]/p[3]' => 'Bake',
+      'li[4]/p[1]' => 'Applause'
+    }.each do |xpath, text|
+      it { should have_html("//ol/#{xpath}").with_text(text) }
+    end
   end
 
-  # Tests block_literal template - second markup style
-  it "should convert literal blocks" do
-    html = convert " This is also a literal block."
-    html.xpath("//pre").text.should == "This is also a literal block."
+  describe 'block_paragraph' do
+
+    it 'converts regular paragraphs' do
+      html = convert('Here is a basic paragraph.')
+      expect(html).to have_html('//p').with_text('Here is a basic paragraph.')
+    end
+
+    it 'converts paragraphs with role attributes' do
+      html = convert <<-eos
+        [role='right']
+        Here is a basic paragraph.
+      eos
+      expect(html).to have_html("//p[@class='right']").with_text('Here is a basic paragraph.')
+    end
   end
 
-  # Test block_math template
-  it "should convert math blocks" do
-    html = convert %(
-      [latexmath]
-      .Equation title
-      ++++
-      \begin{equation}
-      {x = \frac{{ - b \pm \sqrt {b^2 - 4ac} }}{{2a}}}
-      \end{equation}
-      ++++
-    )
-    html.xpath("//div[@data-type='equation']/h5").text.should == "Equation title"
-    html.xpath("//div[@data-type='equation']/p[@data-type='latex']/text()") == "
-\begin{equation}
-{x = \frac{{ - b \pm \sqrt {b^2 - 4ac} }}{{2a}}}
-\end{equation}
-"
+  describe 'block_quote' do
+    subject do
+      convert <<-eos
+        [quote, Wilfred Meynell]
+        ____
+        Many thanks; I shall lose no time in reading it.
+
+        This is a second paragraph in the quotation.
+        ____
+      eos
+    end
+
+    { 'p[1]' => 'Many thanks; I shall lose no time in reading it.',
+      'p[2]' => 'This is a second paragraph in the quotation.',
+      "p[@data-type='attribution']" => '— Wilfred Meynell'
+    }.each do |xpath, text|
+      it { should have_html("//blockquote[@data-type='epigraph']/#{xpath}").with_text(text) }
+    end
   end
 
-  # Tests block_olist template
-  it "should convert ordered lists" do
-    html = convert %(
-      . Preparation
-      . Assembly
-      . Measure
-      +
-      Combine
-      +
-      Bake
-      +
-      . Applause
-    )
-    html.xpath("//ol/li[1]/p[1]").text.should == "Preparation"
-    html.xpath("//ol/li[2]/p[1]").text.should == "Assembly"
-    html.xpath("//ol/li[3]/p[1]").text.should == "Measure"
-    html.xpath("//ol/li[3]/p[2]").text.should == "Combine"
-    html.xpath("//ol/li[3]/p[3]").text.should == "Bake"
-    html.xpath("//ol/li[4]/p[1]").text.should == "Applause"
+  describe 'block_sidebar' do
+    subject do
+      convert <<-eos
+        .Sidebar Title
+        ****
+        Sidebar text is surrounded by four asterisks.
+        ****
+      eos
+    end
+    let(:xpath) { "//aside[@data-type='sidebar']" }
+
+    it { should have_html("#{xpath}/h5").with_text('Sidebar Title') }
+    it { should have_html("#{xpath}/p").with_text('Sidebar text is surrounded by four asterisks.') }
   end
 
-  # Tests block_paragraph template
-  it "should convert regular paragraphs" do
-    html = convert "Here is a basic paragraph."
-    html.xpath("//p").text.should == "Here is a basic paragraph."
+  describe 'block_table' do
+
+    describe 'formal table (with title and header)' do
+      subject do
+        convert <<-eos
+          .Table Title
+          [options='header']
+          |=======
+          |header1|header2
+          |row1|P^Q^
+          |row2|col2
+          |=======
+        eos
+      end
+
+      { 'caption' => 'Table Title',
+        'thead/tr/th[1]' => 'header1',
+        'thead/tr/th[2]' => 'header2',
+        'tbody/tr[1]/td[1]/p' => 'row1',
+        'tbody/tr[1]/td[2]/p/text()' => 'P',
+        'tbody/tr[1]/td[2]/p/sup' => 'Q',
+        'tbody/tr[2]/td[1]/p' => 'row2',
+        'tbody/tr[2]/td[2]/p' => 'col2'
+      }.each do |xpath, text|
+        it { should have_html("//table/#{xpath}").with_text(text) }
+      end
+    end
+
+    describe 'informal table (no title or header)' do
+      subject do
+        convert <<-eos
+          |=======
+          |row1|P^Q^
+          |row2|col2
+          |=======
+        eos
+      end
+
+      { 'tr[1]/td[1]/p' => 'row1',
+        'tr[1]/td[2]/p/text()' => 'P',
+        'tr[1]/td[2]/p/sup' => 'Q',
+        'tr[2]/td[1]/p' => 'row2',
+        'tr[2]/td[2]/p' => 'col2'
+      }.each do |xpath, text|
+        it { should have_html("//table/tbody/#{xpath}").with_text(text) }
+      end
+    end
   end
 
-  it "should convert paragraphs with role attributes" do
-    html = convert %(
-      [role='right']
-      Here is a basic paragraph.
-    )
-    html.xpath("//p[@class='right']").text.should == "Here is a basic paragraph."
+  describe 'block_ulist' do
+
+    describe 'converts itemized lists' do
+      subject do
+        convert <<-eos
+          * lions
+          * tigers
+          +
+          sabre-toothed
+          +
+          teapotted
+          +
+          * lions, tigers, and bears
+        eos
+      end
+
+      { 'li[1]/p[1]' => 'lions',
+        'li[2]/p[1]' => 'tigers',
+        'li[2]/p[2]' => 'sabre-toothed',
+        'li[2]/p[3]' => 'teapotted',
+        'li[3]/p[1]' => 'lions, tigers, and bears'
+      }.each do |xpath, text|
+        it { should have_html("//ul/#{xpath}").with_text(text) }
+      end
+    end
   end
 
-  # Tests block_quote template
-  it "should convert block quotes" do
-    html = convert %(
-      [quote, Wilfred Meynell]
-      ____
-      Many thanks; I shall lose no time in reading it.
+  describe 'block_verse' do
+    subject do
+      convert <<-eos
+        [verse, William Blake, Songs of Experience]
+        Tiger, tiger, burning bright
+        In the forests of the night
+      eos
+    end
+    let(:xpath) { "//blockquote[@data-type='epigraph']" }
 
-      This is a second paragraph in the quotation.
-      ____
-    )
-    html.xpath("//blockquote[@data-type='epigraph']/p[1]").text.should == "Many thanks; I shall lose no time in reading it."
-    html.xpath("//blockquote[@data-type='epigraph']/p[2]").text.should == "This is a second paragraph in the quotation."
-    html.xpath("//blockquote[@data-type='epigraph']/p[@data-type='attribution']").text.should == "— Wilfred Meynell"
+    it { should have_html("#{xpath}/pre").with_text("Tiger, tiger, burning bright\nIn the forests of the night") }
+    it { should have_html("#{xpath}/p[@data-type='attribution']").with_text("— William Blake, Songs of Experience") }
   end
 
-  # Tests block_sidebar template
-  it "should convert sidebars" do
-    html = convert %(
-      .Sidebar Title
-      ****
-      Sidebar text is surrounded by four asterisks.
-      ****
-    )
-    html.xpath("//aside[@data-type='sidebar']/h5").text.should == "Sidebar Title"
-    html.xpath("//aside[@data-type='sidebar']/p").text.should == "Sidebar text is surrounded by four asterisks."
+  describe 'block_video' do
+
+    describe 'first markup style' do
+      subject do
+        convert <<-eos
+          video::gizmo.ogv[width=200]
+        eos
+      end
+
+      it { should have_html("//video[@width='200']/source/@src").with_text('gizmo.ogv') }
+      it { should have_html('//video').with_text("\n\nSorry, the <video> element is not supported in your reading system.\n") }
+    end
   end
 
-  # Tests block_table template
-  it "should convert formal tables (with title and header)" do
-    html = convert %(
-      .Table Title
-      [options='header']
-      |=======
-      |header1|header2
-      |row1|P^Q^
-      |row2|col2
-      |=======
-    )
-    html.xpath("//table/caption").text.should == "Table Title"
-    html.xpath("//table/thead/tr/th[1]").text.should == "header1"
-    html.xpath("//table/thead/tr/th[2]").text.should == "header2"
-    html.xpath("//table/tbody/tr[1]/td[1]/p").text.should == "row1"
-    html.xpath("//table/tbody/tr[1]/td[2]/p/text()").text.should == "P"
-    html.xpath("//table/tbody/tr[1]/td[2]/p/sup").text.should == "Q"
-    html.xpath("//table/tbody/tr[2]/td[1]/p").text.should == "row2"
-    html.xpath("//table/tbody/tr[2]/td[2]/p").text.should == "col2"
+  describe 'inline_anchor' do
+
+    describe 'reference to inline anchor' do
+      subject do
+        convert <<-eos
+          This is a reference to an <<inlineanchor>>.
+
+          See <<inlineanchor, Awesome Chapter>>
+        eos
+      end
+
+      { '//p[1]/a/@href' => '#inlineanchor',
+        '//p[1]/a' => '',
+        '//p[2]/a/@href' => '#inlineanchor',
+        '//p[2]/a' => 'Awesome Chapter'
+      }.each do |xpath, text|
+        it { should have_html(xpath).with_text(text) }
+      end
+    end
+
+    describe 'link' do
+      subject do
+        convert <<-eos
+          This is a link without a text node: http://www.oreilly.com
+
+          This is a link with a text node: http://www.oreilly.com[check out this text node]
+        eos
+      end
+
+      { '//p[1]/a/@href' => 'http://www.oreilly.com',
+        "//p[1]/a/em[@class='hyperlink']" => 'http://www.oreilly.com',
+        '//p[2]/a/@href' => 'http://www.oreilly.com',
+        '//p[2]/a[not(*)]' => 'check out this text node',
+      }.each do |xpath, text|
+        it { should have_html(xpath).with_text(text) }
+      end
+    end
   end
 
-  it "should convert informal tables (no title or header)" do
-    html = convert %(
-      |=======
-      |row1|P^Q^
-      |row2|col2
-      |=======
-    )
-    html.xpath("//table/tbody/tr[1]/td[1]/p").text.should == "row1"
-    html.xpath("//table/tbody/tr[1]/td[2]/p/text()").text.should == "P"
-    html.xpath("//table/tbody/tr[1]/td[2]/p/sup").text.should == "Q"
-    html.xpath("//table/tbody/tr[2]/td[1]/p").text.should == "row2"
-    html.xpath("//table/tbody/tr[2]/td[2]/p").text.should == "col2"
+  describe 'inline_callout' do
+    subject do
+      convert <<-eos
+        ----
+        Roses are red, <1>
+           Violets are blue. <2>
+        ----
+        <1> This is a fact.
+        <2> This poem uses the literary device known as a surprise ending.
+      eos
+    end
+
+    { "//pre[@data-type='programlisting']/text()" => 'Roses are red,\n   Violets are blue. ',
+      "//pre[@data-type='programlisting']/b[1]" => '(1)',
+      "//pre[@data-type='programlisting']/b[2]" => '(2)',
+      "//ol[@class='calloutlist']/li[1]/p" => '➊ This is a fact.',
+      "//ol[@class='calloutlist']/li[2]/p" => '➋ This poem uses the literary device known as a surprise ending.'
+    }.each do |xpath, text|
+      it { should have_html(xpath).with_text(text) }
+    end
   end
 
-  # Tests block_ulist template
-  it "should convert itemized lists" do
-    html = convert %(
-      * lions
-      * tigers
-      +
-      sabre-toothed
-      +
-      teapotted
-      +
-      * lions, tigers, and bears
-    )
-    html.xpath("//ul/li[1]/p[1]").text.should == "lions"
-    html.xpath("//ul/li[2]/p[1]").text.should == "tigers"
-    html.xpath("//ul/li[2]/p[2]").text.should == "sabre-toothed"
-    html.xpath("//ul/li[2]/p[3]").text.should == "teapotted"
-    html.xpath("//ul/li[3]/p[1]").text.should == "lions, tigers, and bears"
+  describe 'inline_footnote' do
+    subject do
+      convert <<-eos
+        A footnote.footnote:[An example footnote.]
+
+        A second footnote with a reference ID.footnoteref:[note2,Second footnote.]
+
+        Finally a reference to the second footnote.footnoteref:[note2]
+      eos
+    end
+
+    { "//p[1]/span[@data-type='footnote']" => 'An example footnote.',
+      "//p[2]/span[@data-type='footnote']" => 'Second footnote.',
+      "//p[2]/span[@data-type='footnote']/@id" => 'note2',
+      "//p[3]/a[@data-type='footnoteref']/@href" => 'note2'
+    }.each do |xpath, text|
+      it { should have_html(xpath).with_text(text) }
+    end
+
+    it { should_not have_html("//p[1]/span[@data-type='footnote']/@id") }
+    it { should_not have_html("//p[3]/a[@data-type='footnoteref']/text()") }
   end
 
-  # Tests block_verse template
-  it "should convert verse blocks" do
-    html = convert %(
-      [verse, William Blake, Songs of Experience]
-      Tiger, tiger, burning bright
-      In the forests of the night
-    )
-    html.xpath("//blockquote[@data-type='epigraph']/pre").text.should == "Tiger, tiger, burning bright
-In the forests of the night"
-    html.xpath("//blockquote[@data-type='epigraph']/p[@data-type='attribution']").text.should == "— William Blake, Songs of Experience"
+  describe 'inline_image' do
+    subject { convert('Here is an inline figure: image:images/logo.png[]') }
+
+    it { should have_html('//p/img/@src').with_text('images/logo.png') }
   end
 
-  # Tests block_video template
-  it "should convert video blocks - first markup style" do
-    html = convert %(
-      video::gizmo.ogv[width=200]
-    )
-    html.xpath("//video[@width='200']/source/@src").text.should == "gizmo.ogv"
-    html.xpath("//video/text()").text.should == "\nSorry, the <video> element is not supported in your reading system.\n"
+  describe 'inline_quoted' do
+
+    describe 'inline formatting' do
+      subject { convert('This para has __emphasis__, *bold**, ++literal++, ^superscript^, ~subscript~, __++replaceable++__, and *+userinput+*.') }
+
+      { '//p/em[1]' => 'emphasis',
+        '//p/strong[1]' => 'bold',
+        '//p/code[1]' => 'literal',
+        '//p/sup' => 'superscript',
+        '//p/sub' => 'subscript',
+        '//p/em/code' => 'replaceable',
+        '//p/strong/code' => 'userinput'
+      }.each do |xpath, text|
+        it { should have_html(xpath).with_text(text) }
+      end
+    end
+
+    describe 'math' do
+      subject { convert('The Pythagorean Theorem is latexmath:[$a^2 + b^2 = c^2$]') }
+      it { should have_html("//p/span[@data-type='tex']").with_text('$a^2 + b^2 = c^2$') }
+    end
   end
 
-  # Tests inline_anchor template
-  it "should convert inline anchors" do
-    html = convert %(
-      This is a reference to an <<inlineanchor>>.
 
-      See <<inlineanchor, Awesome Chapter>>
-    )
-    html.xpath("//p[1]/a/@href").text.should == "#inlineanchor"
-    html.xpath("//p[1]/a").text.should == ""
-    html.xpath("//p[2]/a/@href").text.should == "#inlineanchor"
-    html.xpath("//p[2]/a").text.should == "Awesome Chapter"
+  # source markup is in files/indexterm_testing.asciidoc
+  # XXX Is it really useful to test all these cases?
+  describe 'inline_indexterm.asciidoc' do
+
+    subject { convert_indexterm_tests }
+
+    describe 'with one term' do
+      let(:xpath_prefix) { "//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]" }
+
+      describe 'primary only, with quation marks' do
+        { 'p[1]/a/@data-type' => 'indexterm',
+          'p[1]/a/@data-primary' => 'metaclass'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[1]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'primary only, without quotation marks' do
+        { 'p[2]/a/@data-type' => 'indexterm',
+          'p[2]/a/@data-primary' => 'accessibility'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}/#{xpath}").with_text(text) }
+        end
+      end
+    end
+
+    describe 'with two terms' do
+      let(:xpath_prefix) { "//section[@data-type='sect1'][2]/section[@data-type='sect2']" }
+
+      describe 'primary only' do
+        { 'p[1]/a/@data-see' => 'aspect-oriented',
+          'p[2]/a/@data-seealso' => 'namespace',
+          'p[3]/a/@data-primary-sortas' => 'patterns',
+          'p[4]/a/@id' => 'dynamic',
+          'p[5]/a/@data-startref' => 'dynamic'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[1]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'secondary' do
+        it { should have_html("#{xpath_prefix}[2]/p[1]/a/@data-secondary").with_text('eigenclass') }
+      end
+    end
+
+    describe 'with three terms' do
+      let(:xpath_prefix) { "//section[@data-type='sect1'][3]/section[@data-type='sect2']" }
+
+      describe 'primary only' do
+        { 'p[1]/a/@id' => 'orthogonality',
+          'p[2]/a/@data-see' => 'destructor',
+          'p[2]/a/@data-seealso' => 'factory method'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[1]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'secondary' do
+        { 'p[1]/a/@data-secondary' => 'immutable',
+          'p[1]/a/@data-see' => 'instance method',
+          'p[2]/a/@data-seealso' => 'partial class',
+          'p[3]/a/@data-secondary-sortas' => 'iterator'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[2]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'tertiary, with quotation marks' do
+        { 'p[1]/a/@data-secondary' => 'virtual class',
+          'p[1]/a/@data-tertiary' => 'subtype'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[3]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'tertiary, without quotation marks' do
+        { 'p[2]/a/@data-secondary' => 'test-driven development',
+          'p[2]/a/@data-tertiary' => 'weak reference'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[3]/#{xpath}").with_text(text) }
+        end
+      end
+    end
+
+    describe 'with four terms' do
+      let(:xpath_prefix) { "//section[@data-type='sect1'][4]/section[@data-type='sect2']" }
+
+      describe 'primary only' do
+        { 'p[1]/a/@id' => 'slicing',
+          'p[1]/a/@data-see' => 'access control',
+          'p[2]/a/@data-seealso' => 'hybrid',
+          'p[3]/a/@data-primary-sortas' => 'uninitialized',
+          'p[4]/a/@data-see' => 'mutator method',
+          'p[4]/a/@data-seealso' => 'policy-based design'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[1]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'secondary' do
+        { 'p[1]/a/@data-secondary' => 'viscosity',
+          'p[1]/a/@id' => 'encapsulation',
+          'p[2]/a/@data-secondary' => 'superclass',
+          'p[2]/a/@data-see' => 'typecasting',
+          'p[2]/a/@data-seealso' => 'virtual inheritance'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[2]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'tertiary' do
+        { 'p[1]/a/@data-secondary' => 'shadowed name',
+          'p[1]/a/@data-tertiary' => 'function',
+          'p[1]/a/@data-see' => 'late binding',
+          'p[2]/a/@data-secondary' => 'array',
+          'p[2]/a/@data-tertiary' => 'compiler',
+          'p[2]/a/@data-seealso' => 'subroutine',
+          'p[3]/a/@data-secondary' => 'stack',
+          'p[3]/a/@data-tertiary' => 'paradigm',
+          'p[3]/a/@data-tertiary-sortas' => 'enumerable'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[3]/#{xpath}").with_text(text) }
+        end
+      end
+    end
+
+    describe 'with five terms' do
+      let(:xpath_prefix) { "//section[@data-type='sect1'][5]/section[@data-type='sect2']" }
+
+      describe 'primary only' do
+        { 'p[1]/a/@id' => 'mapping',
+          'p[1]/a/@data-see' => 'overload',
+          'p[1]/a/@data-seealso' => 'parse'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[1]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'secondary' do
+        { 'p[1]/a/@data-secondary' => 'token',
+          'p[1]/a/@id' => 'syntax',
+          'p[1]/a/@data-see' => 'binary',
+          'p[2]/a/@data-secondary' => 'conditional',
+          'p[2]/a/@id' => 'collection',
+          'p[2]/a/@data-seealso' => 'alias',
+          'p[3]/a/@data-secondary' => 'operation',
+          'p[3]/a/@id' => 'semantics',
+          'p[3]/a/@data-secondary-sortas' => 'parameter',
+          'p[4]/a/@data-secondary' => 'abstraction',
+          'p[4]/a/@id' => 'constant',
+          'p[4]/a/@data-see' => 'arithmetic operator',
+          'p[4]/a/@data-seealso' => 'base type'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[2]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'tertiary' do
+        { 'p[1]/a/@data-secondary' => 'deprecated',
+          'p[1]/a/@data-tertiary' => 'finalization',
+          'p[1]/a/@id' => 'little-endian',
+          'p[2]/a/@data-secondary' => 'parallel',
+          'p[2]/a/@data-tertiary' => 'scheme',
+          'p[2]/a/@data-see' => 'ternary',
+          'p[2]/a/@data-seealso' => 'exception'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[3]/#{xpath}").with_text(text) }
+        end
+      end
+    end
+
+    describe 'with six terms' do
+      let(:xpath_prefix) { "//section[@data-type='sect1'][6]/section[@data-type='sect2']" }
+
+      describe 'secondary' do
+        { 'p[1]/a/@data-secondary' => 'while loop',
+          'p[1]/a/@id' => 'retro',
+          'p[1]/a/@data-see' => 'top-level class',
+          'p[1]/a/@data-seealso' => 'unary'
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[1]/#{xpath}").with_text(text) }
+        end
+      end
+
+      describe 'tertiary' do
+        { 'p[1]/a/@data-secondary' => 'precedence',
+          'p[1]/a/@data-tertiary' => 'overriding',
+          'p[1]/a/@id' => 'lightweight',
+          'p[1]/a/@data-see' => 'infinite',
+          'p[2]/a/@data-secondary' => 'encapsulation',
+          'p[2]/a/@data-tertiary' => 'condition',
+          'p[2]/a/@id' => 'aggregation',
+          'p[2]/a/@data-seealso' => 'boundary',
+          'p[3]/a/@data-secondary' => 'classpath',
+          'p[3]/a/@data-tertiary' => 'import',
+          'p[3]/a/@id' => 'datagram',
+          'p[3]/a/@data-tertiary-sortas' => 'method',
+        }.each do |xpath, text|
+          it { should have_html("#{xpath_prefix}[2]/#{xpath}").with_text(text) }
+        end
+      end
+    end
+
+    describe 'with seven terms' do
+
+      describe 'tertiary' do
+        { '@data-secondary' => 'public',
+          '@data-tertiary' => 'relational',
+          '@id' => 'cascaded',
+          '@data-see' => 'inline',
+          '@data-seealso' => 'private'
+        }.each do |xpath, text|
+          it { should have_html("//section[@data-type='sect1'][7]/p[1]/a/#{xpath}").with_text(text) }
+        end
+      end
+    end
   end
 
-  it "should convert inline anchors" do
-    html = convert %(
-      This is a link without a text node: http://www.oreilly.com
+  describe 'passthrough_testing.adoc' do
 
-      This is a link with a text node: http://www.oreilly.com[check out this text node]
-    )
-    html.xpath("//p[1]/a/@href").text.should == "http://www.oreilly.com"
-    html.xpath("//p[1]/a/em[@class='hyperlink']").text.should == "http://www.oreilly.com"
-    html.xpath("//p[2]/a/@href").text.should == "http://www.oreilly.com"
-    html.xpath("//p[2]/a[not(*)]").text.should == "check out this text node"
-  end
+    subject { convert_passthrough_tests }
+    let(:xpath_prefix) { "//section[@data-type='sect1']" }
 
-  # Tests inline_callout template
-  it "should convert inline callouts in code" do
-    html = convert %(
-      ----
-      Roses are red, <1>
-         Violets are blue. <2>
-      ----
-      <1> This is a fact.
-      <2> This poem uses the literary device known as a surprise ending.
-    )
-    html.xpath("//pre[@data-type='programlisting']/text()").text.should == "Roses are red,
-   Violets are blue. "
-    html.xpath("//pre[@data-type='programlisting']/b[1]").text.should == "(1)"
-    html.xpath("//pre[@data-type='programlisting']/b[2]").text.should == "(2)"
-    html.xpath("//ol[@class='calloutlist']/li[1]/p").text.should == "➊ This is a fact."
-    html.xpath("//ol[@class='calloutlist']/li[2]/p").text.should == "➋ This poem uses the literary device known as a surprise ending."
-  end
+    describe 'converts inline DocBook passthroughs to HTMLBook' do
+      { "p[1]/span[@class='keep-together']" => 'DocBook phrase element',
+        "p[2]/code" => 'DocBook code element'
+      }.each do |xpath, text|
+        it { should have_html("//section[@data-type='sect1'][1]/#{xpath}").with_text(text) }
+      end
+    end
 
-  # Tests inline_footnote template
-  it "should convert footnotes and footnoterefs" do
-    html = convert %(
-      A footnote.footnote:[An example footnote.]
+    describe 'converts block DocBook passthroughs to HTMLBook' do
+      { "pre[@data-type='programlisting']/strong/code" => 'first line of code here',
+        "figure/figcaption" => 'DocBook Figure Markup',
+        "figure/img/@src" => 'images/docbook.png',
+        "blockquote/p[@data-type='attribution']" => 'Lewis Carroll',
+        "blockquote/p" => 'Alice was beginning to get very tired'
+      }.each do |xpath, text|
+        it { should have_html("//section[@data-type='sect1'][2]/#{xpath}").with_text(text) }
+      end
+    end
 
-      A second footnote with a reference ID.footnoteref:[note2,Second footnote.]
+    describe 'should not convert inline HTML block passthroughs' do
+      { 'p[1]/strong' => 'HTML strong element',
+        'p[2]/code' => 'HTML code element'
+      }.each do |xpath, text|
+        it { should have_html("//section[@data-type='sect1'][3]/#{xpath}").with_text(text) }
+      end
+    end
 
-      Finally a reference to the second footnote.footnoteref:[note2]
-    )
-    html.xpath("//p[1]/span[@data-type='footnote']").text.should == "An example footnote."
-    html.xpath("//p[1]/span[@data-type='footnote']/@id").size.should == 0
-    html.xpath("//p[2]/span[@data-type='footnote']").text.should == "Second footnote."
-    html.xpath("//p[2]/span[@data-type='footnote']/@id").text.should == "note2"
-    html.xpath("//p[3]/a[@data-type='footnoteref']/text()").size.should == 0
-    html.xpath("//p[3]/a[@data-type='footnoteref']/@href").text.should == "note2"
-  end
+    describe 'should not convert block HTML passthroughs' do
+      { 'p[2]' => 'Some text in an HTML p element.',
+        'figure/figcaption' => 'HTML Figure Markup',
+        'figure/img/@src' => 'images/html.png'
+      }.each do |xpath, text|
+        it { should have_html("#{xpath_prefix}/[4]/#{xpath}").with_text(text) }
+      end
+      it { should have_html("#{xpath_prefix}/[4]/blockquote/p").with_text { |text| text.should start_with("So she was considering") }}
+    end
 
-  # Tests inline_image template
-  it "should convert inline images" do
-    html = convert "Here is an inline figure: image:images/logo.png[]"
-    html.xpath("//p/img/@src").text.should == "images/logo.png"
-  end
+    describe 'ignore processing instruction passthroughs' do
+      { 'p[1]' => 'Processing instruction in inline passthroughs should be ignored entirely.',
+        'p[2]/span' => 'should be subbed out.',
+        'p[5]' => 'text before  text after'
+      }.each do |xpath, text|
+        it { should have_html("#{xpath_prefix}/[5]/#{xpath}").with_text(text) }
+      end
 
-  # Tests inline_quoted template
-  it "should convert inline formatting" do
-    html = convert "This para has __emphasis__, *bold**, ++literal++, ^superscript^, ~subscript~, __++replaceable++__, and *+userinput+*."
-    html.xpath("//p/em[1]").text.should == "emphasis"
-    html.xpath("//p/strong[1]").text.should == "bold"
-    html.xpath("//p/code[1]").text.should == "literal"
-    html.xpath("//p/sup").text.should == "superscript"
-    html.xpath("//p/sub").text.should == "subscript"
-    html.xpath("//p/em/code").text.should == "replaceable"
-    html.xpath("//p/strong/code").text.should == "userinput"
-  end
-
-  # Tests math in inline_quoted template
-  it "should convert inline equations" do
-    html = convert "The Pythagorean Theorem is latexmath:[$a^2 + b^2 = c^2$]"
-    html.xpath("//p/span[@data-type='tex']").text.should == "$a^2 + b^2 = c^2$"
-  end
-
-  # Tests inline_indexterm template - source markup is in files/indexterm_testing.asciidoc
-  it "should convert inline indexterms with one term" do
-    html = convert_indexterm_tests
-    # Primary only, with quation marks
-    html.xpath("//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]/p[1]/a/@data-type").text.should == "indexterm"
-    html.xpath("//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]/p[1]/a/@data-primary").text.should == "metaclass"
-    # Primary only, without quotation marks
-    html.xpath("//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]/p[2]/a/@data-type").text.should == "indexterm"
-    html.xpath("//section[@data-type='sect1'][1]/section[@data-type='sect2'][1]/p[2]/a/@data-primary").text.should == "accessibility"
-  end
-
-  it "should convert inline indexterms with two terms" do
-    html = convert_indexterm_tests
-    # Primary only
-    html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[1]/a/@data-see").text.should == "aspect-oriented"
-    html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[2]/a/@data-seealso").text.should == "namespace"
-    html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[3]/a/@data-primary-sortas").text.should == "patterns"
-    html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[4]/a/@id").text.should == "dynamic"
-    html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][1]/p[5]/a/@data-startref").text.should == "dynamic"
-    # Secondary
-    html.xpath("//section[@data-type='sect1'][2]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "eigenclass"
-  end
-
-  it "should convert inline indexterms with three terms" do
-    html = convert_indexterm_tests
-    # Primary only
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][1]/p[1]/a/@id").text.should == "orthogonality"
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][1]/p[2]/a/@data-see").text.should == "destructor"
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][1]/p[2]/a/@data-seealso").text.should == "factory method"
-    # Secondary
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "immutable"
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][2]/p[1]/a/@data-see").text.should == "instance method"
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][2]/p[2]/a/@data-seealso").text.should == "partial class"
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][2]/p[3]/a/@data-secondary-sortas").text.should == "iterator"
-    # Tertiary, with quotation marks
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][3]/p[1]/a/@data-secondary").text.should == "virtual class"
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][3]/p[1]/a/@data-tertiary").text.should == "subtype"
-    # Tertiary, without quotation marks
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][3]/p[2]/a/@data-secondary").text.should == "test-driven development"
-    html.xpath("//section[@data-type='sect1'][3]/section[@data-type='sect2'][3]/p[2]/a/@data-tertiary").text.should == "weak reference"
-  end
-
-  it "should convert inline indexterms with four terms" do
-    html = convert_indexterm_tests
-    # Primary only
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[1]/a/@id").text.should == "slicing"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[1]/a/@data-see").text.should == "access control"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[2]/a/@data-seealso").text.should == "hybrid"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[3]/a/@data-primary-sortas").text.should == "uninitialized"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[4]/a/@data-see").text.should == "mutator method"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][1]/p[4]/a/@data-seealso").text.should == "policy-based design"
-    # Secondary
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "viscosity"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[1]/a/@id").text.should == "encapsulation"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[2]/a/@data-secondary").text.should == "superclass"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[2]/a/@data-see").text.should == "typecasting"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][2]/p[2]/a/@data-seealso").text.should == "virtual inheritance"
-    # Tertiary
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[1]/a/@data-secondary").text.should == "shadowed name"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[1]/a/@data-tertiary").text.should == "function"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[1]/a/@data-see").text.should == "late binding"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[2]/a/@data-secondary").text.should == "array"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[2]/a/@data-tertiary").text.should == "compiler"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[2]/a/@data-seealso").text.should == "subroutine"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[3]/a/@data-secondary").text.should == "stack"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[3]/a/@data-tertiary").text.should == "paradigm"
-    html.xpath("//section[@data-type='sect1'][4]/section[@data-type='sect2'][3]/p[3]/a/@data-tertiary-sortas").text.should == "enumerable"
-  end
-
-  it "should convert inline indexterms with five terms" do
-    html = convert_indexterm_tests
-    # Primary only
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][1]/p[1]/a/@id").text.should == "mapping"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][1]/p[1]/a/@data-see").text.should == "overload"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][1]/p[1]/a/@data-seealso").text.should == "parse"
-    # Secondary
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "token"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[1]/a/@id").text.should == "syntax"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[1]/a/@data-see").text.should == "binary"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[2]/a/@data-secondary").text.should == "conditional"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[2]/a/@id").text.should == "collection"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[2]/a/@data-seealso").text.should == "alias"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[3]/a/@data-secondary").text.should == "operation"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[3]/a/@id").text.should == "semantics"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[3]/a/@data-secondary-sortas").text.should == "parameter"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[4]/a/@data-secondary").text.should == "abstraction"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[4]/a/@id").text.should == "constant"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[4]/a/@data-see").text.should == "arithmetic operator"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][2]/p[4]/a/@data-seealso").text.should == "base type"
-    # Tertiary
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[1]/a/@data-secondary").text.should == "deprecated"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[1]/a/@data-tertiary").text.should == "finalization"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[1]/a/@id").text.should == "little-endian"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[2]/a/@data-secondary").text.should == "parallel"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[2]/a/@data-tertiary").text.should == "scheme"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[2]/a/@data-see").text.should == "ternary"
-    html.xpath("//section[@data-type='sect1'][5]/section[@data-type='sect2'][3]/p[2]/a/@data-seealso").text.should == "exception"
-  end
-
-  it "should convert inline indexterms with six terms" do
-    html = convert_indexterm_tests
-    # Secondary
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][1]/p[1]/a/@data-secondary").text.should == "while loop"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][1]/p[1]/a/@id").text.should == "retro"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][1]/p[1]/a/@data-see").text.should == "top-level class"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][1]/p[1]/a/@data-seealso").text.should == "unary"
-    # Tertiary
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[1]/a/@data-secondary").text.should == "precedence"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[1]/a/@data-tertiary").text.should == "overriding"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[1]/a/@id").text.should == "lightweight"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[1]/a/@data-see").text.should == "infinite"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[2]/a/@data-secondary").text.should == "encapsulation"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[2]/a/@data-tertiary").text.should == "condition"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[2]/a/@id").text.should == "aggregation"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[2]/a/@data-seealso").text.should == "boundary"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[3]/a/@data-secondary").text.should == "classpath"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[3]/a/@data-tertiary").text.should == "import"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[3]/a/@id").text.should == "datagram"
-    html.xpath("//section[@data-type='sect1'][6]/section[@data-type='sect2'][2]/p[3]/a/@data-tertiary-sortas").text.should == "method"
-  end
-
-  it "should convert inline indexterms with seven terms" do
-    html = convert_indexterm_tests
-    # Tertiary
-    html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-secondary").text.should == "public"
-    html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-tertiary").text.should == "relational"
-    html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@id").text.should == "cascaded"
-    html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-see").text.should == "inline"
-    html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-seealso").text.should == "private"
-  end
-
-  # Passthrough tests
-  it "should convert inline DocBook passthroughs to HTMLBook" do
-    html = convert_passthrough_tests
-    html.xpath("//section[@data-type='sect1'][1]/p[1]/span[@class='keep-together']").text.should == "DocBook phrase element"
-    html.xpath("//section[@data-type='sect1'][1]/p[2]/code").text.should == "DocBook code element"
-  end
-
-  it "should convert block DocBook passthroughs to HTMLBook" do
-    html = convert_passthrough_tests
-    html.xpath("//section[@data-type='sect1'][2]/pre[@data-type='programlisting']/strong/code").text.should == "first line of code here"
-    html.xpath("//section[@data-type='sect1'][2]/figure/figcaption").text.should == "DocBook Figure Markup"
-    html.xpath("//section[@data-type='sect1'][2]/figure/img/@src").text.should == "images/docbook.png"
-    html.xpath("//section[@data-type='sect1'][2]/blockquote/p[@data-type='attribution']").text.should == "Lewis Carroll"
-    html.xpath("//section[@data-type='sect1'][2]/blockquote/p").text.should start_with "Alice was beginning to get very tired"
-  end
-
-  it "should not convert inline HTML block passthroughs" do
-    html = convert_passthrough_tests
-    html.xpath("//section[@data-type='sect1'][3]/p[1]/strong").text.should == "HTML strong element"
-    html.xpath("//section[@data-type='sect1'][3]/p[2]/code").text.should == "HTML code element"
-  end
-
-  it "should not convert block HTML passthroughs" do
-    html = convert_passthrough_tests
-    html.xpath("//section[@data-type='sect1'][4]/p[2]").text.should == "Some text in an HTML p element."
-    html.xpath("//section[@data-type='sect1'][4]/figure/figcaption").text.should == "HTML Figure Markup"
-    html.xpath("//section[@data-type='sect1'][4]/figure/img/@src").text.should == "images/html.png"
-    html.xpath("//section[@data-type='sect1'][4]/blockquote/p").text.should start_with "So she was considering in her own mind"
-  end
-
-  it "should ignore processing instruction passthroughs" do
-    html = convert_passthrough_tests
-    html.xpath("//section[@data-type='sect1'][5]/p[1]").text.should == "Processing instruction in inline passthroughs should be ignored entirely."
-    html.xpath("//section[@data-type='sect1'][5]/p[2]/span").text.should == "should be subbed out."
-    html.xpath("//section[@data-type='sect1'][5]").text.should_not include '<?hard-pagebreak?>'
-    html.xpath("//section[@data-type='sect1'][5]/p[5]").text.should == "text before  text after"
+      it { should have_html("#{xpath_prefix}/[5]").with_text { |text| text.should_not include('<?hard-pagebreak?>') } }
+    end
   end
 
 end
