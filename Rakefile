@@ -1,6 +1,6 @@
 namespace :spec do
 
-  desc "Run all the tests"
+  desc 'Run all the tests'
   task :default do
     require 'rspec/core/rake_task'
     RSpec::Core::RakeTask.new(:spec)
@@ -8,4 +8,4 @@ namespace :spec do
 
 end
 
-task :spec => "spec:default"
+task :spec => 'spec:default'
