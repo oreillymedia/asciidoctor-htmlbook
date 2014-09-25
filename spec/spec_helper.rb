@@ -2,12 +2,12 @@ require 'rubygems'
 require 'bundler'
 require_relative '../orm-atlas-workers/workers/helpers/passthrough_helper.rb'
 
-ENV["RACK_ENV"] ||= 'test'
+ENV['RACK_ENV'] ||= 'test'
 Bundler.require(:test)
 
 RSpec.configure do |config|
-  config.color_enabled = true
-  config.order = "random"
+  config.color = true
+  config.order = :random
 end
 
 def convert(asciidoc)
