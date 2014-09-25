@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 group :test do
-  gem "asciidoctor", "~> 1.5.0.preview.1"
-  gem "nokogiri"
-  gem "tilt"
-  gem "rspec"
+  gem 'asciidoctor', '~> 1.5.0.preview.1'
+  gem 'nokogiri'
+  gem 'tilt'
+  gem 'rspec', '~> 3.1.0'
 end
