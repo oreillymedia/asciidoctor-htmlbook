@@ -1,6 +1,6 @@
 <%#encoding:UTF-8%>
 <% if @level == 0 %>
-<div data-type="part"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<div data-type="part"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h1) %>><%= title %><%= %(</h1>) %>
 
 <%= content %>
@@ -12,49 +12,49 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 
 <% if @level == 1 %>
 <% if sectname == 'preface' and title == 'Foreword' %>
-<section data-type="foreword"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="foreword"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif sectname == 'preface' %>
-<section data-type="preface"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="preface"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif sectname == 'appendix' %>
-<section data-type="appendix"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="appendix"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif title == 'Glossary' %>
-<section data-type="glossary"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="glossary"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
 <% elsif title == 'Dedication' %>
-<section data-type="dedication"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="dedication"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section><% 
 elsif title == 'Colophon' %>
-<section data-type="colophon"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="colophon"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h1) %>><%= title %><%= %(</h1>) %>
 
 <%= content %>
 </section><% 
 elsif title == 'Index' %>
-<section data-type="index"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="index"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h1) %>><%= title %><%= %(</h1>) %>
 
 <%= content %>
 </section><% 
 else %>
-<section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
@@ -62,28 +62,28 @@ else %>
 <% end %><% end %>
 
 <% if @level == 2 %>
-<section data-type="sect1"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="sect1"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <h1><%= title %></h1>
 <%= content %>
 </section>
 <% end %>
 
 <% if @level == 3 %>
-<section data-type="sect2"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="sect2"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <h2><%= title %></h2>
 <%= content %>
 </section>
 <% end %>
 
 <% if @level == 4 %>
-<section data-type="sect3"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="sect3"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <h3><%= title %></h3>
 <%= content %>
 </section>
 <% end %>
 
 <% if @level == 5 %>
-<section data-type="sect4"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
+<section data-type="sect4"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <h4><%= title %></h4>
 <%= content %>
 </section>
