@@ -1,6 +1,2 @@
 <%#encoding:UTF-8%>
-<% if attr? 'style', 'source', false %>
-<pre<%= @id && %( id="#{@id}") %> data-type="programlisting" data-code-language="<%= (attr 'language') %>"<%= attr?('role') ? %( class="#{attr 'role'}") : nil %>><%= content %></pre>
-<% else %>
-<pre<%= @id && %( id="#{@id}") %> data-type="programlisting"<%= attr?('role') ? %( class="#{attr 'role'}") : nil %>><%= content %></pre>
-<% end %>
+<pre<%= @id && %( id="#{@id}") %> data-type="programlisting"<%= attr?('language') ? %( data-code-language="#{attr 'language'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>><%= content %></pre>
