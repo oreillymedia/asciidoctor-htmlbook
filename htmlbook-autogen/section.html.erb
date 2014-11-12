@@ -17,13 +17,19 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 
 <%= content %>
 </section>
-<% elsif sectname == 'preface' %>
+<% elsif sectname == 'preface' and title != 'Foreword'%>
 <section data-type="preface"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
-<% elsif sectname == 'appendix' %>
+<% elsif sectname == 'appendix' and role == 'bibliography' %>
+<section data-type="bibliography"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
+<% elsif sectname == 'appendix' and role != 'bibliography' %>
 <section data-type="appendix"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
