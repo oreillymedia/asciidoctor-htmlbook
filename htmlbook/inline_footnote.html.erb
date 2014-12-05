@@ -1,7 +1,7 @@
 <%#encoding:UTF-8%><%
 idx = attr 'index'
 if @type == :xref
-%><%= %|<a data-type="footnoteref" href="#@target"/>| %><%
+%><a data-type="footnoteref" href="<%= @target %>"><%= @document.attributes['footnote-number'] %></a><%
 else
 %><span data-type="footnote"<%= @id && %( id="#{@id}") %>><%= %(#{text}) %></span><%
 end %>
