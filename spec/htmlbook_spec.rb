@@ -568,6 +568,20 @@ Finally a reference to the second footnote.footnoteref:[note2]
 		html.xpath("//section[@data-type='sect1'][7]/p[1]/a/@data-seealso").text.should == "private"
 	end
 
+	it "should convert inline indexterm next-gen sortas attributes properly (primary-sortas, secondary-sortas, tertiary-sortas)" do
+		html = Nokogiri::HTML(convert_indexterm_tests)
+		html.xpath("//section[@id='sortas_tests']/p[1]/a/@data-primary-sortas").text.should == "one"
+		html.xpath("//section[@id='sortas_tests']/p[1]/a/@data-secondary-sortas").text.should == "two"
+		html.xpath("//section[@id='sortas_tests']/p[1]/a/@data-tertiary-sortas").text.should == "three"
+	end
+
+        it "should ignore legacy sortas when primary, secondary, or tertiary sortas are present" do
+               html = Nokogiri::HTML(convert_indexterm_tests)
+               html.xpath("//section[@id='sortas_tests']/p[position() > 1]/a/@*[contains(., 'ignoreme')]").length.should == 0
+               html.xpath("//section[@id='sortas_tests']/p[2]/a/@data-primary-sortas").text.should == "one"
+               html.xpath("//section[@id='sortas_tests']/p[3]/a/@data-secondary-sortas").text.should == "two"
+               html.xpath("//section[@id='sortas_tests']/p[4]/a/@data-tertiary-sortas").text.should == "three"
+        end
 
 	# Passthrough tests - moving these tests to Atlas app
 
