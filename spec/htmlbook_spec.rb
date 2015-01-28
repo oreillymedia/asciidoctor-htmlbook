@@ -583,6 +583,10 @@ Finally a reference to the second footnote.footnoteref:[note2]
                html.xpath("//section[@id='sortas_tests']/p[4]/a/@data-tertiary-sortas").text.should == "three"
         end
 
+        it "should ignore badly formed indexterms" do 
+               expect { Nokogiri::HTML(convert('This indexterm has unbalanced parens((("primary", "secondary"))')) }.not_to raise_error
+        end
+
 	# Passthrough tests - moving these tests to Atlas app
 
 	# it "should convert inline DocBook passthroughs to HTMLBook" do
