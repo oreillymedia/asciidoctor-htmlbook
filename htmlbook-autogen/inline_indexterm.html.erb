@@ -1,66 +1,33 @@
-<%#encoding:UTF-8%><% terms = (attr :terms) %><% if terms %><% numterms = terms.size %><% 
-terms.each do |term| %><% 
-	if term.start_with?('see=') %><% $seeterm = term.gsub('see=', '') %><% end %><% 
-	if term.start_with?('seealso=') %><% $seealsoterm = term.gsub('seealso=', '') %><% end %><% 
-	if term.start_with?('sortas=') %><% $sortasterm = term.gsub('sortas=', '') %><% end %><% 
-	if term.start_with?('id=') %><% $idterm = term.gsub('id=', '') %><% end %><% 
-	if term.start_with?('range=') %><% $rangeterm = term.gsub('range=', '') %><% end %><% 
-	if term.start_with?('startref') %><% $startrefterm = term.gsub(/startref ?=/, '') %><% end %><% 
-	end %><% 
-	unless terms[0].to_s.start_with?('range=', 'startref') %><% primaryterm = terms[0] %><% end %><% 
-	unless terms[1].to_s.start_with?('see=', 'seealso=', 'sortas=', 'id=', 'range=', 'startref') %><% secondaryterm = terms[1] %><% end %><% 
-	unless terms[2].to_s.start_with?('see=', 'seealso=', 'sortas=', 'id=', 'range=', 'startref') %><% tertiaryterm = terms[2] %><% 
-	end %><% 
-	if numterms == 1 
-		%><a data-type="indexterm" data-primary="<%= primaryterm %>"/><% 
-	elsif numterms == 2 %><% 
-		if secondaryterm %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>"/><% 
-		elsif terms.to_s.include?('see=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-see="<%= $seeterm %>"/><% 
-		elsif terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-		elsif terms.to_s.include?('sortas=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-primary-sortas="<%= $sortasterm %>"/><% 
-		elsif terms.to_s.include?('id=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" id="<%= $idterm %>"/><% 
-		elsif terms.to_s.include?('startref') %><a data-type="indexterm" data-startref="<%= $startrefterm %>"/><% end %><% 
-	elsif numterms == 3 %><% 
-		if tertiaryterm %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>"/><% 
-		elsif terms.to_s.include?('see=') and not terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-see="<%= $seeterm %>"/><% 
-		elsif terms.to_s.include?('seealso=') and not terms.to_s.include?('see=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-seealso="<%= $seealsoterm %>"/><%
-		elsif terms.to_s.include?('seealso=') and terms.to_s.include?('see=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-see="<%= $seeterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-		elsif terms.to_s.include?('sortas=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-secondary-sortas="<%= $sortasterm %>"/><% 
-		elsif terms.to_s.include?('range=startofrange') %><a data-type="indexterm" data-primary="<%= primaryterm %>" id="<%= $idterm %>"/><% 
-		elsif terms.to_s.include?('startref') %><a data-type="indexterm" data-startref="<%= $startrefterm %>"/><% end %><% 
-	elsif numterms == 4 %><%
- 		if not secondaryterm and not tertiaryterm %><% 
-			if terms.to_s.include?('see=') and terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" id="<%= $idterm %>" data-see="<%= $seeterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-			elsif terms.to_s.include?('range=startofrange') and terms.to_s.include?('see=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" id="<%= $idterm %>" data-see="<%= $seeterm %>"/><% 
-			elsif terms.to_s.include?('range=startofrange') and terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" id="<%= $idterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-			elsif terms.to_s.include?('range=startofrange') and terms.to_s.include?('sortas=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-primary-sortas="<%= $sortasterm %>" id="<%= $idterm %>"/><% 
-			elsif terms.to_s.include?('startref') %><a data-type="indexterm" data-startref="<%= $startrefterm %>"/><% end %><% 
-		elsif secondaryterm and not tertiaryterm %><%
-			if terms.to_s.include?('see=') and terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-see="<%= $seeterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-			elsif terms.to_s.include?('range=startofrange') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" id="<%= $idterm %>"/><% 
-			elsif terms.to_s.include?('startref') %><a data-type="indexterm" data-startref="<%= $startrefterm %>"/><% end %><% 
-		elsif tertiaryterm %><%
-			if terms.to_s.include?('see=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" data-see="<%= $seeterm %>"/><% 
-			elsif terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-			elsif terms.to_s.include?('sortas=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" data-tertiary-sortas="<%= $sortasterm %>"/><% end %><% end %><%
-	elsif numterms == 5 %><% 
-		if not secondaryterm and not tertiaryterm 
-			%><a data-type="indexterm" id="<%= $idterm %>" data-see="<%= $seeterm %>" data-seealso="<%= $seealsoterm %>"/><%
-		elsif secondaryterm and not tertiaryterm %><% 
-			if terms.to_s.include?('range=startofrange') and terms.to_s.include?('see=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" id="<%= $idterm %>" data-see="<%= $seeterm %>"/><% 
-			elsif terms.to_s.include?('range=startofrange') and terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" id="<%= $idterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-			elsif terms.to_s.include?('range=startofrange') and terms.to_s.include?('sortas=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-secondary-sortas="<%= $sortasterm %>" id="<%= $idterm %>"/><% 
-			elsif terms.to_s.include?('see=') and terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" id="<%= $idterm %>" data-see="<%= $seeterm %>" data-seealso="<%= $seealsoterm %>"/><% end %><% 
-		elsif tertiaryterm %><%
-			if terms.to_s.include?('see=') and terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" data-see="<%= $seeterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-			elsif terms.to_s.include?('range=startofrange') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" id="<%= $idterm %>"/><% end %><% end %><%
-	elsif numterms == 6 %><% 
-		if secondaryterm and not tertiaryterm 
-			%><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" id="<%= $idterm %>" data-see="<%= $seeterm %>" data-seealso="<%= $seealsoterm %>"/><%
-		elsif tertiaryterm %><%
-			if terms.to_s.include?('see=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" id="<%= $idterm %>" data-see="<%= $seeterm %>"/><% 
-			elsif terms.to_s.include?('seealso=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" id="<%= $idterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-			elsif terms.to_s.include?('sortas=') %><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" data-tertiary-sortas="<%= $sortasterm %>" id="<%= $idterm %>"/><% end %><% end %><%
-	elsif numterms == 7 
-		%><a data-type="indexterm" data-primary="<%= primaryterm %>" data-secondary="<%= secondaryterm %>" data-tertiary="<%= tertiaryterm %>" id="<%= $idterm %>" data-see="<%= $seeterm %>" data-seealso="<%= $seealsoterm %>"/><% 
-end %><% end %>
+<%#encoding:UTF-8%><% terms = attr :terms
+if terms
+  # From terms, Get only supported name attrs see, seealso, sortas, primary-sortas, secondary-sortas, tertiary-sortas, id, range, startref
+  named_attrs = terms.select {|t| t =~ /^(see(also)?|(primary-|secondary-|tertiary-)?sortas|id|range|startref)=/} 
+
+  # For easy access, map to hash
+  attr_map = Hash[named_attrs.map {|a| [a.split('=', 2)[0], a.split('=', 2)[1]]}] 
+
+  # Grab positional attrs (primary, secondary, tertiary), which we will assume all precede the first named attr
+  if terms.index(named_attrs[0]) == nil # No named attrs; use full terms list
+    positional_attrs = terms
+  elsif terms.index(named_attrs[0]) > 0 # Get all the positional attrs before first named attr index
+    positional_attrs = terms[0..terms.index(named_attrs[0]) - 1]
+  else # No positional attrs? Pass
+    positional_attrs = []
+  end
+  # Add positional attrs to attr_map; Values will be nil if terms not present
+  attr_map["primary"] = positional_attrs.shift
+  attr_map["secondary"] = positional_attrs.shift
+  attr_map["tertiary"] = positional_attrs.shift
+
+  # Preserve legacy Atlas v1 handling using plain "sortas" attribute, where sortas gets applied to
+  # deepest-level term that is present
+  if attr_map["sortas"] and not(attr_map["primary-sortas"] or attr_map["secondary-sortas"] or attr_map["tertiary-sortas"])
+    case
+    when attr_map["tertiary"]
+      attr_map["tertiary-sortas"] = attr_map["sortas"]
+    when attr_map["secondary"]
+      attr_map["secondary-sortas"] = attr_map["sortas"]
+    else
+      attr_map["primary-sortas"] = attr_map["sortas"]
+    end 
+  end %><a data-type="indexterm"<%= attr_map["id"] ? %( id="#{attr_map["id"]}") : nil %><%= attr_map["primary"] ? %( data-primary="#{attr_map["primary"]}") : nil %><%= attr_map["secondary"] ? %( data-secondary="#{attr_map["secondary"]}") : nil %><%= attr_map["tertiary"] ? %( data-tertiary="#{attr_map["tertiary"]}") : nil %><%= attr_map["see"] ? %( data-see="#{attr_map["see"]}") : nil %><%= attr_map["seealso"] ? %( data-seealso="#{attr_map["seealso"]}") : nil %><%= attr_map["primary-sortas"] ? %( data-primary-sortas="#{attr_map["primary-sortas"]}") : nil %><%= attr_map["secondary-sortas"] ? %( data-secondary-sortas="#{attr_map["secondary-sortas"]}") : nil %><%= attr_map["tertiary-sortas"] ? %( data-tertiary-sortas="#{attr_map["tertiary-sortas"]}") : nil %><%= attr_map["startref"] ? %( data-startref="#{attr_map["startref"]}") : nil %>/><% end %>
