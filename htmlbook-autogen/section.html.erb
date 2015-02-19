@@ -22,6 +22,11 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
+<% elsif sectname == 'introduction'%>
+<section data-type="introduction"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
 </section>
 <% elsif sectname == 'appendix' and role == 'bibliography' %>
 <section data-type="bibliography"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
