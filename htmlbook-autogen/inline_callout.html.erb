@@ -1,1 +1,1 @@
-<%#encoding:UTF-8%><%#encoding:UTF-8%><% chaptitle = (@document.doctitle).gsub(/ /, '_').downcase %><a class="co" id="<%= %(co_#{chaptitle}_#{@id}) %>" href="<%= %(#callout_#{chaptitle}_#{@id}) %>"><img src="<%= %(callouts/#{@text}.png) %>" alt="<%= @text %>"/></a>
+<%#encoding:UTF-8%><%#encoding:UTF-8%><% chaptitle = (@document.doctitle).gsub(/[ \/\\]/, '_').downcase %><a class="co" id="<%= %(co_#{chaptitle}_#{@id}) %>" href="<%= %(#callout_#{chaptitle}_#{@id}) %>"><img src="<%= %(callouts/#{@text}.png) %>" alt="<%= @text %>"/></a>

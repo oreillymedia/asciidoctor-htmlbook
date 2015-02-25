@@ -265,7 +265,7 @@ ____
 "))
 		html.xpath("//blockquote/p[1]").text.should == "Many thanks; I shall lose no time in reading it."
 		html.xpath("//blockquote/p[2]").text.should == "This is a second paragraph in the quotation."
-		html.xpath("//blockquote/p[@data-type='attribution']").text.should == "— Wilfred Meynell"
+		html.xpath("//blockquote/p[@data-type='attribution']").text.should == "Wilfred Meynell"
 	end
 
 	# Tests block_sidebar template
@@ -417,7 +417,7 @@ Finally a reference to the second footnote.footnoteref:[note2]
 		html.xpath("//p[2]/span[@data-type='footnote']").text.should == "Second footnote."
 		html.xpath("//p[2]/span[@data-type='footnote']/@id").text.should == "note2"
 		html.xpath("//p[3]/a[@data-type='footnoteref']/text()").size.should == 0
-		html.xpath("//p[3]/a[@data-type='footnoteref']/@href").text.should == "note2"
+		html.xpath("//p[3]/a[@data-type='footnoteref']/@href").text.should == "#note2"
 	end
 
 	# Tests inline_image template
