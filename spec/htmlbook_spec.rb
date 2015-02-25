@@ -43,6 +43,13 @@ describe "HTMLBook Templates" do
                 html.xpath("//section[@data-type='foreword']/h1").text.should == "Foreword"
         end
 
+        it "should convert Introduction titles" do
+            html = Nokogiri::HTML(convert("
+[introduction]
+== This is the Introduction"))
+                html.xpath("//section[@data-type='introduction']/h1").text.should == "This is the Introduction"
+        end
+
         it "should convert index titles" do
             html = Nokogiri::HTML(convert("== Index"))
                 html.xpath("//section[@data-type='index']/h1").text.should == "Index"
