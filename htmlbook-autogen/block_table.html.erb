@@ -1,5 +1,5 @@
 <%#encoding:UTF-8%><table<%= @id && %( id="#{@id}") %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %><%= attr?('width') ? %( style="width: #{attr 'width'}") : nil %>>
-<% if title? %><caption><%= title %></caption><% end %><%
+<% if title? %><caption<%= attr?('captionrole') ? %( class="#{attr 'captionrole'}") : nil %>><%= title %></caption><% end %><%
 if (attr 'rowcount') >= 0 %><%
 [:head, :body, :foot].select {|tsec| !@rows[tsec].empty? }.each do |tsec| %>
 <t<%= tsec %>><%
