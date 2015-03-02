@@ -12,7 +12,7 @@ cell.colspan ? %( colspan="#{cell.colspan}") : nil %><%= cell.rowspan ? %( rowsp
 if tsec == :head %><%= cell.text %><% else %><% 
 case cell.attr('style', nil, false)
 when :asciidoc %><div><%= cell.content %></div><%
-else %><% cell.content.each do |text| %><p<%= attr?('role') ? %( class="#{attr 'role'}") : nil %>><%= text %></p><% end %><%
+else %><% cell.content.each do |text| %><p<%= attr?('entryrole') ? %( class="#{attr 'entryrole'}") : nil %>><%= text %></p><% end %><%
 end %><% end %></<%= tsec == :head ? 'th' : 'td' %>><%
 end %>
 </tr><%
