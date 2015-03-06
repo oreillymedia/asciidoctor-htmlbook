@@ -4,7 +4,7 @@ if @document.doctitle
 elsif
 	chaptitle = @document.attributes['docname']
 else
-	chaptitle = Time.now.tv_sec + num
+	chaptitle = Time.now.tv_sec + @text.to_i
 end
 chaptitle = chaptitle.to_s.gsub(/[ \/\\<>"=\&:;]/, '_').downcase
 %><a class="co" id="<%= %(co_#{chaptitle}_#{@id}) %>" href="<%= %(#callout_#{chaptitle}_#{@id}) %>"><img src="<%= %(callouts/#{@text}.png) %>" alt="<%= @text %>"/></a>
