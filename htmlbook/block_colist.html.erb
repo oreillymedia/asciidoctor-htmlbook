@@ -8,8 +8,10 @@
 	end
 	if @document.doctitle
 		chaptitle = @document.doctitle
-	else
+	elsif
 		chaptitle = @document.attributes['docname']
+	else
+		chaptitle = Time.now.tv_sec
 	end
 	chaptitle = chaptitle.gsub(/[ \/\\<>"=]/, '_').downcase
 	%><dt><a class="co" id="<%= %(callout_#{chaptitle}_#{refnum}) %>" href="<%= %(#co_#{chaptitle}_#{refnum}) %>"><img src="<%= %(callouts/#{num}.png) %>" alt="<%= num %>"/></a></dt>
