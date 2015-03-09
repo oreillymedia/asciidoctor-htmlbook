@@ -76,14 +76,34 @@ describe "HTMLBook Templates" do
 	end
 
 	# Tests block_admonition template
-	it "should convert notes" do
+	it "should convert notes with admonition block markup" do
 		html = Nokogiri::HTML(convert("
 [NOTE]
 ====
-Here is some text inside a note.
+Here is a note with block markup.
+
+Here is a second paragraph.
 ====
 "))
-		html.xpath("//div[@data-type='note']/p").text.should == "Here is some text inside a note."
+		html.xpath("//div[@data-type='note']/p[1]").text.should == "Here is a note with block markup."
+		html.xpath("//div[@data-type='note']/p[2]").text.should == "Here is a second paragraph."
+	end
+
+	# Tests block_admonition template alternate markup
+	it "should convert notes with admonition paragraph markup" do
+		html = Nokogiri::HTML(convert("
+[NOTE]
+Here is a note with paragraph markup.
+"))
+		html.xpath("//div[@data-type='note']/p").text.should == "Here is a note with paragraph markup."
+	end
+
+	# Tests block_admonition template second alternate markup
+	it "should convert notes with alternate admonition paragraph markup" do
+		html = Nokogiri::HTML(convert("
+NOTE: Here is a note with alternate paragraph markup.
+"))
+		html.xpath("//div[@data-type='note']/p").text.should == "Here is a note with alternate paragraph markup."
 	end
 
 
