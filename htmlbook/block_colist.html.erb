@@ -14,7 +14,7 @@
 		chaptitle = Time.now.tv_sec + num
 	end
 	chaptitle = chaptitle.to_s.gsub(/[ \/\\<>"=\&:;]/, '_').downcase
-	chaptitle = chaptitle.gsub(/,/, "_")
+	chaptitle = chaptitle.gsub(/,/, '_')
 	%><dt><a class="co" id="<%= %(callout_#{chaptitle}_#{refnum}) %>" href="<%= %(#co_#{chaptitle}_#{refnum}) %>"><img src="<%= %(callouts/#{num}.png) %>" alt="<%= num %>"/></a></dt>
 <dd><p><%= item.text %></p><% if item.blocks? %>
 <%= item.content %><% end %></dd>
