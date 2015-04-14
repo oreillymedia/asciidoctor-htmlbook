@@ -2,6 +2,7 @@
 require 'rubygems'
 require 'asciidoctor'
 require 'fileutils'
+require 'tilt'
 
 book_folder = ARGV[0]
 raise "Book Folder does not exist: #{book_folder}" unless File.exists?(book_folder)
