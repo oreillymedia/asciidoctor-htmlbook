@@ -27,6 +27,13 @@ xmlns="http://www.w3.org/1999/xhtml">
 
 <%= content %>
 </section><% end %>
+
+   <% if (attr? :toc) && (attr? 'toc-placement', 'auto') %>
+<nav id="toc" data-type="toc" class="<%= attr 'toc-class', 'toc' %>">
+<%= converter.convert self, 'outline' %>
+</nav>
+   <%end %>
+
 <%= content %>
 </body>
 </html>
