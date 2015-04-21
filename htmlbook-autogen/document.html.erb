@@ -4,6 +4,7 @@
 xsi:schemaLocation="http://www.w3.org/1999/xhtml https://raw.githubusercontent.com/oreillymedia/HTMLBook/master/schema/htmlbook.xsd"
 xmlns="http://www.w3.org/1999/xhtml">
 
+<% toc_levels = (attr? :levels) ? (attr :levels).to_i : (@document.attr :toclevels, 2).to_i %>
   <head>
     <title><%= doctitle %></title>
     <meta name="<%= doctitle %>" content="text/html; charset=utf-8"/>
@@ -29,8 +30,10 @@ xmlns="http://www.w3.org/1999/xhtml">
 </section><% end %>
 
    <% if (attr? :toc) && (attr? 'toc-placement', 'auto') %>
-<nav id="toc" data-type="toc" class="<%= attr 'toc-class', 'toc' %>">
-<%= converter.convert self, 'outline' %>
+<nav id="toc" data-type="toc" >
+
+<%= outline self %>
+
 </nav>
    <%end %>
 
