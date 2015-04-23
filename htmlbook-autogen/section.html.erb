@@ -67,7 +67,7 @@ elsif title == 'Index' %>
 </section><% 
 else %>
 <section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
-<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+<%= %(<h#{@level}) %> <%= @id && %( id="#{@id}")%>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
