@@ -8,6 +8,11 @@ xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title><%= doctitle %></title>
     <meta name="<%= doctitle %>" content="text/html; charset=utf-8"/>
+
+    <% if attr? :author %>
+      <meta name="author" content="<%= attr :author %>"/>
+    <% end %>
+
   </head>
 <body<%= @id && %( id="#{@id}") %> data-type="book">
   <% if @header %><h1><%= @header.title %></h1><% end %>
