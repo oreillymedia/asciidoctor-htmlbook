@@ -1,23 +1,8 @@
-<%#encoding:UTF-8%><dl class="calloutlist<%= attr?('role') ? %( #{attr 'role'}) : nil %>">
-<% content.each_with_index do |item, i|
-	num = i + 1
-	if @document.callouts.current_list[i] != nil
-		refnum = @document.callouts.current_list[i][:id]
-	else
-		refnum = ""
-	end
-	if @document.doctitle
-		chaptitle = @document.doctitle
-	elsif @document.attributes['docname']
-		chaptitle = @document.attributes['docname']
-	elsif @document.attributes['table-number']
-		chaptitle = @document.attributes['table-number']
-	else
-		chaptitle = Time.now.tv_sec + num
-	end
-	chaptitle = chaptitle.to_s.gsub(/[ \/\\<>"=\&:;]/, '_').downcase
-	chaptitle = chaptitle.gsub(/,/, '_')
-	%><dt><a class="co" id="<%= %(callout_#{chaptitle}_#{refnum}) %>" href="<%= %(#co_#{chaptitle}_#{refnum}) %>"><img src="<%= %(callouts/#{num}.png) %>" alt="<%= num %>"/></a></dt>
-<dd><p><%= item.text %></p><% if item.blocks? %>
-<%= item.content %><% end %></dd>
-<% end %></dl>
+<%#encoding:UTF-8%><%  
+if @document.doctitle
+	chaptitle = @document.doctitle
+else
+	chaptitle = parent.parent
+end
+chaptitle = chaptitle.to_s.gsub(/[^\w]/, '_').downcase
+%><a class="co" id="<%= %(co_#{chaptitle}_#{@id}) %>" href="<%= %(#callout_#{chaptitle}_#{@id}) %>"><img src="<%= %(callouts/#{@text}.png) %>" alt="<%= @text %>"/></a>
