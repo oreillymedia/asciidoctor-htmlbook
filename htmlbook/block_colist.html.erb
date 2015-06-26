@@ -8,8 +8,10 @@
 	end
 	if @document.doctitle
 		chaptitle = @document.doctitle
-	elsif
+	elsif @document.attributes['docname']
 		chaptitle = @document.attributes['docname']
+	elsif @document.attributes['table-number']
+		chaptitle = @document.attributes['table-number']
 	else
 		chaptitle = Time.now.tv_sec + num
 	end
