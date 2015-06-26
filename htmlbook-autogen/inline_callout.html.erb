@@ -6,7 +6,7 @@ elsif @document.attributes['docname']
 elsif @document.attributes['table-number']
 	chaptitle = @document.attributes['table-number']
 else
-	chaptitle = Time.now.tv_sec + num
+	chaptitle = Time.now.tv_sec + @text.to_i
 end
 chaptitle = chaptitle.to_s.gsub(/[ \/\\<>"=\&:;]/, '_').downcase
 chaptitle = chaptitle.gsub(/,/, '_')
