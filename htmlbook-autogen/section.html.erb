@@ -11,7 +11,13 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 %>
 
 <% if @level == 1 %>
-<% if sectname == 'preface' and title == 'Foreword' %>
+<% if sectname == 'part' %>
+<div data-type="part"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<%= %(<h1) %>><%= title %><%= %(</h1>) %>
+
+<%= content %>
+</div>
+<% elsif sectname == 'preface' and title == 'Foreword' %>
 <section data-type="foreword"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 

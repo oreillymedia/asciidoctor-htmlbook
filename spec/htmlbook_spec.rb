@@ -5,6 +5,15 @@ describe "HTMLBook Templates" do
 
 
 	# Tests section.html.erb templates
+	it "should convert part titles" do
+	  html = Nokogiri::HTML(convert("
+[part]
+== Part Title
+
+Some introductory part text"))
+          html.xpath("//div[@data-type='part']/h1").text.should == "Part Title"
+	end
+
 	it "should convert chapter titles" do
 	    html = Nokogiri::HTML(convert("== Chapter Title"))
 		html.xpath("//section[@data-type='chapter']/h1").text.should == "Chapter Title"
