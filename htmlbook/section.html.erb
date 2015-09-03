@@ -78,7 +78,7 @@ elsif title == 'Index' %>
 <%= content %>
 </section><% 
 else %>
-<section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %><%= attr?('data-nutshell-tab') ? %( data-nutshell-tab="#{attr 'data-nutshell-tab'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
