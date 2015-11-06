@@ -1,4 +1,5 @@
-<%#encoding:UTF-8%><% terms = attr :terms
+<%#encoding:UTF-8%><% if @type == :visible %><%= @text %><a data-type="indexterm" data-primary="<%= @text %>"/><% else
+terms = attr :terms
 if terms
   # From terms, Get only supported name attrs see, seealso, sortas, primary-sortas, secondary-sortas, tertiary-sortas, id, range, startref
   named_attrs = terms.select {|t| t =~ /^(see(also)?|(primary-|secondary-|tertiary-)?sortas|id|range|startref)=/} 
@@ -30,4 +31,4 @@ if terms
     else
       attr_map["primary-sortas"] = attr_map["sortas"]
     end 
-  end %><a data-type="indexterm"<%= attr_map["id"] ? %( id="#{attr_map["id"]}") : nil %><%= attr_map["primary"] ? %( data-primary="#{attr_map["primary"]}") : nil %><%= attr_map["secondary"] ? %( data-secondary="#{attr_map["secondary"]}") : nil %><%= attr_map["tertiary"] ? %( data-tertiary="#{attr_map["tertiary"]}") : nil %><%= attr_map["see"] ? %( data-see="#{attr_map["see"]}") : nil %><%= attr_map["seealso"] ? %( data-seealso="#{attr_map["seealso"]}") : nil %><%= attr_map["primary-sortas"] ? %( data-primary-sortas="#{attr_map["primary-sortas"]}") : nil %><%= attr_map["secondary-sortas"] ? %( data-secondary-sortas="#{attr_map["secondary-sortas"]}") : nil %><%= attr_map["tertiary-sortas"] ? %( data-tertiary-sortas="#{attr_map["tertiary-sortas"]}") : nil %><%= attr_map["startref"] ? %( data-startref="#{attr_map["startref"]}") : nil %>/><% end %>
+  end %><a data-type="indexterm"<%= attr_map["id"] ? %( id="#{attr_map["id"]}") : nil %><%= attr_map["primary"] ? %( data-primary="#{attr_map["primary"]}") : nil %><%= attr_map["secondary"] ? %( data-secondary="#{attr_map["secondary"]}") : nil %><%= attr_map["tertiary"] ? %( data-tertiary="#{attr_map["tertiary"]}") : nil %><%= attr_map["see"] ? %( data-see="#{attr_map["see"]}") : nil %><%= attr_map["seealso"] ? %( data-seealso="#{attr_map["seealso"]}") : nil %><%= attr_map["primary-sortas"] ? %( data-primary-sortas="#{attr_map["primary-sortas"]}") : nil %><%= attr_map["secondary-sortas"] ? %( data-secondary-sortas="#{attr_map["secondary-sortas"]}") : nil %><%= attr_map["tertiary-sortas"] ? %( data-tertiary-sortas="#{attr_map["tertiary-sortas"]}") : nil %><%= attr_map["startref"] ? %( data-startref="#{attr_map["startref"]}") : nil %>/><% end %><% end %>
