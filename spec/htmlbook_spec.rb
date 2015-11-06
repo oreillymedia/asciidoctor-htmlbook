@@ -614,6 +614,15 @@ Finally a reference to the second footnote.footnoteref:[note2]
                expect { Nokogiri::HTML(convert('This indexterm has unbalanced parens((("primary", "secondary"))')) }.not_to raise_error
         end
 
+	it "should properly convert text-term hybrids" do
+	       html = Nokogiri::HTML(convert_indexterm_tests)
+	       indexterm_p = html.xpath("//section[@id='text-term-hybrid']//p[1]")
+	       indexterms = html.xpath("//section[@id='text-term-hybrid']//p[1]//a[@data-type='indexterm']")
+	       indexterm_p.text.should == "Ruby is my favorite programming language."
+	       indexterms.length.should == 1
+	       indexterms.xpath("./@data-primary").text.should == "Ruby"
+	end
+
 	# Passthrough tests - moving these tests to Atlas app
 
 	# it "should convert inline DocBook passthroughs to HTMLBook" do

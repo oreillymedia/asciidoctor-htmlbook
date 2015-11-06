@@ -131,3 +131,8 @@ Plain sortas should be ignored if there is primary-sortas((("1", sortas="ignorem
 Plain sortas should be ignored if there is secondary-sortas((("1", "2", secondary-sortas="two", sortas="ignoreme2")))
 
 Plain sortas should be ignored if there is tertiary-sortas((("1", "2", "3",  tertiary-sortas="three", sortas="ignoreme3")))
+
+[[text-term-hybrid]]
+=== VIII. TEXT-TERM HYBRID
+
+((Ruby)) is my favorite programming language.
