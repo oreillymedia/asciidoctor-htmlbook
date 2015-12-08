@@ -79,7 +79,7 @@ elsif title == 'Index' %>
 </section><% 
 else %>
 <section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %><%= attr?('data-nutshell-tab') ? %( data-nutshell-tab="#{attr 'data-nutshell-tab'}") : nil %>>
-<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+<%= %(<h#{@level}) %> <%= @id && %( id="#{@id}")%>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
 </section>
@@ -87,7 +87,7 @@ else %>
 
 <% if @level == 2 %>
 <section data-type="sect1"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
-<h1><%= title %></h1>
+<h1 <%= @id && %( id="#{@id}")%>><%= title %></h1>
 <%= content %>
 </section>
 <% end %>
