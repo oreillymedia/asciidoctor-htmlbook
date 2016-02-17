@@ -1,8 +1,43 @@
-<%#encoding:UTF-8%><%  
-if @document.doctitle
-	chaptitle = @document.doctitle
-else
-	chaptitle = parent.parent
-end
-chaptitle = chaptitle.to_s.gsub(/[^\w]/, '_').downcase
-%><a class="co" id="<%= %(co_#{chaptitle}_#{@id}) %>" href="<%= %(#callout_#{chaptitle}_#{@id}) %>"><img src="<%= %(callouts/#{@text}.png) %>" alt="<%= @text %>"/></a>
+<%#encoding:UTF-8%><dl class="calloutlist<%= attr?('role') ? %( #{attr 'role'}) : nil %>">
+<% content.each_with_index do |item, i|
+	num = i + 1
+
+	# Variable "refnum" is used for calloutlist entry ids. We expect them to increment 1 at time per index entry.
+	if @document.callouts.current_list[i] != nil
+		refnum = @document.callouts.current_list[i][:id]
+	else
+		refnum = ""
+	end
+
+	# Variable "callout_id_to_point_to" holds the proper href value to which a calloutlist item will point.
+	# Essentially, it looks at each item in "@document.callouts.current_list", which is an array of hashes
+	# where each hash has only 1 entry, an :id paired with an :ordinal.
+	# This logic goes through that list, using the "num" variable (the position of the entry in the callout list (2 for the 2nd item in 
+	# the callout list)), finds the first entry with an :ordinal value that matches the position number, then grabs
+	# the :id value of that hash entry, and uses that to point to the (first) callout bug in the code block.
+
+	#puts @document.callouts.current_list.inspect
+	callout_id_to_point_to = ""
+	@document.callouts.current_list.each do |callout_hash|
+		if num == callout_hash[:ordinal]
+
+			callout_id_to_point_to = callout_hash[:id]
+			#puts "WE FOUND A MATCH. Num is = #{num} and callout_id_to_point_to = #{callout_id_to_point_to}"
+			# Break out of the loop once we find our first match
+			break
+		end
+
+	end
+
+	if @document.doctitle
+		chaptitle = @document.doctitle
+	else
+		chaptitle = parent
+	end
+
+	#puts ""
+	chaptitle = chaptitle.to_s.gsub(/[^\w]/, '_').downcase
+	%><dt><a class="co" id="<%= %(callout_#{chaptitle}_#{refnum}) %>" href="<%= %(#co_#{chaptitle}_#{callout_id_to_point_to}) %>"><img src="<%= %(callouts/#{num}.png) %>" alt="<%= num %>"/></a></dt>
+<dd><p><%= item.text %></p><% if item.blocks? %>
+<%= item.content %><% end %></dd>
+<% end %></dl>
