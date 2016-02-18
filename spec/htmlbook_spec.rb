@@ -410,7 +410,7 @@ This is a link with a text node: http://www.oreilly.com[check out this text node
         end
 
     # Callout handling
-	# PENDING: Tests block_colist template
+	# Tests block_colist template
 	it "should convert calloutlists with a code example preceding" do
 		html = Nokogiri::HTML(convert("
 == Required title
@@ -423,17 +423,17 @@ Hello Again <2>
 <1> First time.
 <2> Second time.
 "))
-		html.xpath("//dl//a[1]/@class").text.should == "co"
-		html.xpath("//dl//a[1]/@href").text.should == "#co_required_title_CO1-1"
-		html.xpath("//dl//a[1]/@id").text.should == "callout_required_title_CO1-1"
-		html.xpath("//dl//a[1]/img/@src").text.should == "callouts/1.png"
-		html.xpath("//dl//a[1]/img/@alt").text.should == "1"
+		html.xpath("//dl/dt[1]/a/@class").text.should == "co"
+		html.xpath("//dl/dt[1]/a/@href").text.should == "#co_required_title_CO1-1"
+		html.xpath("//dl/dt[1]/a/@id").text.should == "callout_required_title_CO1-1"
+		html.xpath("//dl/dt[1]/a/img/@src").text.should == "callouts/1.png"
+		html.xpath("//dl/dt[1]/a/img/@alt").text.should == "1"
 
-		html.xpath("//dl//a[2]/@class").text.should == "co"
-		html.xpath("//dl//a[2]/@href").text.should == "#co_required_title_CO1-2"
-		html.xpath("//dl//a[2]/@id").text.should == "callout_required_title_CO1-2"
-		html.xpath("//dl//a[2]/img/@src").text.should == "callouts/2.png"
-		html.xpath("//dl//a[2]/img/@alt").text.should == "2"
+		html.xpath("//dl/dt[2]/a/@class").text.should == "co"
+		html.xpath("//dl/dt[2]/a/@href").text.should == "#co_required_title_CO1-2"
+		html.xpath("//dl/dt[2]/a/@id").text.should == "callout_required_title_CO1-2"
+		html.xpath("//dl/dt[2]/a/img/@src").text.should == "callouts/2.png"
+		html.xpath("//dl/dt[2]/a/img/@alt").text.should == "2"
 		end
 
 		it "should convert calloutlists with a code example preceding with duplicate callouts in code" do
@@ -449,17 +449,17 @@ Hello Again <2>
 <1> First time.
 <2> Second time.
 "))			
-			html.xpath("//dl//a[1]/@class").text.should == "co"
-			html.xpath("//dl//a[1]/@href").text.should == "#co_required_title_CO1-1"
-			html.xpath("//dl//a[1]/@id").text.should == "callout_required_title_CO1-1"
-			html.xpath("//dl//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//dl//a[1]/img/@alt").text.should == "1"
+			html.xpath("//dl/dt[1]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[1]/a/@href").text.should == "#co_required_title_CO1-1"
+			html.xpath("//dl/dt[1]/a/@id").text.should == "callout_required_title_CO1-1"
+			html.xpath("//dl/dt[1]/a/img/@src").text.should == "callouts/1.png"
+			html.xpath("//dl/dt[1]/a/img/@alt").text.should == "1"
 
-			html.xpath("//dl//a[2]/@class").text.should == "co"
-			html.xpath("//dl//a[2]/@href").text.should == "#co_required_title_CO1-3"
-			html.xpath("//dl//a[2]/@id").text.should == "callout_required_title_CO1-2"
-			html.xpath("//dl//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//dl//a[2]/img/@alt").text.should == "2"
+			html.xpath("//dl/dt[2]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[2]/a/@href").text.should == "#co_required_title_CO1-3"
+			html.xpath("//dl/dt[2]/a/@id").text.should == "callout_required_title_CO1-2"
+			html.xpath("//dl/dt[2]/a/img/@src").text.should == "callouts/2.png"
+			html.xpath("//dl/dt[2]/a/img/@alt").text.should == "2"
 			end
 
 		it "should convert calloutlists with a code example preceding with callouts out of order" do
@@ -475,17 +475,17 @@ What evs. <1>
 <1> First time.
 <2> Second time.
 "))
-			html.xpath("//dl//a[1]/@class").text.should == "co"
-			html.xpath("//dl//a[1]/@href").text.should == "#co_required_title_CO1-2"
-			html.xpath("//dl//a[1]/@id").text.should == "callout_required_title_CO1-1"
-			html.xpath("//dl//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//dl//a[1]/img/@alt").text.should == "1"
+			html.xpath("//dl/dt[1]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[1]/a/@href").text.should == "#co_required_title_CO1-2"
+			html.xpath("//dl/dt[1]/a/@id").text.should == "callout_required_title_CO1-1"
+			html.xpath("//dl/dt[1]/a/img/@src").text.should == "callouts/1.png"
+			html.xpath("//dl/dt[1]/a/img/@alt").text.should == "1"
 
-			html.xpath("//dl//a[2]/@class").text.should == "co"
-			html.xpath("//dl//a[2]/@href").text.should == "#co_required_title_CO1-1"
-			html.xpath("//dl//a[2]/@id").text.should == "callout_required_title_CO1-2"
-			html.xpath("//dl//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//dl//a[2]/img/@alt").text.should == "2"
+			html.xpath("//dl/dt[2]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[2]/a/@href").text.should == "#co_required_title_CO1-1"
+			html.xpath("//dl/dt[2]/a/@id").text.should == "callout_required_title_CO1-2"
+			html.xpath("//dl/dt[2]/a/img/@src").text.should == "callouts/2.png"
+			html.xpath("//dl/dt[2]/a/img/@alt").text.should == "2"
 			end
 
 		it "should convert calloutlists with a code example preceding with duplicate callouts with callouts out of order" do
@@ -501,17 +501,17 @@ Yeah me too. <2>
 <1> First time.
 <2> Second time.
 "))
-			html.xpath("//dl//a[1]/@class").text.should == "co"
-			html.xpath("//dl//a[1]/@href").text.should == "#co_required_title_CO1-2"
-			html.xpath("//dl//a[1]/@id").text.should == "callout_required_title_CO1-1"
-			html.xpath("//dl//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//dl//a[1]/img/@alt").text.should == "1"
+			html.xpath("//dl/dt[1]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[1]/a/@href").text.should == "#co_required_title_CO1-2"
+			html.xpath("//dl/dt[1]/a/@id").text.should == "callout_required_title_CO1-1"
+			html.xpath("//dl/dt[1]/a/img/@src").text.should == "callouts/1.png"
+			html.xpath("//dl/dt[1]/a/img/@alt").text.should == "1"
 
-			html.xpath("//dl//a[2]/@class").text.should == "co"
-			html.xpath("//dl//a[2]/@href").text.should == "#co_required_title_CO1-1"
-			html.xpath("//dl//a[2]/@id").text.should == "callout_required_title_CO1-2"
-			html.xpath("//dl//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//dl//a[2]/img/@alt").text.should == "2"
+			html.xpath("//dl/dt[2]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[2]/a/@href").text.should == "#co_required_title_CO1-1"
+			html.xpath("//dl/dt[2]/a/@id").text.should == "callout_required_title_CO1-2"
+			html.xpath("//dl/dt[2]/a/img/@src").text.should == "callouts/2.png"
+			html.xpath("//dl/dt[2]/a/img/@alt").text.should == "2"
 			end
 
 		it "should convert calloutlists with a code example preceding when a number in the calloutlist does not correspond to a code callout" do
@@ -526,17 +526,17 @@ I suppose. <2>
 <1> This is true.
 <3> Third time is a... mistake.
 "))
-			html.xpath("//dl//a[1]/@class").text.should == "co"
-			html.xpath("//dl//a[1]/@href").text.should == "#co_required_title_CO1-1"
-			html.xpath("//dl//a[1]/@id").text.should == "callout_required_title_CO1-1"
-			html.xpath("//dl//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//dl//a[1]/img/@alt").text.should == "1"
+			html.xpath("//dl/dt[1]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[1]/a/@href").text.should == "#co_required_title_CO1-1"
+			html.xpath("//dl/dt[1]/a/@id").text.should == "callout_required_title_CO1-1"
+			html.xpath("//dl/dt[1]/a/img/@src").text.should == "callouts/1.png"
+			html.xpath("//dl/dt[1]/a/img/@alt").text.should == "1"
 
-			html.xpath("//dl//a[2]/@class").text.should == "co"
-			html.xpath("//dl//a[2]/@href").text.should == "#co_required_title_CO1-2"
-			html.xpath("//dl//a[2]/@id").text.should == "callout_required_title_CO1-2"
-			html.xpath("//dl//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//dl//a[2]/img/@alt").text.should == "2"
+			html.xpath("//dl/dt[2]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[2]/a/@href").text.should == "#co_required_title_CO1-2"
+			html.xpath("//dl/dt[2]/a/@id").text.should == "callout_required_title_CO1-2"
+			html.xpath("//dl/dt[2]/a/img/@src").text.should == "callouts/2.png"
+			html.xpath("//dl/dt[2]/a/img/@alt").text.should == "2"
 			end
 
 	it "should convert calloutlists without a code example preceding" do
@@ -548,17 +548,17 @@ Friends, Dean Roman, and countrymen. It's time for an IT meeting.
 <1> This is a calloutlist item.
 <2> Maybe we should have waited for some code.
 "))
-			html.xpath("//dl//a[1]/@class").text.should == "co"
-			html.xpath("//dl//a[1]/@href").text.should == "#co_required_title_"
-			html.xpath("//dl//a[1]/@id").text.should == "callout_required_title_"
-			html.xpath("//dl//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//dl//a[1]/img/@alt").text.should == "1"
+			html.xpath("//dl/dt[1]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[1]/a/@href").text.should == "#co_required_title_"
+			html.xpath("//dl/dt[1]/a/@id").text.should == "callout_required_title_"
+			html.xpath("//dl/dt[1]/a/img/@src").text.should == "callouts/1.png"
+			html.xpath("//dl/dt[1]/a/img/@alt").text.should == "1"
 
-			html.xpath("//dl//a[2]/@class").text.should == "co"
-			html.xpath("//dl//a[2]/@href").text.should == "#co_required_title_"
-			html.xpath("//dl//a[2]/@id").text.should == "callout_required_title_"
-			html.xpath("//dl//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//dl//a[2]/img/@alt").text.should == "2"
+			html.xpath("//dl/dt[2]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[2]/a/@href").text.should == "#co_required_title_"
+			html.xpath("//dl/dt[2]/a/@id").text.should == "callout_required_title_"
+			html.xpath("//dl/dt[2]/a/img/@src").text.should == "callouts/2.png"
+			html.xpath("//dl/dt[2]/a/img/@alt").text.should == "2"
 		end
 
 	it "should convert calloutlists without a code example preceding with non sequential list numbering" do
@@ -571,20 +571,20 @@ Friends, Dean Roman, and countrymen. It's time for an IT meeting.
 <1> This is a calloutlist item.
 <3> Maybe we should have waited for some code.
 "))
-			html.xpath("//dl//a[1]/@class").text.should == "co"
-			html.xpath("//dl//a[1]/@href").text.should == "#co_required_title_"
-			html.xpath("//dl//a[1]/@id").text.should == "callout_required_title_"
-			html.xpath("//dl//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//dl//a[1]/img/@alt").text.should == "1"
+			html.xpath("//dl/dt[1]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[1]/a/@href").text.should == "#co_required_title_"
+			html.xpath("//dl/dt[1]/a/@id").text.should == "callout_required_title_"
+			html.xpath("//dl/dt[1]/a/img/@src").text.should == "callouts/1.png"
+			html.xpath("//dl/dt[1]/a/img/@alt").text.should == "1"
 
-			html.xpath("//dl//a[2]/@class").text.should == "co"
-			html.xpath("//dl//a[2]/@href").text.should == "#co_required_title_"
-			html.xpath("//dl//a[2]/@id").text.should == "callout_required_title_"
-			html.xpath("//dl//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//dl//a[2]/img/@alt").text.should == "2"
+			html.xpath("//dl/dt[2]/a/@class").text.should == "co"
+			html.xpath("//dl/dt[2]/a/@href").text.should == "#co_required_title_"
+			html.xpath("//dl/dt[2]/a/@id").text.should == "callout_required_title_"
+			html.xpath("//dl/dt[2]/a/img/@src").text.should == "callouts/2.png"
+			html.xpath("//dl/dt[2]/a/img/@alt").text.should == "2"
 		end
 
-	# PENDING: Tests inline_callout template 
+	# Tests inline_callout template 
 	it "should convert inline callouts in code with a calloutlist following"  do
 		html = Nokogiri::HTML(convert("
 == Required title
@@ -597,17 +597,17 @@ Hello Again <2>
 <1> First time.
 <2> Second time.
 "))
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@href").text.should == "#callout_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@id").text.should == "co_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@alt").text.should == "1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@href").text.should == "#callout_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@id").text.should == "co_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@src").text.should == "callouts/1.png"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@alt").text.should == "1"
 
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@href").text.should == "#callout_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@id").text.should == "co_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@alt").text.should == "2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@href").text.should == "#callout_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@id").text.should == "co_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@src").text.should == "callouts/2.png"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@alt").text.should == "2"
 		end
 
 		it "should convert inline callouts in code with duplicate callouts in code with a calloutlist following" do
@@ -623,23 +623,23 @@ Hello THRICE <2>
 <1> First time.
 <2> Second time.
 "))
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@href").text.should == "#callout_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@id").text.should == "co_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@alt").text.should == "1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@href").text.should == "#callout_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@id").text.should == "co_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@src").text.should == "callouts/1.png"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@alt").text.should == "1"
 
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@href").text.should == "#callout_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@id").text.should == "co_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@alt").text.should == "2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@href").text.should == "#callout_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@id").text.should == "co_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@src").text.should == "callouts/2.png"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@alt").text.should == "2"
 
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@href").text.should == "#callout_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@id").text.should == "co_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@alt").text.should == "2"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@href").text.should == "#callout_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@id").text.should == "co_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@src").text.should == "callouts/2.png"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@alt").text.should == "2"
 			end
 
 		it "should convert inline callouts in code with callouts out of order with a calloutlist following" do
@@ -658,29 +658,29 @@ What's in my head <1>
 <3> I wake up in the morning
 <4> and I step outside...
 "))
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@href").text.should == "#callout_required_title_CO1-4"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@id").text.should == "co_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@src").text.should == "callouts/4.png"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@alt").text.should == "4"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@href").text.should == "#callout_required_title_CO1-4"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@id").text.should == "co_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@src").text.should == "callouts/4.png"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@alt").text.should == "4"
 
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@href").text.should == "#callout_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@id").text.should == "co_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@alt").text.should == "2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@href").text.should == "#callout_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@id").text.should == "co_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@src").text.should == "callouts/2.png"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@alt").text.should == "2"
 
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@href").text.should == "#callout_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@id").text.should == "co_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@src").text.should == "callouts/3.png"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@alt").text.should == "3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@href").text.should == "#callout_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@id").text.should == "co_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@src").text.should == "callouts/3.png"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@alt").text.should == "3"
 
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@href").text.should == "#callout_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@id").text.should == "co_required_title_CO1-4"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/img/@alt").text.should == "1"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@href").text.should == "#callout_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@id").text.should == "co_required_title_CO1-4"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/img/@src").text.should == "callouts/1.png"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/img/@alt").text.should == "1"
 			end
 
 		it "should convert inline callouts in code with duplicate callouts with callouts out of order with a calloutlist following" do
@@ -698,29 +698,29 @@ What's in my head <1>
 <2> A little peculiar.
 <3> I wake up in the morning
 "))
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@href").text.should == "#callout_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@id").text.should == "co_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@src").text.should == "callouts/3.png"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@alt").text.should == "3"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@href").text.should == "#callout_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@id").text.should == "co_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@src").text.should == "callouts/3.png"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@alt").text.should == "3"
 
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@href").text.should == "#callout_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@id").text.should == "co_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@alt").text.should == "2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@href").text.should == "#callout_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@id").text.should == "co_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@src").text.should == "callouts/2.png"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@alt").text.should == "2"
 
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@href").text.should == "#callout_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@id").text.should == "co_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@src").text.should == "callouts/3.png"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@alt").text.should == "3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@href").text.should == "#callout_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@id").text.should == "co_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@src").text.should == "callouts/3.png"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@alt").text.should == "3"
 
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@href").text.should == "#callout_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@id").text.should == "co_required_title_CO1-4"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/img/@alt").text.should == "1"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@href").text.should == "#callout_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@id").text.should == "co_required_title_CO1-4"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/img/@src").text.should == "callouts/1.png"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/img/@alt").text.should == "1"
 			end
 
 		it "should convert inline callouts in code with a calloutlist following, when a callout in the code refers to a calloutlist number that does not exist" do
@@ -737,23 +737,23 @@ nm nm, just pointing to an item that doesn't exist <3>
 <1> I'm a dude
 <2> He's a dude.
 ")) 
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@href").text.should == "#callout_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@id").text.should == "co_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@alt").text.should == "1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@href").text.should == "#callout_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@id").text.should == "co_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@src").text.should == "callouts/1.png"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@alt").text.should == "1"
 
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@href").text.should == "#callout_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@id").text.should == "co_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@alt").text.should == "2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@href").text.should == "#callout_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@id").text.should == "co_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@src").text.should == "callouts/2.png"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@alt").text.should == "2"
 
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@href").text.should == "#callout_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@id").text.should == "co_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@src").text.should == "callouts/3.png"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@alt").text.should == "3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@href").text.should == "#callout_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@id").text.should == "co_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@src").text.should == "callouts/3.png"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@alt").text.should == "3"
 			end
 
 	it "should convert inline callouts in code without a calloutlist following"  do
@@ -768,29 +768,29 @@ That choco fudge folded in is totes yum. <4>
 ----
 
 "))
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@href").text.should == "#callout_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/@id").text.should == "co_required_title_CO1-1"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@src").text.should == "callouts/1.png"
-			html.xpath("//pre[@data-type='programlisting']//a[1]/img/@alt").text.should == "1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@href").text.should == "#callout_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/@id").text.should == "co_required_title_CO1-1"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@src").text.should == "callouts/1.png"
+			html.xpath("//pre[@data-type='programlisting']/a[1]/img/@alt").text.should == "1"
 
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@href").text.should == "#callout_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/@id").text.should == "co_required_title_CO1-2"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@src").text.should == "callouts/2.png"
-			html.xpath("//pre[@data-type='programlisting']//a[2]/img/@alt").text.should == "2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@href").text.should == "#callout_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/@id").text.should == "co_required_title_CO1-2"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@src").text.should == "callouts/2.png"
+			html.xpath("//pre[@data-type='programlisting']/a[2]/img/@alt").text.should == "2"
 
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@href").text.should == "#callout_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/@id").text.should == "co_required_title_CO1-3"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@src").text.should == "callouts/3.png"
-			html.xpath("//pre[@data-type='programlisting']//a[3]/img/@alt").text.should == "3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@href").text.should == "#callout_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/@id").text.should == "co_required_title_CO1-3"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@src").text.should == "callouts/3.png"
+			html.xpath("//pre[@data-type='programlisting']/a[3]/img/@alt").text.should == "3"
 			
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@class").text.should == "co"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@href").text.should == "#callout_required_title_CO1-4"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/@id").text.should == "co_required_title_CO1-4"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/img/@src").text.should == "callouts/4.png"
-			html.xpath("//pre[@data-type='programlisting']//a[4]/img/@alt").text.should == "4"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@class").text.should == "co"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@href").text.should == "#callout_required_title_CO1-4"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/@id").text.should == "co_required_title_CO1-4"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/img/@src").text.should == "callouts/4.png"
+			html.xpath("//pre[@data-type='programlisting']/a[4]/img/@alt").text.should == "4"
 		end
 
 
