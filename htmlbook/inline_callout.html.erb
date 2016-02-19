@@ -4,5 +4,14 @@ if @document.doctitle
 else
 	chaptitle = parent.parent
 end
+
+# For the href, disregard the incremental number we get automatically
+# Match everything but the number after the "-" in something like CO12-3 (For example, match the "CO12-")
+id_without_list_item_number = @id.match('CO\d*-').to_s
+
+# Tack on the final number by looking at what the number is in the callout bug markup (<1>). (For example, making the above CO12-1)
+callout_number = @text
+id_with_list_item_number = id_without_list_item_number + callout_number
+
 chaptitle = chaptitle.to_s.gsub(/[^\w]/, '_').downcase
-%><a class="co" id="<%= %(co_#{chaptitle}_#{@id}) %>" href="<%= %(#callout_#{chaptitle}_#{@id}) %>"><img src="<%= %(callouts/#{@text}.png) %>" alt="<%= @text %>"/></a>
+%><a class="co" id="<%= %(co_#{chaptitle}_#{@id}) %>" href="<%= %(#callout_#{chaptitle}_#{id_with_list_item_number}) %>"><img src="<%= %(callouts/#{@text}.png) %>" alt="<%= @text %>"/></a>
