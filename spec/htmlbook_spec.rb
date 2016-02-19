@@ -410,6 +410,28 @@ This is a link with a text node: http://www.oreilly.com[check out this text node
         end
 
     # Callout handling
+
+    it "should convert inline callouts while preserving whitespace" do
+		html = Nokogiri::HTML(convert("
+== Required title
+
+----
+Hello World <1>
+Hello Again <2>
+
+Thrice Hello <3>
+{
+   Blah
+}
+
+Fourth Hello <4>
+----
+
+
+"))		
+		html.xpath("//pre[@data-type='programlisting']").text.should == "Hello World \nHello Again \n\nThrice Hello \n{\n   Blah\n}\n\nFourth Hello "
+		end
+
 	# Tests block_colist template
 	it "should convert calloutlists with a code example preceding" do
 		html = Nokogiri::HTML(convert("
