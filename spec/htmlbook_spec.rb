@@ -344,6 +344,348 @@ Sidebar text is surrounded by four asterisks.
 		html.xpath("//table/tbody/tr[2]/td[2]/p").text.should == "col2"
 	end
 
+
+
+
+
+
+
+
+
+	# MORE TABLE TESTS
+	it "should convert 2 Column Formal Table, widths in percentages, width the same" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='50%,50%']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 50%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 50%"
+
+	end
+
+	it "should convert 2 Column Formal Table, widths in percentages, width different" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='30%,70%']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 30%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 70%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 30%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 70%"
+
+	end
+
+	it "should convert 3 Column Formal Table, widths in percentages, width the same" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='33%,33%,33%']
+|======================================
+| Table cell one | Row one cell 2 | cow
+| Row 2 cell one | Row 2 cell 2   | dog
+| ROW THREE!!! | THIS IS FO FREEE | cat
+|======================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 33%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 33%"
+
+	end
+
+	it "should convert 3 Column Formal Table, widths in percentages, width different" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='35%,25%,40%']
+|======================================
+| Table cell one | Row one cell 2 | cow
+| Row 2 cell one | Row 2 cell 2   | dog
+| ROW THREE!!! | THIS IS FO FREEE | cat
+|======================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 35%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 25%"
+		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 40%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 35%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 40%"
+
+	end
+
+	it "should convert 2 Column Formal Table, widths in relative numbers, width the same" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='1,1']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 50%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 50%"
+
+	end
+
+	it "should convert 2 Column Formal Table, widths in relative numbers, width different" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='1,3']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 25%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 75%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 25%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 75%"
+
+	end
+
+	it "should convert 3 Column Formal Table, widths in relative numbers, width the same" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='1,1,1']
+|======================================
+| Table cell one | Row one cell 2 | cow
+| Row 2 cell one | Row 2 cell 2   | dog
+| ROW THREE!!! | THIS IS FO FREEE | cat
+|======================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 33%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 33%"
+
+	end
+
+	it "should convert 3 Column Formal Table, widths in relative numbers, width different" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='1,2,7']
+|======================================
+| Table cell one | Row one cell 2 | cow
+| Row 2 cell one | Row 2 cell 2   | dog
+| ROW THREE!!! | THIS IS FO FREEE | cat
+|======================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 10%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 20%"
+		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 70%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 10%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 20%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 70%"
+
+	end
+
+	it "should convert 2 Column Formal Table, cols attribute just has letters (a,a), width the same" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='a,a']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 50%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 50%"
+
+	end
+
+	it "should convert 2 Column Formal Table, widths in relative numbers and letters, width the same" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='1a,1a']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 50%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 50%"
+
+	end
+
+	it "should convert 2 Column Formal Table, widths in relative numbers and letters, width different" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='3a,1d']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 75%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 25%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 75%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
+
+	end
+
+	it "should convert 3 Column Formal Table, widths in relative numbers and letters, width the same" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='1a,1a,1d']
+|======================================
+| Table cell one | Row one cell 2 | cow
+| Row 2 cell one | Row 2 cell 2   | dog
+| ROW THREE!!! | THIS IS FO FREEE | cat
+|======================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 33%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 33%"
+
+	end
+
+	it "should convert 3 Column Formal Table, widths in relative numbers and letters, width different" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='2d,1a,1a']
+|======================================
+| Table cell one | Row one cell 2 | dog 
+| Row 2 cell one | Row 2 cell 2   | cow
+| ROW THREE!!! | THIS IS FO FREEE | cat
+|======================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 25%"
+		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 25%"
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 25%"
+
+	end
+
+	it "should NOT convert 2 Column Formal Table, widths in percentages, when missing a width" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols=',25%']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: "
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: "
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: "
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: "
+
+	end
+
+	it "should convert 2 Column Formal Table, widths in percentages, widths don't add to 100" do
+	html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[options='header', cols='25%,15%']
+|================================
+| Table cell one | Row one cell 2
+| Row 2 cell one | Row 2 cell 2
+|================================
+
+"))
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: "
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: "
+
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: "
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: "
+
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	# Tests block_ulist template
 	it "should convert itemized lists" do
 		html = Nokogiri::HTML(convert("
