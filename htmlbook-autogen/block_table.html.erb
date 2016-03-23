@@ -7,7 +7,7 @@ if (attr 'rowcount') >= 0 %><%
 <tr><%
 row.each_with_index do |cell, index| %>
 <<%= tsec == :head ? 'th' : 'td' %><% 
-if row[index].attr('colpcwidth') %><%= %( style="width: #{row[index].attr 'colpcwidth'}%") %><% end %><%= 
+if row[index].attr('colpcwidth') %><%= %( width="#{row[index].attr 'colpcwidth'}%") %><% end %><%= 
 cell.colspan ? %( colspan="#{cell.colspan}") : nil %><%= cell.rowspan ? %( rowspan="#{cell.rowspan}") : nil %>><% 
 if tsec == :head %><%= cell.text %><% else %><% 
 case cell.attr('style', nil, false)

@@ -356,11 +356,11 @@ Sidebar text is surrounded by four asterisks.
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "50%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "50%"
 
 	end
 
@@ -375,11 +375,11 @@ Sidebar text is surrounded by four asterisks.
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 30%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 70%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "30%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "70%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 30%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 70%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "30%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "70%"
 
 	end
 
@@ -395,13 +395,13 @@ Sidebar text is surrounded by four asterisks.
 |======================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 33%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 33%"
-		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "33%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "33%"
+		html.xpath("//table/thead/tr[1]/th[3]/@width").text.should == "33%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 33%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 33%"
-		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "33%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "33%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@width").text.should == "33%"
 
 	end
 
@@ -417,13 +417,13 @@ Sidebar text is surrounded by four asterisks.
 |======================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 35%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 25%"
-		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 40%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "35%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "25%"
+		html.xpath("//table/thead/tr[1]/th[3]/@width").text.should == "40%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 35%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
-		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 40%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "35%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "25%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@width").text.should == "40%"
 
 	end
 
@@ -438,11 +438,11 @@ Sidebar text is surrounded by four asterisks.
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "50%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "50%"
 
 	end
 
@@ -457,11 +457,11 @@ Sidebar text is surrounded by four asterisks.
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 25%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 75%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "25%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "75%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 25%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 75%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "25%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "75%"
 
 	end
 
@@ -477,13 +477,13 @@ Sidebar text is surrounded by four asterisks.
 |======================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 33%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 33%"
-		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "33%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "33%"
+		html.xpath("//table/thead/tr[1]/th[3]/@width").text.should == "33%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 33%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 33%"
-		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "33%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "33%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@width").text.should == "33%"
 
 	end
 
@@ -499,13 +499,13 @@ Sidebar text is surrounded by four asterisks.
 |======================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 10%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 20%"
-		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 70%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "10%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "20%"
+		html.xpath("//table/thead/tr[1]/th[3]/@width").text.should == "70%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 10%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 20%"
-		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 70%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "10%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "20%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@width").text.should == "70%"
 
 	end
 
@@ -520,11 +520,11 @@ Sidebar text is surrounded by four asterisks.
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "50%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "50%"
 
 	end
 
@@ -539,11 +539,11 @@ Sidebar text is surrounded by four asterisks.
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 50%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "50%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 50%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "50%"
 
 	end
 
@@ -558,11 +558,11 @@ Sidebar text is surrounded by four asterisks.
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 75%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 25%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "75%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "25%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 75%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "75%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "25%"
 
 	end
 
@@ -578,13 +578,13 @@ Sidebar text is surrounded by four asterisks.
 |======================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 33%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 33%"
-		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 33%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "33%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "33%"
+		html.xpath("//table/thead/tr[1]/th[3]/@width").text.should == "33%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 33%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 33%"
-		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 33%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "33%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "33%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@width").text.should == "33%"
 
 	end
 
@@ -600,13 +600,13 @@ Sidebar text is surrounded by four asterisks.
 |======================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 25%"
-		html.xpath("//table/thead/tr[1]/th[3]/@style").text.should == "width: 25%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "50%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "25%"
+		html.xpath("//table/thead/tr[1]/th[3]/@width").text.should == "25%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 50%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
-		html.xpath("//table/tbody/tr[1]/td[3]/@style").text.should == "width: 25%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "50%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "25%"
+		html.xpath("//table/tbody/tr[1]/td[3]/@width").text.should == "25%"
 
 	end
 
@@ -621,11 +621,11 @@ Sidebar text is surrounded by four asterisks.
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 75%"
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 25%"
+		html.xpath("//table/thead/tr[1]/th[1]/@width").text.should == "75%"
+		html.xpath("//table/thead/tr[1]/th[2]/@width").text.should == "25%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 75%"
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
+		html.xpath("//table/tbody/tr[1]/td[1]/@width").text.should == "75%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@width").text.should == "25%"
 
 	end
 
