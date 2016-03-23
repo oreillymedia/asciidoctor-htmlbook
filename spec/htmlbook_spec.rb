@@ -618,41 +618,22 @@ Sidebar text is surrounded by four asterisks.
 
 	end
 
-	it "should NOT convert 2 Column Formal Table, widths in percentages, when missing a width" do
-	html = Nokogiri::HTML(convert("
-[[my_little_table]]
-.This Is My Table
-[options='header', cols=',25%']
-|================================
-| Table cell one | Row one cell 2
-| Row 2 cell one | Row 2 cell 2
-|================================
-
-"))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: "
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: "
-
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: "
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: "
-
-	end
-
 	it "should convert 2 Column Formal Table, widths in percentages, widths don't add to 100" do
 	html = Nokogiri::HTML(convert("
 [[my_little_table]]
 .This Is My Table
-[options='header', cols='25%,15%']
+[options='header', cols='30%,10%']
 |================================
 | Table cell one | Row one cell 2
 | Row 2 cell one | Row 2 cell 2
 |================================
 
 "))
-		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: "
-		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: "
+		html.xpath("//table/thead/tr[1]/th[1]/@style").text.should == "width: 75%"
+		html.xpath("//table/thead/tr[1]/th[2]/@style").text.should == "width: 25%"
 
-		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: "
-		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: "
+		html.xpath("//table/tbody/tr[1]/td[1]/@style").text.should == "width: 75%"
+		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
 
 	end
 
