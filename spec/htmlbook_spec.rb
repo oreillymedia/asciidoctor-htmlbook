@@ -344,14 +344,6 @@ Sidebar text is surrounded by four asterisks.
 		html.xpath("//table/tbody/tr[2]/td[2]/p").text.should == "col2"
 	end
 
-
-
-
-
-
-
-
-
 	# MORE TABLE TESTS
 	it "should convert 2 Column Formal Table, widths in percentages, width the same" do
 	html = Nokogiri::HTML(convert("
@@ -636,36 +628,6 @@ Sidebar text is surrounded by four asterisks.
 		html.xpath("//table/tbody/tr[1]/td[2]/@style").text.should == "width: 25%"
 
 	end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	# Tests block_ulist template
 	it "should convert itemized lists" do
