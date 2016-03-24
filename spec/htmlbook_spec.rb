@@ -201,6 +201,27 @@ image::images/tiger.png[]
 		html.xpath("//figure/img/@alt").text.should == "An image of a lion head"
 	end
 
+	it "should convert figures with a width attributes" do
+		html = Nokogiri::HTML(convert("image::images/lion.png[width='99in']"))
+		html.xpath("//figure/img/@width").text.should == "99in"
+	end
+
+	it "should convert figures with a width attributes when other attributes are present" do
+		html = Nokogiri::HTML(convert("image::images/lion.png[width='4in', height='2in']"))
+		html.xpath("//figure/img/@width").text.should == "4in"
+	end
+
+	it "should convert figures with a height attributes" do
+		html = Nokogiri::HTML(convert("image::images/lion.png[height='3in']"))
+		html.xpath("//figure/img/@height").text.should == "3in"
+	end
+
+	it "should convert figures with a height attributes when other attributes are present" do
+		html = Nokogiri::HTML(convert("image::images/lion.png[width='5in', height='2in']"))
+		html.xpath("//figure/img/@height").text.should == "2in"
+	end
+
+
 	# Tests block_listing template
 	it "should convert informal code blocks" do
 		html = Nokogiri::HTML(convert("
