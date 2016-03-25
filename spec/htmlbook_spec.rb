@@ -345,6 +345,19 @@ Sidebar text is surrounded by four asterisks.
 	end
 
 	# MORE TABLE TESTS
+	it "should convert table width specified on tables" do
+		html = Nokogiri::HTML(convert("
+[[my_little_table]]
+.This Is My Table
+[width='75%', options='header', cols='50%,50%']
+|=======
+|row1|P^Q^
+|row2|col2
+|=======
+"))
+		html.xpath("//table/@width").text.should == "75%"
+	end
+
 	it "should convert 2 Column Formal Table, widths in percentages, width the same" do
 	html = Nokogiri::HTML(convert("
 [[my_little_table]]
