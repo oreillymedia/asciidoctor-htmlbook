@@ -52,6 +52,14 @@ Some introductory part text"))
                 html.xpath("//section[@data-type='foreword']/h1").text.should == "Foreword"
         end
 
+        # New foreword handling test 5/4/2016 DESK#52924
+        it "should convert foreword titles with new syntax" do
+            html = Nokogiri::HTML(convert("
+[foreword]
+== This is my title"))
+                html.xpath("//section[@data-type='foreword']/h1").text.should == "This is my title"
+        end
+
         it "should convert Introduction titles" do
             html = Nokogiri::HTML(convert("
 [introduction]
