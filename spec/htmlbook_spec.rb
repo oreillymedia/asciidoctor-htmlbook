@@ -182,6 +182,41 @@ Hello world
 		html.xpath("//div[@data-type='example']/pre[@data-type='programlisting']").text.should == "Hello world"
 	end
 
+	# Test linenumbering attribute
+	it "should convert line numbering attribute in code listing in formal example" do
+		html = Nokogiri::HTML(convert("
+[[Example2]]
+.Another code block with a title
+====
+[source, php, linenums]
+----
+Hello world again
+----
+====
+
+"))
+		html.xpath("//div[@data-type='example'][1]/@id").text.should == "Example2"
+		html.xpath("//div[@data-type='example'][1]/h5").text.should == "Another code block with a title"
+		html.xpath("//div[@data-type='example'][1]/pre[@data-type='programlisting']").text.should == "Hello world again"
+		html.xpath("//pre[1]/@data-line-numbering").text.should_not == ""
+		html.xpath("//div[@data-type='example'][1]/pre/@data-line-numbering").text.should == "numbered"
+		html.xpath("//div[@data-type='example'][1]/pre[@data-type='programlisting']/@data-code-language").text.should == "php"
+	end
+
+	it "should convert line numbering attribute in informal code listing" do
+		html = Nokogiri::HTML(convert("
+[source, php, linenums]
+----
+Hello world again
+----
+
+"))
+		html.xpath("//pre[@data-type='programlisting'][1]").text.should == "Hello world again"
+		html.xpath("//pre[1]/@data-line-numbering").text.should_not == ""
+		html.xpath("//pre[1]/@data-line-numbering").text.should == "numbered"
+		html.xpath("//pre[@data-type='programlisting'][1]/@data-code-language").text.should == "php"
+	end
+
 
 	# Tests block_image template
 	it "should convert formal figures" do
