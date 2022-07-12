@@ -1,7 +1,13 @@
+GIT
+  remote: https://github.com/asciidoctor/asciidoctor.git
+  revision: 77091bf96780c738027a1846f4a8a0cc8809b8dd
+  ref: 77091bf96780c738027a1846f4a8a0cc8809b8dd
+  specs:
+    asciidoctor (1.5.0.preview)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    asciidoctor (1.5.0.preview.1)
     diff-lcs (1.2.4)
     nokogiri (1.5.10)
     rspec (2.14.1)
@@ -18,7 +24,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  asciidoctor (~> 1.5.0.preview.1)
+  asciidoctor!
   nokogiri
   rspec
   tilt
+
+BUNDLED WITH
+   2.3.12
