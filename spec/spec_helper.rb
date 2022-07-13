@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler'
 #require_relative '../orm-atlas-workers/workers/helpers/passthrough_helper.rb'
-require 'passthrough_helper'
+#require 'passthrough_helper'
 
 ENV["RACK_ENV"] ||= 'test'
 Bundler.require(:test)
