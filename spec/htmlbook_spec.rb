@@ -935,9 +935,25 @@ Finally a reference to the second footnote.footnoteref:[note2]
 	end
 
 	# Tests math in inline_quoted template
-	it "should convert inline equations" do
+	it "should convert inline latexmath equations with dollar sign delimeters to use standard delimiters" do
 		html = Nokogiri::HTML(convert("The Pythagorean Theorem is latexmath:[$a^2 + b^2 = c^2$]"))
-		html.xpath("//p/span[@data-type='tex']").text.should == "$a^2 + b^2 = c^2$"
+		html.xpath("//p/span[@data-type='tex']").text.should == "\\(a^2 + b^2 = c^2\\)"
+	end
+	it "should convert inline latexmath equations with standard delimiters with no change" do
+		html = Nokogiri::HTML(convert("The Pythagorean Theorem is latexmath:[\\(a^2 + b^2 = c^2\\)]"))
+		html.xpath("//p/span[@data-type='tex']").text.should == "\\(a^2 + b^2 = c^2\\)"
+	end
+	it "should convert inline latexmath equations with no delimiters and add delimiters" do
+		html = Nokogiri::HTML(convert("The Pythagorean Theorem is latexmath:[a^2 + b^2 = c^2]"))
+		html.xpath("//p/span[@data-type='tex']").text.should == "\\(a^2 + b^2 = c^2\\)"
+	end
+	it "should convert inline asciimath equations with dollar sign delimeters with no change" do
+		html = Nokogiri::HTML(convert("The Pythagorean Theorem is asciimath:[\$a^2 + b^2 = c^2\$]"))
+		html.xpath("//p/span[@data-type='tex']").text.should == "\$a^2 + b^2 = c^2\$"
+	end
+	it "should convert inline asciimath equations with no delimeters and add delimiters" do
+		html = Nokogiri::HTML(convert("The Pythagorean Theorem is asciimath:[a^2 + b^2 = c^2]"))
+		html.xpath("//p/span[@data-type='tex']").text.should == "\$a^2 + b^2 = c^2\$"
 	end
 
 	# Tests inline_indexterm template - source markup is in files/indexterm_testing.asciidoc

@@ -12,7 +12,7 @@ RSpec.configure do |config|
 end
 
 def convert(asciidoc)
-  Asciidoctor.render(asciidoc, :safe => :safe, :in_place => true, :doctype => 'book', :template_dir => htmlbook_path)
+  Asciidoctor.convert(asciidoc, :safe => :safe, :in_place => true, :doctype => 'book', :template_dir => htmlbook_path, :attributes => {'compat-mode' => 'true'})
 end
 
 def htmlbook_path
@@ -22,5 +22,5 @@ end
 def convert_indexterm_tests
   indexterm_test_path = File.readlines("#{File.dirname(__FILE__)}/files/indexterm_testing.asciidoc")
   doc = Asciidoctor::Document.new(indexterm_test_path, :template_dir => htmlbook_path)
-  doc.render
+  doc.convert
 end
