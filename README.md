@@ -22,3 +22,12 @@ So If my book repo exists in `/Documents/MyBook`, you would do the following:
 ```bash
 $ ruby scripts/convert_book.rb /Documents/MyBook
 ```
+
+Running Tests
+-------------
+
+To run the test suite, run the following command:
+
+```bash
+$ rspec spec/htmlbook_spec.rb
+```
