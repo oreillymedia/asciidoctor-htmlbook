@@ -14,7 +14,7 @@ In this folder there's a script that helps you convert book files written in asc
 Convert a book by running the script like this:
 
 ```bash
-$ ruby scripts/convert_folder PATH_TO_BOOK_REPO
+$ ruby scripts/convert_book.rb PATH_TO_BOOK_REPO
 ```
 
 So If my book repo exists in `/Documents/MyBook`, you would do the following:
