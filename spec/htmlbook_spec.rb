@@ -369,7 +369,7 @@ ____
 Sidebar text is surrounded by four asterisks.
 ****
 "))
-		html.xpath("//aside[@data-type='sidebar']/h5").text.should == "Sidebar Title"
+		html.xpath("//aside[@data-type='sidebar']/h1").text.should == "Sidebar Title"
 		html.xpath("//aside[@data-type='sidebar']/p").text.should == "Sidebar text is surrounded by four asterisks."
 	end
 
