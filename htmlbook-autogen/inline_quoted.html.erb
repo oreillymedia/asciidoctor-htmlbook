@@ -11,8 +11,6 @@ when :single %><%= class_attr ? %(<span#{class_attr}>&#8216;#{@text}&#8217;</spa
 when :asciimath, :latexmath
   open, close = ::Asciidoctor::INLINE_MATH_DELIMITERS[@type] %><%= %(<span data-type="tex">#{@text}</span>) %><%
 else %><% 
-	if role == 'line-through' %>
-<%= attr?('role') ? %(<span class="strikethrough">#{@text}</span>) : @text %><%
-	else %>
-<%= attr?('role') ? %(<span class="#{attr 'role'}">#{@text}</span>) : @text %><%
+	if role == 'line-through' %><%= attr?('role') ? %(<span class="strikethrough">#{@text}</span>) : @text %><%
+	else %><%= attr?('role') ? %(<span class="#{attr 'role'}">#{@text}</span>) : @text %><%
 end %><% end %>

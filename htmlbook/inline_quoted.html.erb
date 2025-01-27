@@ -19,8 +19,6 @@ when :asciimath
   <% else %><%= %(<span data-type="tex">$#{@text}$</span>) %>
   <% end %>
 <% else %><% 
-	if role == 'line-through' %>
-<%= attr?('role') ? %(<span class="strikethrough">#{@text}</span>) : @text %><%
-	else %>
-<%= attr?('role') ? %(<span class="#{attr 'role'}">#{@text}</span>) : @text %><%
+	if role == 'line-through' %><%= attr?('role') ? %(<span class="strikethrough">#{@text}</span>) : @text %><%
+	else %><%= attr?('role') ? %(<span class="#{attr 'role'}">#{@text}</span>) : @text %><%
 end %><% end %>

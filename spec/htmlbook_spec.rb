@@ -217,6 +217,24 @@ Hello world again
 		html.xpath("//pre[@data-type='programlisting'][1]/@data-code-language").text.should == "php"
 	end
 
+	# Tests span nested in source block
+	it "should convert spans nested in source blocks" do
+		html = Nokogiri::HTML(convert('
+[source,sql,subs="verbatim,quotes"]
+----
+[.nohighlight]#greg@127.0.0.1:44913># SHOW DATABASES;
+----
+		'))
+
+		listing = html.xpath("//pre[@data-type='programlisting'][1]")
+		spans = listing.xpath("//span")
+		span = spans[0]
+		
+		listing.text.should == "greg@127.0.0.1:44913> SHOW DATABASES;"
+		spans.count == 1
+		span.text.should == "greg@127.0.0.1:44913>"
+		span.xpath("//@class") == "nohighlight"
+	end
 
 	# Tests block_image template
 	it "should convert formal figures" do
