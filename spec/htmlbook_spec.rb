@@ -219,7 +219,7 @@ Hello world again
 
 	# Tests span nested in source block
 	it "should convert spans nested in source blocks" do
-		html = 	html = Nokogiri::HTML(convert('
+		html = Nokogiri::HTML(convert('
 [source,sql,subs="verbatim,quotes"]
 ----
 [.nohighlight]#greg@127.0.0.1:44913># SHOW DATABASES;
