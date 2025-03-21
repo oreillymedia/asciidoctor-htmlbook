@@ -5,7 +5,7 @@ GEM
     concurrent-ruby (1.1.10)
     diff-lcs (1.6.0)
     mini_portile2 (2.8.8)
-    nokogiri (1.18.3)
+    nokogiri (1.18.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     racc (1.8.1)
