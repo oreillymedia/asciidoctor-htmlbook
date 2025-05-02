@@ -3,7 +3,7 @@ class_attr = (style_class = role) ? %( class="#{style_class}") : nil
 case @type
 when :emphasis %><em<%= attr?('role') ? %( #{attr 'role'}) : nil %>><%= @text %></em><%
 when :strong %><strong<%= attr?('role') ? %( #{attr 'role'}) : nil %>><%= @text %></strong><%
-when :monospaced %><code<%= attr?('role') ? %( #{attr 'role'}) : nil %>><%= @text %></code><%
+when :monospaced %><code translate="no"<%= attr?('role') ? %( #{attr 'role'}) : nil %>><%= @text %></code><%
 when :superscript %><sup<%= attr?('role') ? %( #{attr 'role'}) : nil %>><%= @text %></sup><%
 when :subscript %><sub<%= attr?('role') ? %( #{attr 'role'}) : nil %>><%= @text %></sub><%
 when :double %><%= class_attr ? %(<span#{class_attr}>&#8220;#{@text}&#8221;</span>) : %(&#8220;#{@text}&#8221;) %><%
