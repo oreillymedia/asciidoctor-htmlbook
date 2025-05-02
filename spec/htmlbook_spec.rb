@@ -303,6 +303,16 @@ This is a literal block.
 		html = Nokogiri::HTML(convert(" This is also a literal block."))
 		html.xpath("//pre").text.should == "This is also a literal block."
 	end
+	
+	it "should add translate='no' attribute to literal blocks" do
+		html = Nokogiri::HTML(convert("
+....
+This is text in a literal block
+that should not be translated.
+....
+"))
+		html.xpath("//pre/@translate").text.should == "no"
+	end
 
 	# Test block_math template
 	it "should convert math blocks" do
