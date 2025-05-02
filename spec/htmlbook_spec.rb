@@ -277,6 +277,18 @@ Hello world
 		html.xpath("//pre[@data-type='programlisting']").text.should == "Hello world"
 	end
 
+	it "should add translate='no' attribute to code blocks" do
+		html = Nokogiri::HTML(convert("
+[source, ruby]
+----
+def hello
+  puts 'Hello, world!'
+end
+----
+"))
+		html.xpath("//pre[@data-type='programlisting']/@translate").text.should == "no"
+	end
+
 	# Tests block_literal template - first markup style
 	it "should convert literal blocks" do
 		html = Nokogiri::HTML(convert("
@@ -932,6 +944,11 @@ Finally a reference to the second footnote.footnoteref:[note2]
 		html.xpath("//p/sub").text.should == "subscript"
 		html.xpath("//p/em/code").text.should == "replaceable"
 		html.xpath("//p/strong/code").text.should == "userinput"
+	end
+
+	it "should add translate='no' attribute to inline code elements" do
+		html = Nokogiri::HTML(convert("This para has some ++inline code++ in it."))
+		html.xpath("//p/code[1]/@translate").text.should == "no"
 	end
 
 	# Tests math in inline_quoted template
