@@ -980,17 +980,17 @@ Finally a reference to the second footnote.footnoteref:[note2]
 	end
 
 	# Tests math in inline_quoted template
-	it "should convert inline latexmath equations with dollar sign delimeters to use standard delimiters" do
+	it "should convert inline latexmath equations with dollar sign delimeters to use no delimiters" do
 		html = Nokogiri::HTML(convert("The Pythagorean Theorem is latexmath:[$a^2 + b^2 = c^2$]"))
-		expect(html.xpath("//p/span[@data-type='tex']").text).to eq("\\(a^2 + b^2 = c^2\\)")
+        expect(html.xpath("//p/span[@data-type='tex']").text).to eq("a^2 + b^2 = c^2")
 	end
-	it "should convert inline latexmath equations with standard delimiters with no change" do
+	it "should convert inline latexmath equations with standard delimiters removed" do
 		html = Nokogiri::HTML(convert("The Pythagorean Theorem is latexmath:[\\(a^2 + b^2 = c^2\\)]"))
-		expect(html.xpath("//p/span[@data-type='tex']").text).to eq("\\(a^2 + b^2 = c^2\\)")
+        expect(html.xpath("//p/span[@data-type='tex']").text).to eq("a^2 + b^2 = c^2")
 	end
-	it "should convert inline latexmath equations with no delimiters and add delimiters" do
+	it "should convert inline latexmath equations with no delimiters without changing them" do
 		html = Nokogiri::HTML(convert("The Pythagorean Theorem is latexmath:[a^2 + b^2 = c^2]"))
-		expect(html.xpath("//p/span[@data-type='tex']").text).to eq("\\(a^2 + b^2 = c^2\\)")
+        expect(html.xpath("//p/span[@data-type='tex']").text).to eq("a^2 + b^2 = c^2")
 	end
 	it "should convert inline asciimath equations with dollar sign delimeters with no change" do
 		html = Nokogiri::HTML(convert("The Pythagorean Theorem is asciimath:[\$a^2 + b^2 = c^2\$]"))
