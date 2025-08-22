@@ -10,8 +10,8 @@ when :double %><%= class_attr ? %(<span#{class_attr}>&#8220;#{@text}&#8221;</spa
 when :single %><%= class_attr ? %(<span#{class_attr}>&#8216;#{@text}&#8217;</span>) : %(&#8216;#{@text}&#8217;) %><%
 when :latexmath
   open, close = ::Asciidoctor::INLINE_MATH_DELIMITERS[@type] %><% 
-  if (@text.start_with? '\(') && (@text.end_with? '\)') %><%= %(<span data-type="tex">#{@text}</span>) %>
-  <% else %><%= %(<span data-type="tex">#{open}#{@text}#{close}</span>) %>
+  if (@text.start_with? '\(') && (@text.end_with? '\)') %><%= %(<span data-type="tex">#{@text[2..-3]}</span>) %>
+  <% else %><%= %(<span data-type="tex">#{@text}</span>) %>
   <% end %><%
 when :asciimath
   open, close = ::Asciidoctor::INLINE_MATH_DELIMITERS[@type] %><% 
