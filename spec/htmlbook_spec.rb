@@ -203,6 +203,45 @@ Hello world again
 		expect(html.xpath("//div[@data-type='example'][1]/pre[@data-type='programlisting']/@data-code-language").text).to eq("php")
 	end
 
+	# Tests collapsible block (details tag) support
+	it "should convert collapsible blocks to details/summary elements" do
+		html = Nokogiri::HTML(convert("
+.Details
+[%collapsible]
+====
+This would be the show and hide!
+====
+"))
+		expect(html.xpath("//details/summary[@class='title']").text).to eq("Details")
+		expect(html.xpath("//details/div[@class='content']/p").text).to eq("This would be the show and hide!")
+	end
+
+	it "should convert collapsible blocks with an id" do
+		html = Nokogiri::HTML(convert("
+[[my-details]]
+.Click to expand
+[%collapsible]
+====
+Hidden content here.
+====
+"))
+		expect(html.xpath("//details/@id").text).to eq("my-details")
+		expect(html.xpath("//details/summary[@class='title']").text).to eq("Click to expand")
+		expect(html.xpath("//details/div[@class='content']/p").text).to eq("Hidden content here.")
+	end
+
+	it "should convert collapsible blocks with a role attribute" do
+		html = Nokogiri::HTML(convert("
+.Summary text
+[%collapsible,role='special']
+====
+Content with a role.
+====
+"))
+		expect(html.xpath("//details/@class").text).to eq("special")
+		expect(html.xpath("//details/summary[@class='title']").text).to eq("Summary text")
+	end
+
 	it "should convert line numbering attribute in informal code listing" do
 		html = Nokogiri::HTML(convert("
 [source, php, linenums]
