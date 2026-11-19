@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "3.4.12"
+ruby "3.4.13"
 
 group :test do
   gem "asciidoctor"
